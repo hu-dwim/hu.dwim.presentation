@@ -451,6 +451,7 @@ such as MAKE-INSTANCE, MAKE-MAKER, MAKE-VIEWER, MAKE-EDITOR, MAKE-INSPECTOR, MAK
   (operation-not-supported "Cannot render ~A, you may want to override RENDER-COMPONENT" -self-))
 
 (def render-component :around component
+  (app.dribble "Rendering component ~A" -self-)
   (with-component-environment -self-
     (call-next-layered-method)))
 
