@@ -186,8 +186,9 @@
         (fully-qualified-symbol-name component-value))))
 
 (def method parse-component-value ((component symbol/presentation) client-value)
-  (or (find-fully-qualified-symbol client-value :otherwise #f)
-      (invalid-client-value "Symbol with the name ~A not found" client-value)))
+  (unless (string= client-value "")
+    (or (find-fully-qualified-symbol client-value :otherwise #f)
+        (invalid-client-value "Symbol with the name ~A not found" client-value))))
 
 ;;;;;;
 ;;; keyword/presentation

@@ -111,6 +111,11 @@
             component-value
             (fully-qualified-symbol-name component-value)))))
 
+(def method parse-component-value ((component symbol/filter) client-value)
+  (unless (string= client-value "")
+    (or (find-fully-qualified-symbol client-value :otherwise #f)
+        client-value)))
+
 ;;;;;;
 ;;; keyword/filter
 
