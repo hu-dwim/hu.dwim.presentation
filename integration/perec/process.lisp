@@ -99,17 +99,17 @@
 
 (def (layered-function e) make-persistent-process-commands (component class prototype value)
   ;; TODO: move hu.dwim.perec::with-revived-instance?
-  (:method ((component t/inspector) class prototype value)
+  (:method ((component t/alternator/inspector) class prototype value)
     (hu.dwim.perec::with-revived-instance value
       (optional-list (when (process-initializing? value)
                        (make-start-persistent-process-command component value))
                      (when (process-in-progress? value)
                        (make-continue-persistent-process-command component value))))))
 
-(def layered-method make-context-menu-items ((component t/inspector) (class hu.dwim.meta-model::persistent-process-class) (prototype hu.dwim.meta-model::persistent-process) (value hu.dwim.meta-model::persistent-process))
+(def layered-method make-context-menu-items ((component t/alternator/inspector) (class hu.dwim.meta-model::persistent-process-class) (prototype hu.dwim.meta-model::persistent-process) (value hu.dwim.meta-model::persistent-process))
   (append (make-persistent-process-commands component class prototype value) (call-next-layered-method)))
 
-(def layered-method make-command-bar-commands ((component t/inspector) (class hu.dwim.meta-model::persistent-process-class) (prototype hu.dwim.meta-model::persistent-process) (value hu.dwim.meta-model::persistent-process))
+(def layered-method make-command-bar-commands ((component t/alternator/inspector) (class hu.dwim.meta-model::persistent-process-class) (prototype hu.dwim.meta-model::persistent-process) (value hu.dwim.meta-model::persistent-process))
   (append (make-persistent-process-commands component class prototype value) (call-next-layered-method)))
 
 (def (function e) make-start-persistent-process-command (component process)

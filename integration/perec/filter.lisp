@@ -11,7 +11,7 @@
 
 (def subtype-mapper *filter-type-mapping* (hu.dwim.perec::set hu.dwim.perec::persistent-object) sequence/alternator/filter)
 
-(def layered-method execute-filter ((component t/filter) (class hu.dwim.perec::persistent-class) (prototype hu.dwim.perec::persistent-object) value)
+(def layered-method execute-filter ((component t/alternator/filter) (class hu.dwim.perec::persistent-class) (prototype hu.dwim.perec::persistent-object) value)
   (hu.dwim.perec::execute-query (make-filter-query component class prototype value)))
 
 (def method predicate-function ((component timestamp/filter) (class hu.dwim.perec::persistent-class) (predicate (eql 'equal)))
@@ -77,7 +77,7 @@
       (pop (query-variable-stack-of filter-query)))))
 
 (def (layered-function e) make-filter-query (component class prototype value)
-  (:method ((component t/filter) class prototype value)
+  (:method ((component t/alternator/filter) class prototype value)
     (bind ((query (hu.dwim.perec::make-instance 'hu.dwim.perec::query))
            (filter-query (make-instance 'filter-query :query query)))
       (with-new-query-variable (query-variable filter-query (class-name class))
@@ -108,7 +108,7 @@
          (bind ((slot (slot-of place)))
            (when (typep slot 'hu.dwim.perec::persistent-effective-slot-definition)
              (cond ((or (typep value-filter 'primitive/filter)
-                        (typep value-filter 't/inspector))
+                        (typep value-filter 't/alternator/inspector))
                     ;; TODO: use when, not unless
                     (when (use-in-filter? component)
                       (bind ((value (component-value-of value-filter))
