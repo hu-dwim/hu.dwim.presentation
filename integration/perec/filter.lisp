@@ -9,7 +9,7 @@
 ;;;;;;
 ;;; Customizations
 
-(def subtype-mapper *filter-type-mapping* (hu.dwim.perec::set hu.dwim.perec::persistent-object) sequence/filter)
+(def subtype-mapper *filter-type-mapping* (hu.dwim.perec::set hu.dwim.perec::persistent-object) sequence/alternator/filter)
 
 (def layered-method execute-filter ((component t/filter) (class hu.dwim.perec::persistent-class) (prototype hu.dwim.perec::persistent-object) value)
   (hu.dwim.perec::execute-query (make-filter-query component class prototype value)))

@@ -146,8 +146,11 @@ Optimized factory configuration (default):
 (def layered-method collect-presented-slots ((component t/name-value-list/filter) class prototype value)
   (class-slots (component-dispatch-class component)))
 
+(def layered-method collect-presented-places ((component t/name-value-list/filter) class prototype value)
+  (mapcar [make-object-slot-place (class-prototype (component-dispatch-class component)) !1] value))
+
 (def layered-method make-presented-place-group ((component t/name-value-list/filter) class prototype value)
-  (make-place-group nil (mapcar [make-object-slot-place (class-prototype (component-dispatch-class component)) !1] value)))
+  (make-place-group nil value))
 
 (def layered-methods make-content-presentation
   (:method ((component t/name-value-list/filter) class prototype (value place-group))
