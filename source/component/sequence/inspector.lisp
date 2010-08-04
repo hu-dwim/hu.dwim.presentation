@@ -209,6 +209,10 @@
 (def (component e) place/column/inspector (t/detail/inspector column/widget)
   ((cell-factory :type (or symbol function))))
 
+;; KLUDGE: t/detail/inspector overrides component-style-class of column/widget, undo that
+(def method component-style-class ((self place/column/inspector))
+  (string+ "table-header-border " (call-next-method)))
+
 ;;;;;;
 ;;; t/row/inspector
 

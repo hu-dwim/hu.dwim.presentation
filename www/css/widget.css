@@ -98,8 +98,10 @@ span.widget {
 }
 
 .row > .column {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 1px;
+  padding-right: 1px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .row > .cell {
