@@ -33,9 +33,10 @@
   )
 
 (def render-xhtml book/toc/inspector
-  <div (:class "toc") "Tartalomjegyzék">
-  (render-context-menu-for -self-)
-  (render-contents-for -self-))
+  (with-render-style/component (-self-)
+    <div (:class "toc") ,#"toc.title">
+    (render-context-menu-for -self-)
+    (render-contents-for -self-)))
 
 (def function toc-numbering (component)
   (bind ((component-value (component-value-of component)))
@@ -66,7 +67,8 @@
                                          `js(.scrollIntoView (document.getElementById ,(id-of -self-)) true))))))
 
 (def render-xhtml chapter/toc/inspector
-  (bind (((:read-only-slots reference) -self-))
-    (render-component reference)
-    (render-context-menu-for -self-)
-    (render-contents-for -self-)))
+  (with-render-style/component (-self-)
+    (bind (((:read-only-slots reference) -self-))
+      (render-component reference)
+      (render-context-menu-for -self-)
+      (render-contents-for -self-))))
