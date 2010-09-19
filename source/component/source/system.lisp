@@ -36,7 +36,4 @@
   (make-instance 'system/depends-on-hierarchy/node/inspector :component-value value :expanded #f))
 
 (def layered-method collect-presented-children ((component system/depends-on-hierarchy/node/inspector) (class standard-class) (prototype asdf:system) (value asdf:system))
-  (mapcar #'asdf:find-system
-          (cdr (find-if (lambda (description)
-                          (eq 'asdf:load-op (first description)))
-                        (asdf:component-depends-on 'asdf:load-op value)))))
+  (collect-system-dependencies value))
