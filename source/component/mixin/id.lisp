@@ -15,6 +15,7 @@
 
 (def layered-method render-component-stub :in xhtml-layer ((-self- id/mixin))
   (setf (rendered-component? -self-) :stub)
+  (assert (id-of -self-))
   <div (:id ,(id-of -self-) :style "display: none;") "">)
 
 (debug-only
