@@ -9,6 +9,7 @@
 ;;;;;;
 ;;; t/toc/inspector
 
+;; TODO rename t/toc/inspector to what?
 (def (component e) t/toc/inspector (t/detail/inspector contents/widget)
   ())
 
@@ -34,7 +35,7 @@
 
 (def render-xhtml book/toc/inspector
   (with-render-style/component (-self-)
-    <div (:class "toc") ,#"toc.title">
+    <div (:class "toc") ,#"Toc.title">
     (render-context-menu-for -self-)
     (render-contents-for -self-)))
 

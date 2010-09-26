@@ -27,6 +27,7 @@
 
 (def layered-method make-alternatives ((component sequence/alternator/inspector) class prototype value)
   (bind (((:read-only-slots editable-component edited-component component-value-type) component))
+    ;; FIXME error: VALUE here can be ("_j" . "t") on which find-if dies. reproduce: inspect request, expand the query parameters.
     (optional-list (awhen (find-if [not (null (class-slots (class-of !1)))] value)
                      (make-instance 'sequence/table/inspector
                                     :component-value value

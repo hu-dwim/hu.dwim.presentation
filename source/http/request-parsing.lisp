@@ -263,7 +263,7 @@
                                                                                :sideffect-initial-parameters #t)))))
               ("multipart/form-data"
                (http.dribble "Parsing multipart/form-data body. Attributes: ~S." attributes)
-               (bind ((boundary (cdr (assoc "boundary" attributes :test #'string=))))
+               (bind ((boundary (assoc-value attributes "boundary" :test #'string=)))
                  ;; TODO DOS prevention: add support for rfc2388-binary to limit parsing length if the ContentLength header is fake, pass in *request-content-length-limit*
                  (rfc2388-binary:read-mime stream boundary
                                            (make-rfc2388-callback-factory

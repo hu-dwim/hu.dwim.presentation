@@ -38,7 +38,7 @@
     (bind ((message (build-backtrace-string error :message "HANDLE-TOPLEVEL-ERROR :before is now dealing with this error")))
       (if (is-error-worth-logging? error)
           (server.error message)
-          (server.dribble message)))
+          (server.debug message)))
     (maybe-invoke-debugger error :context context))
 
   (:method :around (context error)

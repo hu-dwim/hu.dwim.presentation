@@ -41,6 +41,7 @@
           <div (:id ,id)
             ,(if (and checked-image
                       unchecked-image)
+                 ;; TODO cleanup... <img> tags are not allowed without an alt, but this is pure confusion here...
                  <img>)>
           `js-onload(wui.field.setup-custom-checkbox ,id ,checked-image ,unchecked-image ,checked-tooltip ,unchecked-tooltip ,checked-class ,unchecked-class))
         (progn
