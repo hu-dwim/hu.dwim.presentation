@@ -397,3 +397,9 @@
        <br>
        ;; TODO replace with a reference renderer
        ,(princ-to-string instance)>))
+
+;;;;;;
+;;; TOC
+
+(def localization en
+  (toc.title "tartalomjegyzék"))

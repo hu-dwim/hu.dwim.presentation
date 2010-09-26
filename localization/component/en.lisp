@@ -427,3 +427,9 @@
 
 (def localization en
   (dictionary-name.editing "editing"))
+
+;;;;;;
+;;; TOC
+
+(def localization en
+  (toc.title "table of contents"))
