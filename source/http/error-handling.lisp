@@ -39,7 +39,10 @@
     (bind ((message (build-backtrace-string error :message "HANDLE-TOPLEVEL-ERROR :before is now dealing with this error")))
       (if (is-error-worth-logging? error)
           (server.error message)
-          (server.debug message)))
+          (progn
+            (when (typep error 'illegal-http-request/error)
+              (server.info "Ignoring an illegal http request from ~S: ~A" *request-remote-address/string* error))
+            (server.debug message))))
     (maybe-invoke-debugger error :context context))
 
   (:method :around (context error)
