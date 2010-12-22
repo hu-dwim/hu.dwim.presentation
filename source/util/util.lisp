@@ -351,13 +351,11 @@
   (format-symbol *package* "~{~A~^&~}" class-names))
 
 (def function dynamic-class-metaclass (class-names)
-  (bind ((metaclasses
-          (mapcar (lambda (class-name)
-                    (class-of (find-class class-name)))
-                  class-names)))
-    (every (lambda (metaclass)
-             (eq metaclass (first metaclasses)))
-           metaclasses)
+  (bind ((metaclasses (mapcar (lambda (class-name)
+                                (class-of (find-class class-name)))
+                              class-names)))
+    (unless (all-the-same? metaclasses)
+      (error "~S was called with classes of not the same metaclass" 'dynamic-class-metaclass))
     (first metaclasses)))
 
 (def function ensure-dynamic-class (class-names)
