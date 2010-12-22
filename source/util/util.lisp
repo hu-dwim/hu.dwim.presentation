@@ -77,7 +77,9 @@
 (def function function-name (function)
   (etypecase function
     (generic-function (generic-function-name function))
-    (function (sb-impl::%fun-name function))))
+    (function #*((:sbcl (sb-impl::%fun-name function))
+                 (t #.(warn "~S is not implemented on your platform" 'function-name)
+                    (not-yet-implemented))))))
 
 (def function html-text? (instance)
   (declare (ignore instance))
