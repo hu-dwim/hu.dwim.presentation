@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;; TODO localize this file!
 
@@ -23,8 +23,8 @@
   (when *frame*
     (bind ((href (register-action/href (make-action (show-context-sensitive-help -self-)) :delayed-content #t)))
       <div (:id ,(id-of -self-)
-            :onclick `js-inline(wui.help.setup event ,href)
-            :onmouseover `js-inline((wui.help.make-mouseover-handler ,href) event))
+            :onclick `js-inline(hdp.help.setup event ,href)
+            :onmouseover `js-inline((hdp.help.make-mouseover-handler ,href) event))
         ,(render-content-for -self-)>)))
 
 (def layered-function show-context-sensitive-help (component)

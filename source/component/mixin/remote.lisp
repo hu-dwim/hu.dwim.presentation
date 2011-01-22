@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; remote-setup/mixin
@@ -21,7 +21,7 @@
       (call-next-layered-method)))
 
   (:method :in xhtml-layer ((self id/mixin))
-    `js-onload(wui.setup-component ,(id-of self) ,(instance-class-name-as-string self))))
+    `js-onload(hdp.setup-component ,(id-of self) ,(instance-class-name-as-string self))))
 
 (def render-xhtml :after remote-setup/mixin
   (render-remote-setup -self-))

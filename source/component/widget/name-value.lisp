@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; name-value-list/widget
@@ -53,8 +53,8 @@
                   (bind ((id (generate-unique-component-id)))
                     <tr (:id ,id
                          :class "name-value-pair widget"
-                         :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-                         :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+                         :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+                         :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
                       <td>
                       ,(render-component content)>))
                 (contents-of -self-)))>)

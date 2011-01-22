@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 (def layered-method collect-presented-slots :around (component (class hu.dwim.perec::persistent-class) (prototype hu.dwim.perec::persistent-object) value)
   (remove-slots '(hu.dwim.perec::oid

@@ -4,22 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
-
-;; from arnesi
-(def macro dolist* ((iterator list &optional return-value) &body body)
-  "Like DOLIST but destructuring-binds the elements of LIST.
-
-If ITERATOR is a symbol then dolist* is just like dolist EXCEPT
-that it creates a fresh binding."
-  (if (listp iterator)
-      (let ((i (gensym "DOLIST*-I-")))
-        `(dolist (,i ,list ,return-value)
-           (destructuring-bind ,iterator ,i
-             ,@body)))
-      `(dolist (,iterator ,list ,return-value)
-         (let ((,iterator ,iterator))
-           ,@body))))
+(in-package :hu.dwim.presentation)
 
 (def function map-subclasses (class fn &key proper?)
   "Applies fn to each subclass of class. If proper? is true, then
@@ -46,4 +31,3 @@ the class itself is not included in the mapping. Proper? defaults to nil."
                             (push class result))
                     :proper? proper?)
     (nreverse result)))
-

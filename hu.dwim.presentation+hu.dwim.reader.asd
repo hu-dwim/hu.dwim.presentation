@@ -8,9 +8,9 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui+hu.dwim.reader
+(defsystem :hu.dwim.presentation+hu.dwim.reader
   :class hu.dwim.system
   :depends-on (:hu.dwim.reader+hu.dwim.syntax-sugar
-               :hu.dwim.wui)
+               :hu.dwim.presentation)
   :components ((:module "integration"
                 :components ((:file "reader")))))

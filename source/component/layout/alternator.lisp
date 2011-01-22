@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; alternator/layout
@@ -13,7 +13,7 @@
   ((alternatives
     nil
     :type list))
-  (:documentation "A /CLASS/HU.DWIM.WUI:COMPONENT with several child components, out of which only one is shown at a time."))
+  (:documentation "A /CLASS/HU.DWIM.PRESENTATION:COMPONENT with several child components, out of which only one is shown at a time."))
 
 (def (macro e) alternator/layout ((&rest args &key &allow-other-keys) &body alternatives)
   (bind ((first-alternative (first alternatives)))

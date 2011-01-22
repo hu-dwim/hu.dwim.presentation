@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; node/widget
@@ -26,8 +26,8 @@
 (def render-xhtml node/widget
   (bind (((:read-only-slots id child-nodes) -self-))
     <div (:id ,id :class `str("node widget level-" ,(integer-to-string *tree-level*))
-          :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-          :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+          :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+          :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
       ,(render-context-menu-for -self-)
       <span (:class `str("content " ,(selectable-component-style-class -self-)
                                     ,(unless child-nodes

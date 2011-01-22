@@ -2,7 +2,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; style-class/mixin

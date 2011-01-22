@@ -8,29 +8,34 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui.component
+(defsystem :hu.dwim.presentation
   :class hu.dwim.system
-  :description "Provides a component based server side GUI framework which is rendered into HTML and JavaScript through HTTP."
+  :description "A component based GUI framework with a backend to present it using HTML and JavaScript."
   :long-description "Provides various components, layouts, widgets, charts, books, model documentation components, meta components. Components have server and client side state and behavior."
   :depends-on (:contextl
                :cl-graph ; KLUDGE component/source/class.lisp depends on cl-graph
-               :hu.dwim.wui.application
+               :hu.dwim.def+contextl
+               :hu.dwim.stefil+hu.dwim.def ; to resolve the -body- symbol conflict
                :hu.dwim.util.authorization
                :hu.dwim.util.source
-               :hu.dwim.util.standard-process)
+               :hu.dwim.util.standard-process
+               :hu.dwim.web-server.application)
   :components ((:module "source"
                 :components ((:module "util"
+                              :depends-on ("package" "logger")
                               :components ((:file "book")
                                            (:file "csv")
                                            (:file "definition")
-                                           (:file "dictionary")
-                                           #+sbcl(:file "object-size")
+                                           (:file "dictionary" :depends-on ("l10n"))
                                            (:file "human-readable" :depends-on ("book" "project"))
+                                           (:file "l10n")
+                                           #+sbcl(:file "object-size")
                                            (:file "place")
                                            (:file "project")
-                                           (:file "selection")))
+                                           (:file "selection")
+                                           (:file "util")))
                              (:module "component"
-                              :depends-on ("util")
+                              :depends-on ("util" "component-hierarchy-serving")
                               :components ((:module "api"
                                             :components ((:file "api")
                                                          (:file "component" :depends-on ("api" "mop"))
@@ -255,5 +260,21 @@
                                                          (:file "type")
                                                          (:file "uri")
                                                          (:file "variable")))))
+                             (:file "logger" :depends-on ("package"))
+                             (:file "package")
+                             (:file "component-hierarchy-serving" :depends-on ("logger"))
                              ;; KLUDGE: kill this
                              (:file "xxx" :pathname #p"component/xxx.lisp" :depends-on ("component"))))))
+
+(defmethod perform :before ((op develop-op) (system (eql (find-system :hu.dwim.presentation))))
+  (develop-system :hu.dwim.web-server))
+
+#+nil ; TODO delme
+(defmethod perform :after ((op develop-op) (system (eql (find-system :hu.dwim.presentation))))
+  (let ((*package* (find-package :hu.dwim.presentation)))
+    (eval
+     (read-from-string
+      "(progn
+         (setf (log-level 'wui) +debug+)
+         (setf *debug-on-error* t))")))
+  (warn "Set WUI log level to +debug+; enabled server-side debugging"))

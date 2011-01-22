@@ -8,15 +8,17 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui.component.test
+(defsystem :hu.dwim.presentation.test
   :class hu.dwim.test-system
-  :package-name :hu.dwim.wui.test
+  :package-name :hu.dwim.presentation.test
   :depends-on (:hu.dwim.graphviz
-               :hu.dwim.wui.application.test
-               :hu.dwim.wui.component
-               :hu.dwim.wui+cl-graph+cl-typesetting
-               :hu.dwim.wui+hu.dwim.reader
-               :hu.dwim.wui+stefil)
+               :hu.dwim.web-server.application.test
+               :hu.dwim.presentation
+               :hu.dwim.presentation+cl-graph+cl-typesetting
+               :hu.dwim.presentation+hu.dwim.reader
+               :hu.dwim.presentation+hu.dwim.stefil)
   :components ((:module "test"
-                :components ((:file "component")
-                             (:file "human-readable")))))
+                :components ((:file "component" :depends-on ("environment" "package"))
+                             (:file "environment" :depends-on ("package"))
+                             (:file "human-readable" :depends-on ("environment" "package"))
+                             (:file "package")))))

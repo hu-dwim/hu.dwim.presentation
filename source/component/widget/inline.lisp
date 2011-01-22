@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; thunk/mixin
@@ -21,7 +21,7 @@
   (:documentation "An INLINE-RENDER/WIDGET has a FUNCTION that is called in its RENDER-COMPONENT."))
 
 (def (macro e) inline-render/widget ((&rest args &key &allow-other-keys) &body forms)
-  `(make-instance 'inline-render/widget ,@args :thunk (named-lambda inline-render-component/body () ,@forms)))
+  `(make-instance 'inline-render/widget ,@args :thunk (named-lambda inline-render/widget/body () ,@forms)))
 
 (def function render-inline-render-component (component)
   (funcall (thunk-of component)))
@@ -37,7 +37,7 @@
   (:documentation "An INLINE-RENDER-XHTML/WIDGET can only be rendered in XHTML format."))
 
 (def (macro e) inline-render-xhtml/widget ((&rest args &key &allow-other-keys) &body forms)
-  `(make-instance 'inline-render-xhtml/widget ,@args :thunk (lambda () ,@forms)))
+  `(make-instance 'inline-render-xhtml/widget ,@args :thunk (named-lambda inline-render-xhtml/widget/body () ,@forms)))
 
 (def render-component inline-render-xhtml/widget
   (error "Cannot render ~A in the current format" -self-))

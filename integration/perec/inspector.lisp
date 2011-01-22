@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 (def subtype-mapper *inspector-type-mapping* (hu.dwim.perec::set hu.dwim.perec::persistent-object) sequence/alternator/inspector)
 

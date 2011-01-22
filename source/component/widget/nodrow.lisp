@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; nodrow/widget
@@ -27,8 +27,8 @@
     <tr (:id ,id :style ,custom-style :class `str("content " ,(nodrow-style-class -self-)
                                                              ,(selectable-component-style-class -self-)
                                                              ,(unless child-nodes " leaf"))
-         :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-         :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+         :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+         :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
       ,(render-nodrow-cells -self-)>
     (render-onclick-handler -self- :left)
     (render-context-menu-for -self-)
@@ -137,6 +137,6 @@
   (bind (((:read-only-slots id) -self-))
     (with-render-style/component (-self- :element-name "tr")
       <td (:colspan ,(length (columns-of *tree*))
-           :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-           :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+           :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+           :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
         ,(render-content-for -self-)>)))

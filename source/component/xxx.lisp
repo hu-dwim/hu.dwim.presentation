@@ -5,7 +5,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 (def function make-copy-to-repl-command (component)
   (command/widget (:ajax #t)
@@ -16,6 +16,17 @@
   (command/widget (:ajax #t)
     "INSPECT"
     (make-action (inspect-in-repl component))))
+
+(def (function e) make-default-broker-list ()
+  "Returns a list of brokers that are needed for normal operation."
+  (bind ((priority 100))
+    (append
+     (hu.dwim.web-server::make-default-broker-list :include-application-support #t)
+     (list (make-instance 'js-directory-serving-broker
+                          :path-prefix "/hdp/js/"
+                          :root-directory (system-relative-pathname :hu.dwim.presentation "source/js/")
+                          :priority priority)
+           (make-directory-serving-broker "/static/hdp/" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)))))
 
 ;;;;;;
 ;;; Icon

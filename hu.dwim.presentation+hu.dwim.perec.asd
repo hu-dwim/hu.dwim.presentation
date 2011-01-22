@@ -8,12 +8,13 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui+hu.dwim.perec
+(defsystem :hu.dwim.presentation+hu.dwim.perec
   :class hu.dwim.system
   :depends-on (:cl-l10n
                :hu.dwim.perec+iolib
-               :hu.dwim.meta-model
-               :hu.dwim.wui)
+               :hu.dwim.presentation
+               :hu.dwim.meta-model ; KLUDGE
+               )
   :components ((:module "integration"
                 :components ((:module "perec"
                               :components ((:file "d-value")

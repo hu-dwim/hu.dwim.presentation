@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;; TODO map-* should have the visitor at first position?
 
@@ -22,7 +22,9 @@
 ;;;;;;
 ;;; Component localization
 
-(def localization-loader-callback wui-component-localization-loader :hu.dwim.wui "localization/component/" :log-discriminator "hu.dwim.wui.component")
+(def localization-loader-callback localization-loader/hu.dwim.presentation.component
+  :hu.dwim.presentation "localization/component/"
+  :log-discriminator "hu.dwim.presentation.component")
 
 ;;;;;;
 ;;; Component
@@ -61,19 +63,19 @@ Naming convention for non instantiatable components:
 <name>/component - abstract base class for similar kind of components, usually related to a mixin that adds an instance of this component in a slot. It usually has no superclasses, except other mixins, and usually there is only one abstract superclass of an instantiatable component.
 
 Naming convention for alternative presentations related to a lisp type, they are usually subclasses of the following components:
-<lisp-type>/<alternative>/maker     - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/MAKER'
-<lisp-type>/<alternative>/viewer    - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/VIEWER'
-<lisp-type>/<alternative>/editor    - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/EDITOR'
-<lisp-type>/<alternative>/inspector - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/INSPECTOR'
-<lisp-type>/<alternative>/filter    - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/FILTER'
-<lisp-type>/<alternative>/finder    - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/FINDER'
-<lisp-type>/<alternative>/selector  - subclasses of /CLASS/'HU.DWIM.WUI:COMPONENT/SELECTOR'
+<lisp-type>/<alternative>/maker     - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/MAKER'
+<lisp-type>/<alternative>/viewer    - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/VIEWER'
+<lisp-type>/<alternative>/editor    - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/EDITOR'
+<lisp-type>/<alternative>/inspector - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/INSPECTOR'
+<lisp-type>/<alternative>/filter    - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/FILTER'
+<lisp-type>/<alternative>/finder    - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/FINDER'
+<lisp-type>/<alternative>/selector  - subclasses of /CLASS/'HU.DWIM.PRESENTATION:COMPONENT/SELECTOR'
 
 Naming convention for some alternative components:
-<lisp-type>/reference/<presentation-kind> - subclasses of /CLASS/'HU.DWIM.WUI:T/REFERENCE/PRESENTATION'
-<lisp-type>/detail/<presentation-kind>    - subclasses of /CLASS/'HU.DWIM.WUI:T/DETAIL/PRESENTATION'
+<lisp-type>/reference/<presentation-kind> - subclasses of /CLASS/'HU.DWIM.PRESENTATION:T/REFERENCE/PRESENTATION'
+<lisp-type>/detail/<presentation-kind>    - subclasses of /CLASS/'HU.DWIM.PRESENTATION:T/DETAIL/PRESENTATION'
 
-Components are created by either using the component specific macros, one of the component specific factory functions or by calling generic factory functions such as /FUNCTION/COMMON-LISP:MAKE-INSTANCE, /FUNCTION/HU.DWIM.WUI:MAKE-MAKER, /FUNCTION/HU.DWIM.WUI:MAKE-VIEWER, /FUNCTION/HU.DWIM.WUI:MAKE-EDITOR, /FUNCTION/HU.DWIM.WUI:MAKE-INSPECTOR, /FUNCTION/HU.DWIM.WUI:MAKE-FILTER, /FUNCTION/HU.DWIM.WUI:MAKE-FINDER and /FUNCTION/HU.DWIM.WUI:MAKE-SELECTOR."))
+Components are created by either using the component specific macros, one of the component specific factory functions or by calling generic factory functions such as /FUNCTION/COMMON-LISP:MAKE-INSTANCE, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-MAKER, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-VIEWER, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-EDITOR, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-INSPECTOR, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-FILTER, /FUNCTION/HU.DWIM.PRESENTATION:MAKE-FINDER and /FUNCTION/HU.DWIM.PRESENTATION:MAKE-SELECTOR."))
 
 ;;;;;;
 ;;; standard/component

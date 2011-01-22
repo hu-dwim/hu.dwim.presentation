@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; Checkbox field
@@ -43,7 +43,7 @@
                       unchecked-image)
                  ;; TODO cleanup... <img> tags are not allowed without an alt, but this is pure confusion here...
                  <img>)>
-          `js-onload(wui.field.setup-custom-checkbox ,id ,checked-image ,unchecked-image ,checked-tooltip ,unchecked-tooltip ,checked-class ,unchecked-class))
+          `js-onload(hdp.field.setup-custom-checkbox ,id ,checked-image ,unchecked-image ,checked-tooltip ,unchecked-tooltip ,checked-class ,unchecked-class))
         (progn
           ;; TODO :accesskey (accesskey field)
           ;; :title (or (tooltip field) (if value
@@ -56,7 +56,7 @@
                   :type "checkbox"
                   :checked ,checked
                   ,(maybe-make-xml-attribute "onChange" on-change))>
-          `js-onload(wui.field.setup-simple-checkbox ,id ,checked-tooltip ,unchecked-tooltip))))
+          `js-onload(hdp.field.setup-simple-checkbox ,id ,checked-tooltip ,unchecked-tooltip))))
   (values))
 
 ;;;;;;
@@ -155,7 +155,6 @@
          value)
       ,(render-dojo-widget (menu-id)
         <div (:id ,menu-id
-              :class "wuiComboBox"
               :dojoType #.+dijit/menu+
               :leftClickToOpen "true"
               :style "display: none;"
@@ -167,5 +166,5 @@
                    <div (:id ,option-id
                          :dojoType #.+dijit/menu-item+
                          :iconClass ,class
-                         :onClick `js-inline(wui.field.update-popup-menu-select-field ,div-id ,field-id ,possible-value ,class))
+                         :onClick `js-inline(hdp.field.update-popup-menu-select-field ,div-id ,field-id ,possible-value ,class))
                      ,possible-value>))>)>))

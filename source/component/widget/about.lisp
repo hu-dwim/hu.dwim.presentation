@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; about/widget
@@ -38,7 +38,7 @@
 
 (def (function e) render-about/dwim ()
   (render-about/contributors "dwim" "Szoftver" "http://dwim.hu"
-                             "/static/wui/image/about/dwim-logo.png" "DWIM"
+                             "/static/hdp/image/about/dwim-logo.png" "DWIM"
                              (list "Lendvai Attila"
                                    "Mészáros Levente"
                                    "Borbély Tamás"
@@ -46,5 +46,5 @@
 
 (def (function e) render-about/thellminar ()
   (render-about/contributors "thellminar" "Grafika" "http://www.thellminar.hu"
-                             "/static/wui/image/about/thellminar-logo.png" "ThellMinar"
+                             "/static/hdp/image/about/thellminar-logo.png" "ThellMinar"
                              (list "Páka Tamás")))

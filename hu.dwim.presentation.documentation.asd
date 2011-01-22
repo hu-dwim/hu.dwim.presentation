@@ -8,9 +8,9 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui.documentation
+(defsystem :hu.dwim.presentation.documentation
   :class hu.dwim.documentation-system
-  :depends-on (:hu.dwim.wui.test)
+  :depends-on (:hu.dwim.presentation.test)
   :components ((:module "documentation"
                 :components ((:file "package")
-                             (:file "wui" :depends-on ("package"))))))
+                             (:file "main" :depends-on ("package"))))))

@@ -4,9 +4,11 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
-(def localization-loader-callback wui-perec-localization-loader :hu.dwim.wui "localization/integration/perec/" :log-discriminator "hu.dwim.wui+hu.dwim.perec")
+(def localization-loader-callback localization-loader/hu.dwim.presentation+hu.dwim.perec
+  :hu.dwim.presentation "localization/integration/perec/"
+  :log-discriminator "hu.dwim.presentation+hu.dwim.perec")
 
 (def method localized-instance-name ((instance hu.dwim.perec::persistent-object))
   (bind ((class (class-of instance)))

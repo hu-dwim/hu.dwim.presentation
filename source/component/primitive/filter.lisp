@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; primitive/filter
@@ -17,7 +17,7 @@
   (ensure-client-state-sink -self-))
 
 (def function make-update-use-in-filter-js (component)
-  `js-inline(wui.field.update-use-in-filter ,(use-in-filter-id-of component) #t))
+  `js-inline(hdp.field.update-use-in-filter ,(use-in-filter-id-of component) #t))
 
 ;;;;;;
 ;;; boolean/filter
@@ -36,9 +36,9 @@
     (if (eq (component-value-type-of -self-) 'boolean)
         (render-checkbox-field component-value
                                :name (client-state-sink-of -self-)
-                               :on-change `js-inline(wui.field.update-use-in-filter ,use-in-filter-id #t))
+                               :on-change `js-inline(hdp.field.update-use-in-filter ,use-in-filter-id #t))
         <select (:name ,(id-of (client-state-sink-of -self-))
-                 :onChange `js-inline(wui.field.update-use-in-filter ,use-in-filter-id #t))
+                 :onChange `js-inline(hdp.field.update-use-in-filter ,use-in-filter-id #t))
           ,(bind ((selected (when (and use-in-filter?
                                        (not has-component-value?))
                               "yes")))
@@ -68,7 +68,7 @@
 (def render-xhtml character/filter
   (bind ((widget-id (generate-unique-component-id "_stw")))
     (render-string-component -self- :id widget-id)
-    `js(wui.field.setup-string-filter ,widget-id ,(use-in-filter-id-of -self-))))
+    `js(hdp.field.setup-string-filter ,widget-id ,(use-in-filter-id-of -self-))))
 
 ;;;;;;
 ;;; string/filter
@@ -84,7 +84,7 @@
 (def render-xhtml string/filter
   (bind ((widget-id (generate-unique-component-id "_stw")))
     (render-string-component -self- :id widget-id)
-    `js(wui.field.setup-string-filter ,widget-id ,(use-in-filter-id-of -self-))))
+    `js(hdp.field.setup-string-filter ,widget-id ,(use-in-filter-id-of -self-))))
 
 ;;;;;;
 ;;; password/filter
@@ -147,7 +147,7 @@
 (def render-xhtml number/filter
   (bind ((widget-id (generate-unique-component-id "_stw")))
     (render-number-field-for-primitive-component -self- :id widget-id)
-    `js(wui.field.setup-number-filter ,widget-id ,(use-in-filter-id-of -self-))))
+    `js(hdp.field.setup-number-filter ,widget-id ,(use-in-filter-id-of -self-))))
 
 ;;;;;;
 ;;; integer/filter

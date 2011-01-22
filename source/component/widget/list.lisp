@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; list/widget
@@ -27,8 +27,8 @@
 (def render-xhtml list/widget
   (bind (((:read-only-slots id style-class custom-style orientation contents page-navigation-bar) -self-))
     <div (:id ,id :class `str("list widget " ,style-class) :style ,custom-style
-          :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-          :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+          :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+          :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
       ,(render-context-menu-for -self-)
       ,(render-list-layout orientation (make-page-navigation-contents page-navigation-bar contents))
       ,(render-page-navigation-bar-for -self-)

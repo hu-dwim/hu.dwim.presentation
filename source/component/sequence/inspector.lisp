@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; sequence/inspector
@@ -118,7 +118,7 @@
 (def (layered-function e) make-column-presentations (component class prototype value)
   (:method ((component sequence/columns/component) class prototype value)
     (append (optional-list (when-bind the-class (component-dispatch-class component)
-                             (when (closer-mop:class-direct-subclasses the-class)
+                             (when (class-direct-subclasses the-class)
                                (make-type-column-presentation component class prototype value))))
             (make-place-column-presentations component class prototype value))))
 

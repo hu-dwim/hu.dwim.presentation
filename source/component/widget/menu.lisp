@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; menu-bar/widget
@@ -86,7 +86,7 @@
     (render-action-js-event-handler "oncontextmenu" parent-id (make-action
                                                                 (setf (lazily-rendered-component? -self-) #f))
                                     :js (lambda (href)
-                                          `js(wui.io.lazy-context-menu-handler event connection ,href ,id ,parent-id))
+                                          `js(hdp.io.lazy-context-menu-handler event connection ,href ,id ,parent-id))
                                     :one-shot #t :stop-event #t)
     ;; another alternative, but left clicking anything will force the context menu to download, and i think :xhr-sync true is also missing...
     #+nil

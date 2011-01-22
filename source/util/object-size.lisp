@@ -1,4 +1,4 @@
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; Object size breakdown

@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; book/alternator/inspector
@@ -27,7 +27,7 @@
 (def (function e) make-book-menu-item (name)
   (menu-item/widget ()
       (replace-target-place/widget ()
-          (icon/widget book :label (hu.dwim.wui::title-of (find-book name)))
+          (icon/widget book :label (title-of (find-book name)))
         (make-value-viewer (find-book name)))))
 
 ;;;;;;
@@ -111,29 +111,29 @@
 (def (component e) book/tree-level/inspector (t/tree-level/inspector)
   ())
 
-(def layered-method make-path-presentation ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value list))
+(def layered-method make-path-presentation ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) (value list))
   (make-instance 't/tree-level/path/inspector :component-value value))
 
-(def layered-method make-content-presentation ((component t/tree-level/path/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method make-content-presentation ((component t/tree-level/path/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (make-instance 't/tree-level/reference/inspector :component-value value))
 
-(def layered-method make-previous-sibling-presentation ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) value)
+(def layered-method make-previous-sibling-presentation ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) value)
   (make-instance 't/tree-level/reference/inspector :component-value value))
 
-(def layered-method make-next-sibling-presentation ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) value)
+(def layered-method make-next-sibling-presentation ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) value)
   (make-instance 't/tree-level/reference/inspector :component-value value))
 
-(def layered-method make-descendants-presentation ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method make-descendants-presentation ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (make-instance 't/tree-level/tree/inspector :component-value value))
 
-(def layered-method make-node-presentation ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method make-node-presentation ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (make-instance 't/tree-level/reference/inspector :component-value value))
 
-(def layered-method collect-presented-children ((component book/tree-level/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method collect-presented-children ((component book/tree-level/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (collect-if (of-type 'title-mixin) (contents-of value)))
 
-(def layered-method collect-presented-children ((component t/node/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method collect-presented-children ((component t/node/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (collect-if (of-type 'title-mixin) (contents-of value)))
 
-(def layered-method make-reference-content ((component t/tree-level/reference/inspector) (class standard-class) (prototype hu.dwim.wui::title-mixin) (value hu.dwim.wui::title-mixin))
+(def layered-method make-reference-content ((component t/tree-level/reference/inspector) (class standard-class) (prototype title-mixin) (value title-mixin))
   (title-of value))

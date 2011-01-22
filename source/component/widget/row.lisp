@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; row/widget
@@ -34,8 +34,8 @@
       <tr (:id ,id :class `str("row " ,(table-row-style-class table row)
                                ,(when onclick-handler? " selectable")
                                ,(selectable-component-style-class row))
-           :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-           :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+           :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+           :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
         ,(render-table-row-cells table row)>
       (render-context-menu-for row)))
 
@@ -85,7 +85,7 @@
   (bind (((:read-only-slots id) -self-)
          (onclick-handler? (render-onclick-handler -self- :left)))
     <tr (:id ,id :class ,(when onclick-handler? "selectable")
-         :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-         :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+         :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+         :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
       <td (:colspan ,(length (columns-of *table*)))
         ,(render-content-for -self-)>>))

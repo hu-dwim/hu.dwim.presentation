@@ -94,7 +94,7 @@
                ;; applicable methods we can't shortcircuit them.
                ;; KLUDGE: specialization for component-class
                (or (every (lambda (x) (= (length x) 1)) setf-svuc-slots-methods)
-                   (typep class 'hu.dwim.wui::component-class))
+                   (typep class 'hu.dwim.presentation::component-class))
                (every (lambda (x) (= (length x) 1)) setf-svuc-slots-methods)
                (every (lambda (x) (= (length x) 1)) sbuc-slots-methods))
           (optimizing-generator ctor ii-methods si-methods)
@@ -122,8 +122,8 @@
            ;; KLUDGE: specialization for component-class
            ,@(loop
                 :for slot :in (class-slots class)
-                :when (typep slot 'hu.dwim.wui::component-effective-slot-definition)
-                :collect `(setf (hu.dwim.wui::parent-component-references (standard-instance-access .instance. ,(slot-definition-location slot))) .instance.))
+                :when (typep slot 'hu.dwim.presentation::component-effective-slot-definition)
+                :collect `(setf (hu.dwim.presentation::parent-component-references (standard-instance-access .instance. ,(slot-definition-location slot))) .instance.))
            .instance.)
         `(let* ((.instance. (,allocation-function ,wrapper))
                 (.slots. (,slots-fetcher .instance.)))

@@ -9,7 +9,7 @@
 ;; KLUDGE, TODO, FIXME, etc...
 ;; - (in-package :hu.dwim.util)
 ;; - numerous exported common symbols
-;; - it doesn't belong to wui, but it doesn't have a place yet
+;; - it doesn't belong here, but it doesn't have a place yet
 
 (def (class* e) curriculum-vitae ()
   ((subject :type person)
@@ -66,7 +66,7 @@
     :subject (make-instance 'person
                             :first-name "Levente" :last-name "Mészáros" :birth-date "1975-05-08"
                             :email-address "levente.meszaros@gmail.com" :mobile-phone "+36205413889" :skype-id "123456" :facebook-id "123456"
-                            :photo (system-relative-pathname :hu.dwim.wui "levente-mészáros"))
+                            :photo (system-relative-pathname :hu.dwim.presentation "levente-mészáros"))
     :educations (list (make-instance 'education
                                      :begin-date "1989" :end-date "1993"
                                      :school (make-instance 'school
@@ -101,7 +101,7 @@
                                              :name "C++"
                                              :level "Experienced")))
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; curriculum-vitae/detail/inspector

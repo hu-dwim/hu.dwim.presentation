@@ -8,9 +8,9 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui+hu.dwim.serializer
+(defsystem :hu.dwim.presentation+hu.dwim.serializer
   :class hu.dwim.system
-  :depends-on (:hu.dwim.serializer
-               :hu.dwim.wui)
+  :depends-on (:hu.dwim.presentation
+               :hu.dwim.serializer)
   :components ((:module "integration"
                 :components ((:file "serializer")))))

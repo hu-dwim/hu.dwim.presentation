@@ -4,7 +4,14 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
+
+(def constant +scroll-x-parameter-name+ "_sx")
+(def constant +scroll-y-parameter-name+ "_sy")
+(def constant +no-javascript-error-parameter-name+ "_njs")
+
+(def constant +page-failed-to-load-id+ "page-failed-to-load")
+(def constant +page-failed-to-load-grace-period-in-millisecs+ 10000)
 
 ;;;;;;
 ;;; frame/widget
@@ -13,10 +20,10 @@
   ((content-mime-type +xhtml-mime-type+)
    (stylesheet-uris nil)
    (script-uris (make-default-script-uris))
-   (page-icon-uri (make-page-icon-uri :hu.dwim.wui "static/wui/" "image/miscellaneous/favicon.ico"))
+   (page-icon-uri (make-page-icon-uri :hu.dwim.presentation "static/hdp/" "image/miscellaneous/favicon.ico"))
    (title nil)
    (dojo-skin-name *dojo-skin-name*)
-   (dojo-release-uri (parse-uri (string+ "static/wui/dojo/" *dojo-directory-name* "dojo/")))
+   (dojo-release-uri (parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* "dojo/")))
    (dojo-file-name *dojo-file-name*)
    (parse-dojo-widgets-on-load #f :type boolean)
    (debug-client-side :type boolean :writer (setf debug-client-side?))))
@@ -67,7 +74,8 @@
                                       (print-uri-to-string uri)))>))
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
-          ,(string+ "djConfig = { parseOnLoad: " (to-js-boolean (parse-dojo-widgets-on-load? -self-))
+          ,(string+ "djConfig = { baseUrl: 'static/hdws/libraries/" *dojo-directory-name* "dojo/'"
+                    ", parseOnLoad: " (to-js-boolean (parse-dojo-widgets-on-load? -self-))
                     ", isDebug: " (to-js-boolean debug-client-side?)
                     ;; TODO add separate flag for debugAtAllCosts
                     ", debugAtAllCosts: " (to-js-boolean debug-client-side?)
@@ -117,7 +125,7 @@
                       (return false))
                     (bind ((failed-page (document.getElementById ,+page-failed-to-load-id+)))
                       (setf failed-page.style.display "none")
-                      (setf document.wui-failed-to-load-timer (setTimeout (lambda ()
+                      (setf document.hdp-failed-to-load-timer (setTimeout (lambda ()
                                                                             ;; if things go wrong, at least have a timer that brings stuff back in the view
                                                                             (setf document.body.style.margin "0px")
                                                                             (dolist (child document.body.childNodes)
@@ -127,10 +135,10 @@
                                                                           ,+page-failed-to-load-grace-period-in-millisecs+)))
                     (on-load
                      ;; KLUDGE "content" cross reference is fragile...
-                     (wui.reset-scroll-position "content")
-                     (setf wui.session-id  ,(or (awhen *session* (id-of it)) ""))
-                     (setf wui.frame-id    ,(or (awhen *frame* (id-of it)) ""))
-                     (setf wui.frame-index ,(or (awhen *frame* (frame-index-of it)) "")))))
+                     (hdws.reset-scroll-position "content")
+                     (setf hdp.session-id  ,(or (awhen *session* (id-of it)) ""))
+                     (setf hdp.frame-id    ,(or (awhen *frame* (id-of it)) ""))
+                     (setf hdp.frame-index ,(or (awhen *frame* (frame-index-of it)) "")))))
         ;; NOTE: if javascript is turned on in the browser, then just reload without the marker parameter (this might be true after enabling it and pressing refresh)
         ,(unless javascript-supported?
            (bind ((href (print-uri-to-string (clone-request-uri :strip-query-parameters (list +no-javascript-error-parameter-name+)))))
@@ -154,7 +162,7 @@
               (render-content-for -self-)
              `js-onload(progn
                          (log.debug "Loaded successfully, clearing the failed to load timer and showing the page")
-                         (clearTimeout document.wui-failed-to-load-timer)
+                         (clearTimeout document.hdp-failed-to-load-timer)
                          (dojo.style document.body "margin" "0px")))>>>))
 
 (def method supports-debug-component-hierarchy? ((self frame/widget))
@@ -174,11 +182,14 @@
 
 (def (function e) make-default-script-uris ()
   (load-time-value
-   (list (list (parse-uri "/wui/js/wui.js")
-               (bind ((file (system-relative-pathname :hu.dwim.wui "source/js/wui.lisp")))
+   (list (list (parse-uri "/hdws/js/main.js")
+               (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.lisp")))
+                 (delay (file-write-date file))))
+         (list (parse-uri "/hdp/js/main.js")
+               (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.lisp")))
                  (delay (file-write-date file))))
          (list (parse-uri +js-i18n-broker/default-path+)
-               (delay *js-i18n-resource-registry/last-modified-at*))
+               (delay hu.dwim.web-server::*js-i18n-resource-registry/last-modified-at*))
          (list (parse-uri +js-component-hierarchy-serving-broker/default-path+)
                (delay *js-component-hierarchy-cache/last-modified-at*)))))
 
@@ -193,12 +204,12 @@
 
 (def (function e) make-default-stylesheet-uris ()
   (flet ((dojo-relative-path (path)
-           (parse-uri (string+ "static/wui/dojo/" *dojo-directory-name* path))))
+           (parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* path))))
     (append
      (mapcar #'dojo-relative-path
              '("dojo/resources/dojo.css"
                "dijit/themes/tundra/tundra.css"))
-     (%make-stylesheet-uris :hu.dwim.wui "static/wui/"
+     (%make-stylesheet-uris :hu.dwim.presentation "static/hdp/"
                             "css/wui.css"
                             "css/icon.css"
                             "css/border.css"

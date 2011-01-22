@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; Component action
@@ -105,6 +105,25 @@
     (make-byte-vector-response* body
                                 :headers (headers-of self)
                                 :cookies (cookies-of self))))
+
+;; KLUDGE FIXME: it's a redefine until further fixes...
+(def method produce-response/application ((application application) request)
+  (if *delayed-content-request*
+      (progn
+        (app.debug "This is a *DELAYED-CONTENT-REQUEST*, handling appropriately")
+        (with-session-logic (:requires-valid-session #t)
+          (with-frame-logic (:requires-valid-frame #t)
+            (with-action-logic ()
+              (make-component-rendering-response/from-current-frame)))))
+      (bind ((response (hu.dwim.web-server::query-brokers-for-response request (entry-points-of application) :otherwise nil)))
+        (when response
+          (unwind-protect
+               (progn
+                 (app.debug "Calling SEND-RESPONSE for ~A while still inside the dynamic extent of the PRODUCE-RESPONSE method of application" response)
+                 (hu.dwim.web-server::send-response response))
+            (close-response response))
+          ;; TODO why not unwinding from here instead of make-do-nothing-response?
+          (make-do-nothing-response)))))
 
 ;;;;;;
 ;;; Ajax aware render

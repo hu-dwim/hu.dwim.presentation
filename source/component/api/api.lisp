@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;; TODO: move some not so generic functions from this file to the place their methods are first defined
 ;;; TODO: there are three different uses of refresh-component

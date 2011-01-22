@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; element/widget
@@ -22,8 +22,8 @@
 (def render-xhtml element/widget
   (bind (((:read-only-slots id style-class custom-style) -self-))
     <div (:id ,id :class `str("element widget " ,style-class ,(selectable-component-style-class -self-)) :style ,custom-style
-          :onmouseover `js-inline(wui.highlight-mouse-enter-handler event ,id)
-          :onmouseout `js-inline(wui.highlight-mouse-leave-handler event ,id))
+          :onmouseover `js-inline(hdp.highlight-mouse-enter-handler event ,id)
+          :onmouseout `js-inline(hdp.highlight-mouse-leave-handler event ,id))
       ,(render-context-menu-for -self-)
       ,(render-content-for -self-)>
     (when-bind select-command (find-command -self- 'select-component)

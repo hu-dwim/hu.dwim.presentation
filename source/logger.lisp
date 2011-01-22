@@ -4,21 +4,9 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
-(def logger wui ())
+(def logger log ())
 
-(def logger rerl (wui))
-(def logger threads (wui))
-(def logger timer (wui))
-(def logger component (wui))
+(def logger component (log))
 (def logger incremental (component))
-
-(def logger http (rerl))
-(def logger app (rerl))
-(def logger server (rerl))
-
-(def logger cgi (server))
-(def logger files (server))
-
-(def logger l10n (app))

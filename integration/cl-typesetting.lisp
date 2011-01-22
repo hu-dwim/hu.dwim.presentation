@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;
 ;;; Font loading
@@ -28,12 +28,12 @@
    (namestring (merge-pathnames (make-pathname :type "pfb") font-path))))
 
 (def function load-fonts ()
-  (let ((font-directory (system-relative-pathname :hu.dwim.wui "font/")))
+  (let ((font-directory (system-relative-pathname :hu.dwim.presentation "font/")))
     (dolist (ttf-font-path (get-font-path-list font-directory "ttf" "ufm"))
-      (wui.info "Loading truetype unicode font ~A." ttf-font-path)
+      (log.info "Loading truetype unicode font ~A." ttf-font-path)
       (load-truetype-unicode-font ttf-font-path))
     (dolist (t1-font-path (get-font-path-list font-directory "pfb" "afm"))
-      (wui.info "Loading type1 font ~A." t1-font-path)
+      (log.info "Loading type1 font ~A." t1-font-path)
       (load-type1-font t1-font-path))))
 
 (load-fonts)
@@ -76,7 +76,7 @@
                 (when (typep component-value 'title-mixin)
                   (typeset:put-string (title-of component-value)))
                 :hfill
-                (typeset:put-string (hu.dwim.wui::localized-timestamp (local-time:now))))
+                (typeset:put-string (localized-timestamp (local-time:now))))
               (typeset:hrule :dy 1/2))))))))
 
 (def layered-function render-pdf-footer (component)
@@ -441,7 +441,7 @@
       (when box
         (setf (compiled-content-of vertex) box))
       ;; store sizes in dpi
-      (wui.debug "Precalculated vertex size for ~A is (~A, ~A)" vertex width height)
+      (log.debug "Precalculated vertex size for ~A is (~A, ~A)" vertex width height)
       (setf (getf (cl-graph:dot-attributes vertex) :width) (/ (+ (* 2 *vertex-inset*) width) *dpi*))
       (setf (getf (cl-graph:dot-attributes vertex) :height) (/ (+ (* 2 *vertex-inset*) height) *dpi*)))))
 

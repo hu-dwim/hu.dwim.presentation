@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; project/alternator/inspector
@@ -27,8 +27,8 @@
   ())
 
 (def layered-method refresh-component :before ((self project/detail/inspector))
-  (bind (((:slots hu.dwim.wui::tab-pages component-value) self))
-    (setf hu.dwim.wui::tab-pages (make-project-tab-pages self component-value))))
+  (bind (((:slots tab-pages component-value) self))
+    (setf tab-pages (make-project-tab-pages self component-value))))
 
 (def (generic e) make-project-tab-pages (component project)
   (:method ((component project/detail/inspector) (project project))

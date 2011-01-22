@@ -6,7 +6,7 @@
 
 (in-package :hu.dwim.def)
 
-(def package :hu.dwim.wui
+(def package :hu.dwim.presentation
   (:use :babel
         :babel-streams
         :bordeaux-threads
@@ -25,16 +25,21 @@
         :hu.dwim.quasi-quote.xml
         :hu.dwim.syntax-sugar
         :hu.dwim.util
+        :hu.dwim.web-server
+        :hu.dwim.web-server.semi-public
         :trivial-garbage)
 
   (:shadow #:class-prototype
            #:class-slots
            #:class-precedence-list
-           #:|defun|
-           #:build-error-log-message)
+           #:log)
+
+  (:shadowing-import-from :hu.dwim.syntax-sugar
+                          #:define-syntax)
+
+  (:shadowing-import-from :hu.dwim.web-server
+                          #:|defun|)
 
   (:shadowing-import-from :trivial-garbage
                           #:make-hash-table)
-
-  (:shadowing-import-from :hu.dwim.syntax-sugar
-                          #:define-syntax))
+  (:readtable-setup (setup-readtable/same-as-package :hu.dwim.web-server)))

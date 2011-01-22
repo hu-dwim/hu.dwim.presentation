@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; Debug menu
@@ -37,7 +37,7 @@
     (menu-item/widget ()
         "Debug"
       (menu-item/widget ()
-          (command/widget (:js (lambda () `js(wui.reload-css)))
+          (command/widget (:js (lambda () `js(hdws.reload-css)))
             "Reload CSS"))
       (menu-item/widget ()
           "Invalidate"

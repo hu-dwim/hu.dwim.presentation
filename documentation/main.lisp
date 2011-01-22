@@ -4,20 +4,20 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui.documentation)
+(in-package :hu.dwim.presentation.documentation)
 
-(def project :hu.dwim.wui)
+(def project :hu.dwim.presentation)
 
-(def method make-project-tab-pages ((component project/detail/inspector) (project (eql (find-project :hu.dwim.wui))))
+(def method make-project-tab-pages ((component project/detail/inspector) (project (eql (find-project :hu.dwim.presentation))))
   (append (call-next-method)
           (list (tab-page/widget (:selector (icon/widget switch-to-tab-page :label "Demo"))
-                  (hu.dwim.wui.test:make-component-demo-content))
+                  (hu.dwim.presentation.test:make-component-demo-content))
                 (tab-page/widget (:selector (icon/widget switch-to-tab-page :label "User guide"))
                   (make-value-inspector (find-book 'user-guide))))))
 
 (def book user-guide (:title "User guide")
   (chapter (:title "Introduction")
-    (chapter (:title "What is hu.dwim.wui?")
+    (chapter (:title "What is hu.dwim.presentation?")
       (paragraph ()
         "It is a scalable pure lisp-from-the-socket web server."))
     (chapter (:title "Why not something else?")
@@ -135,13 +135,13 @@
 
 An all-lisp web server, based on iolib.
 
-(test-system :hu.dwim.wui)
+(test-system :hu.dwim.presentation)
 
 (start-test-server-with-wudemo-application)
 
 http://localhost.localdomain:8080/
 
-(setf hu.dwim.wui::*debug-on-error* t)
+(setf hu.dwim.util:*debug-on-error* t)
 
 2. DOJO
 -------
@@ -150,5 +150,5 @@ You need to build dojo for WUI to work:
 
 svn checkout -r 18738 http://svn.dojotoolkit.org/src/trunk/ dojo/
 svn update -r 18738
-$DWIM_WORKSPACE/wui/etc/build-dojo.sh --dojo $DWIM_WORKSPACE/dojo --dojo-release-dir $DWIM_WORKSPACE/wui/wwwroot/ --profile $DWIM_WORKSPACE/wui/etc/wui.profile.js --locales "en-us,hu"
+out of date! $DWIM_WORKSPACE/wui/etc/build-dojo.sh --dojo $DWIM_WORKSPACE/dojo --dojo-release-dir $DWIM_WORKSPACE/wui/wwwroot/ --profile $DWIM_WORKSPACE/wui/etc/wui.profile.js --locales "en-us,hu"
 |#

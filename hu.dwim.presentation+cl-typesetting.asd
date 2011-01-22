@@ -8,9 +8,9 @@
 
 (in-package :hu.dwim.asdf)
 
-(defsystem :hu.dwim.wui+cl-typesetting
+(defsystem :hu.dwim.presentation+cl-typesetting
   :class hu.dwim.system
   :depends-on (:cl-typesetting
-               :hu.dwim.wui)
+               :hu.dwim.presentation)
   :components ((:module "integration"
                 :components ((:file "cl-typesetting")))))

@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; Kludges
@@ -109,20 +109,20 @@
 
 (in-package :hu.dwim.perec)
 
-(def persistent-type hu.dwim.wui::html-text (&optional maximum-length)
+(def persistent-type hu.dwim.presentation::html-text (&optional maximum-length)
   "Formatted text that may contain various fonts, styles and colors as in XHTML."
   (declare (ignore maximum-length))
   `(and text
-        (satisfies hu.dwim.wui::html-text?)))
+        (satisfies hu.dwim.presentation::html-text?)))
 
-(defmapping hu.dwim.wui::html-text (if (consp normalized-type)
-                                       (sql-character-varying-type :size (maximum-length-of (parse-type normalized-type)))
-                                       (sql-character-varying-type))
+(defmapping hu.dwim.presentation::html-text (if (consp normalized-type)
+                                                (sql-character-varying-type :size (maximum-length-of (parse-type normalized-type)))
+                                                (sql-character-varying-type))
   ;; TODO do some sanity check for maximum-length when provided
   'identity-reader
   'identity-writer)
 
-(pushnew 'hu.dwim.wui::html-text hu.dwim.perec::*canonical-types*)
+(pushnew 'hu.dwim.presentation::html-text hu.dwim.perec::*canonical-types*)
 
 ;; TODO: KLUDGE: bruhuhu, should kill this stupid type mapping in hu.dwim.perec and use the one from hu.dwim.util
-(pushnew 'hu.dwim.wui::html-text hu.dwim.perec::*mapped-type-precedence-list*)
+(pushnew 'hu.dwim.presentation::html-text hu.dwim.perec::*mapped-type-precedence-list*)

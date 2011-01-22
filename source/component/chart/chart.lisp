@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; component/chart
@@ -31,7 +31,7 @@
 
 (def function render-chart (component kind)
   ;; TODO: move this to frame or something higher?
-  (bind ((path (string+ "/static/wui/amCharts/" kind "/")))
+  (bind ((path (string+ "/static/hdp/amCharts/" kind "/")))
     <script (:type "text/javascript" :src ,(string+ path "swfobject.js")) "">
     (bind ((id (generate-unique-component-id))
            (data-provider (data-provider-of component)))

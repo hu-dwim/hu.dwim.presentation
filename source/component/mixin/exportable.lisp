@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui)
+(in-package :hu.dwim.presentation)
 
 ;;;;;;
 ;;; exportable/component
@@ -104,7 +104,7 @@
                     office:version "1.2"
                     office:mimetype ,mime-type)
     <office:meta
-      <meta:generator "http://dwim.hu/project/hu.dwim.wui">
+      <meta:generator "http://dwim.hu/project/hu.dwim.presentation">
       <meta:creation-date ()
         ,(local-time:format-rfc3339-timestring nil (local-time:now))>>
     <office:font-face-decls
