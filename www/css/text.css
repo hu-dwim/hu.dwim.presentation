@@ -3,7 +3,7 @@
  */
 
 .text.inspector > .separator {
-  background: url('/static/wui/image/miscellaneous/separator.png') repeat-x;
+  background: url('/static/hdp/image/miscellaneous/separator.png') repeat-x;
 }
 
 .book.text.inspector > .title {

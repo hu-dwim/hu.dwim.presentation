@@ -18,57 +18,57 @@
 /* component */
 
 .navigate-back.icon {
-  background-image: url("/static/wui/icon/24x24/page-backward.png");
+  background-image: url("/static/hdp/icon/24x24/page-backward.png");
 }
 
 /* refreshable */
 
 .refresh-component.icon {
-  background-image: url("/static/wui/icon/20x20/ying-yang-arrows.png");
+  background-image: url("/static/hdp/icon/20x20/ying-yang-arrows.png");
 }
 
 /* hideable */
 
 .hide-component.icon {
-  background-image: url("/static/wui/icon/20x20/eye.png");
+  background-image: url("/static/hdp/icon/20x20/eye.png");
 }
 
 /* hideable */
 
 .show-component.icon {
-  background-image: url("/static/wui/icon/20x20/eye.png");
+  background-image: url("/static/hdp/icon/20x20/eye.png");
 }
 
 /* closable */
 
 .close-component.icon {
-  background-image: url("/static/wui/icon/20x20/red-x.png");
+  background-image: url("/static/hdp/icon/20x20/red-x.png");
 }
 
 /* cloneable */
 
 .focus-in.icon {
-  background-image: url("/static/wui/icon/20x20/blue-all-direction-arrows.png");
+  background-image: url("/static/hdp/icon/20x20/blue-all-direction-arrows.png");
 }
 
 .focus-out.icon {
-  background-image: url("/static/wui/icon/20x20/green-double-left-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/green-double-left-arrow.png");
 }
 
 .open-in-new-frame.icon {
-  background-image: url("/static/wui/icon/20x20/split-vertically.png");
+  background-image: url("/static/hdp/icon/20x20/split-vertically.png");
 }
 
 /* collapsible */
 
 .expand-component.icon {
-  background-image: url("/static/wui/icon/20x20/arrowhead-right.png");
+  background-image: url("/static/hdp/icon/20x20/arrowhead-right.png");
   width: 14px;
   padding-left: 14px;
 }
 
 .collapse-component.icon {
-  background-image: url("/static/wui/icon/20x20/arrowhead-down.png");
+  background-image: url("/static/hdp/icon/20x20/arrowhead-down.png");
   width: 14px;
   padding-left: 14px;
 }
@@ -76,71 +76,71 @@
 /* selectable */
 
 .select-component.icon {
-  background-image: url("/static/wui/icon/20x20/checkmark.png");
+  background-image: url("/static/hdp/icon/20x20/checkmark.png");
 }
 
 /* editable */
 
 .begin-editing.icon {
-  background-image: url("/static/wui/icon/20x20/pen-on-document.png");
+  background-image: url("/static/hdp/icon/20x20/pen-on-document.png");
 }
 
 .save-editing.icon {
-  background-image: url("/static/wui/icon/20x20/disc-on-document.png");
+  background-image: url("/static/hdp/icon/20x20/disc-on-document.png");
 }
 
 .cancel-editing.icon {
-  background-image: url("/static/wui/icon/20x20/yellow-x.png");
+  background-image: url("/static/hdp/icon/20x20/yellow-x.png");
 }
 
 .store-editing.icon {
-  background-image: url("/static/wui/icon/20x20/disc-on-document.png");
+  background-image: url("/static/hdp/icon/20x20/disc-on-document.png");
 }
 
 .revert-editing.icon {
-  background-image: url("/static/wui/icon/20x20/yellow-x.png");
+  background-image: url("/static/hdp/icon/20x20/yellow-x.png");
 }
 
 /* exportable */
 
 .export-text.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 .export-csv.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 .export-pdf.icon {
-  background-image: url("/static/wui/icon/20x20/pdf-document.png");
+  background-image: url("/static/hdp/icon/20x20/pdf-document.png");
 }
 
 .export-odt.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 .export-ods.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 .export-sh.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 /* menu */
 
 .show-submenu.icon {
-  background-image: url("/static/wui/icon/20x20/open-folder.png");
+  background-image: url("/static/hdp/icon/20x20/open-folder.png");
 }
 
 .show-context-menu.icon {
-  background-image: url("/static/wui/icon/20x20/green-star.png");
+  background-image: url("/static/hdp/icon/20x20/green-star.png");
 }
 
 /* external-link */
 
 .external-link.icon {
-  background-image: url("/static/wui/icon/10x10/arrow-out.png");
+  background-image: url("/static/hdp/icon/10x10/arrow-out.png");
   width: 10px;
   padding-left: 10px;
   margin-left: 3px;
@@ -149,97 +149,97 @@
 /* alternator */
 
 .switch-to-alternative.icon {
-  background-image: url("/static/wui/icon/20x20/eye.png");
+  background-image: url("/static/hdp/icon/20x20/eye.png");
 }
 
 /* tab page */
 
 .switch-to-tab-page.icon {
-  background-image: url("/static/wui/icon/20x20/eye.png");
+  background-image: url("/static/hdp/icon/20x20/eye.png");
 }
 
 /* page navigation */
 
 .go-to-first-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-first.png");
+  background-image: url("/static/hdp/icon/24x24/page-first.png");
 }
 
 .disabled .go-to-first-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-first-disabled.png");
+  background-image: url("/static/hdp/icon/24x24/page-first-disabled.png");
 }
 
 .go-to-previous-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-previous.png");
+  background-image: url("/static/hdp/icon/24x24/page-previous.png");
 }
 
 .disabled .go-to-previous-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-previous-disabled.png");
+  background-image: url("/static/hdp/icon/24x24/page-previous-disabled.png");
 }
 
 .go-to-next-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-next.png");
+  background-image: url("/static/hdp/icon/24x24/page-next.png");
 }
 
 .disabled .go-to-next-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-next-disabled.png");
+  background-image: url("/static/hdp/icon/24x24/page-next-disabled.png");
 }
 
 .go-to-last-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-last.png");
+  background-image: url("/static/hdp/icon/24x24/page-last.png");
 }
 
 .disabled .go-to-last-page.icon {
-  background-image: url("/static/wui/icon/24x24/page-last-disabled.png");
+  background-image: url("/static/hdp/icon/24x24/page-last-disabled.png");
 }
 
 /* list */
 
 .move-up.icon {
-  background-image: url("/static/wui/icon/20x20/up-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/up-arrow.png");
 }
 
 .move-down.icon {
-  background-image: url("/static/wui/icon/20x20/down-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/down-arrow.png");
 }
 
 .move-left.icon {
-  background-image: url("/static/wui/icon/20x20/left-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/left-arrow.png");
 }
 
 .move-right.icon {
-  background-image: url("/static/wui/icon/20x20/right-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/right-arrow.png");
 }
 
 /* pivot */
 
 .rotate-clockwise.icon {
-  background-image: url("/static/wui/icon/20x20/clockwise-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/clockwise-arrow.png");
 }
 
 .rotate-counter-clockwise.icon {
-  background-image: url("/static/wui/icon/20x20/counter-clockwise-arrow.png");
+  background-image: url("/static/hdp/icon/20x20/counter-clockwise-arrow.png");
 }
 
 /* file */
 
 .download-file.icon {
-  background-image: url("/static/wui/icon/20x20/file-download.png");
+  background-image: url("/static/hdp/icon/20x20/file-download.png");
 }
 
 .upload-file.icon {
-  background-image: url("/static/wui/icon/20x20/file-upload.png");
+  background-image: url("/static/hdp/icon/20x20/file-upload.png");
 }
 
 /* maker */
 
 .make-new-instance.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 /* filter */
 
 .execute-filter.icon {
-  background-image: url("/static/wui/icon/24x24/search.png");
+  background-image: url("/static/hdp/icon/24x24/search.png");
 }
 
 .predicate.icon {
@@ -254,21 +254,21 @@
 }
 
 .use.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/use-in-filter.png");
+  background-image: url("/static/hdp/icon/17x17/use-in-filter.png");
 }
 
 .ignore.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/ignore-in-filter.png");
+  background-image: url("/static/hdp/icon/17x17/ignore-in-filter.png");
   opacity: 0.5;
 }
 
 .negated.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/negated-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/negated-predicate.png");
   width: 29px;
 }
 
 .ponated.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/ponated-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/ponated-predicate.png");
   width: 29px;
   opacity: 0.5;
 }
@@ -276,75 +276,75 @@
 /* predicate */
 
 .equal.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/equal-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/equal-predicate.png");
 }
 
 .like.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/like-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/like-predicate.png");
 }
 
 .less-than.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/less-than-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/less-than-predicate.png");
 }
 
 .less-than-or-equal.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/less-than-or-equal-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/less-than-or-equal-predicate.png");
 }
 
 .greater-than.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/greater-than-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/greater-than-predicate.png");
 }
 
 .greater-than-or-equal.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/greater-than-or-equal-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/greater-than-or-equal-predicate.png");
 }
 
 .every.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/every-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/every-predicate.png");
 }
 
 .some.predicate.icon {
-  background-image: url("/static/wui/icon/17x17/some-predicate.png");
+  background-image: url("/static/hdp/icon/17x17/some-predicate.png");
 }
 
 /* form */
 
 .evaluate-form.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-play.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-play.png");
 }
 
 /* process */
 
 .start-process.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-play.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-play.png");
 }
 
 .continue-process.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-play.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-play.png");
 }
 
 .cancel-process.icon {
-  background-image: url("/static/wui/icon/20x20/red-x.png");
+  background-image: url("/static/hdp/icon/20x20/red-x.png");
 }
 
 .pause-process.icon {
-  background-image: url("/static/wui/icon/20x20/stop-sign.png");
+  background-image: url("/static/hdp/icon/20x20/stop-sign.png");
 }
 
 .answer-component.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-forward.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-forward.png");
 }
 /* reference */
 
 .expand-from-reference.icon {
-  background-image: url("/static/wui/icon/14x14/expand-reference.png");
+  background-image: url("/static/hdp/icon/14x14/expand-reference.png");
   width: 14px;
   padding-left: 14px;
   white-space: normal;
 }
 
 .collapse-to-reference.icon {
-  background-image: url("/static/wui/icon/20x20/arrowhead-down.png");
+  background-image: url("/static/hdp/icon/20x20/arrowhead-down.png");
   width: 14px;
   padding-left: 14px;
 }
@@ -352,47 +352,47 @@
 /* authentication */
 
 .login.icon {
-  background-image: url("/static/wui/icon/24x24/login.png");
+  background-image: url("/static/hdp/icon/24x24/login.png");
 }
 
 .logout.icon {
-  background-image: url("/static/wui/icon/24x24/logout.png");
+  background-image: url("/static/hdp/icon/24x24/logout.png");
 }
 
 /* impersonalization */
 
 .impersonalize.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-play-with-people.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-play-with-people.png");
 }
 
 .cancel-impersonalization.icon {
-  background-image: url("/static/wui/icon/20x20/vcr-backward-with-people.png");
+  background-image: url("/static/hdp/icon/20x20/vcr-backward-with-people.png");
 }
 
 /* password */
 
 .change-password.icon {
-  background-image: url("/static/wui/icon/20x20/green-checkmark.png");
+  background-image: url("/static/hdp/icon/20x20/green-checkmark.png");
 }
 
 .generate-new-password.icon {
-  background-image: url("/static/wui/icon/20x20/pen-on-document.png");
+  background-image: url("/static/hdp/icon/20x20/pen-on-document.png");
 }
 
 /* book */
 
 .book.icon {
-  background-image: url("/static/wui/icon/20x20/document.png");
+  background-image: url("/static/hdp/icon/20x20/document.png");
 }
 
 /* diagram */
 
 .diagram.icon {
-  background-image: url("/static/wui/icon/20x20/eye.png");
+  background-image: url("/static/hdp/icon/20x20/eye.png");
 }
 
 /* help */
 
 .context-sensitive-help.icon {
-  background-image: url("/static/wui/icon/20x20/magnifier.png");
+  background-image: url("/static/hdp/icon/20x20/magnifier.png");
 }
