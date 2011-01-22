@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui.test)
+(in-package :hu.dwim.presentation.test)
 
 ;;;;;;
 ;;; Test
@@ -21,7 +21,7 @@
   (test/human-readable/invariant :class "/CLASS")
   (test/human-readable/invariant :function "/FUNCTION")
   (test/human-readable/invariant (find-class 'class) "/CLASS/COMMON-LISP:CLASS")
-  (test/human-readable/invariant (find-slot 'server 'handler) "/CLASS/HU.DWIM.WUI:SERVER/EFFECTIVE-SLOT/HU.DWIM.WUI::HANDLER")
+  (test/human-readable/invariant (find-slot 'server 'handler) "/CLASS/HU.DWIM.WEB-SERVER:SERVER/EFFECTIVE-SLOT/HU.DWIM.WEB-SERVER::HANDLER")
   (test/human-readable/invariant (fdefinition 'list) "/FUNCTION/COMMON-LISP:LIST")
-  (test/human-readable/invariant (def project test-project :path (system-directory :hu.dwim.wui)) "/PROJECT/HU.DWIM.WUI.TEST::TEST-PROJECT")
-  (test/human-readable/invariant (def book test-book ()) "/BOOK/HU.DWIM.WUI.TEST::TEST-BOOK"))
+  (test/human-readable/invariant (def project test-project :path (system-directory :hu.dwim.presentation)) "/PROJECT/HU.DWIM.PRESENTATION.TEST::TEST-PROJECT")
+  (test/human-readable/invariant (def book test-book ()) "/BOOK/HU.DWIM.PRESENTATION.TEST::TEST-BOOK"))

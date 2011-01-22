@@ -6,7 +6,7 @@
 
 (in-package :hu.dwim.def)
 
-(def package :hu.dwim.wui.test
+(def package :hu.dwim.presentation.test
   (:use :babel
         :babel-streams
         :cl-l10n
@@ -14,13 +14,14 @@
         :hu.dwim.common
         :hu.dwim.def
         :hu.dwim.logger
+        :hu.dwim.presentation
         :hu.dwim.quasi-quote
         :hu.dwim.quasi-quote.js
         :hu.dwim.quasi-quote.xml
         :hu.dwim.stefil
         :hu.dwim.syntax-sugar
         :hu.dwim.util
-        :hu.dwim.wui
+        :hu.dwim.web-server
         :iolib)
 
   (:shadowing-import-from :hu.dwim.syntax-sugar
@@ -32,16 +33,10 @@
            #:uri)
 
   (:readtable-setup
-   (hu.dwim.wui::setup-readtable)
+   (hu.dwim.web-server::setup-readtable)
    (hu.dwim.syntax-sugar:enable-string-quote-syntax)))
 
-(in-package :hu.dwim.wui.test)
+(in-package :hu.dwim.presentation.test)
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  ;; import all the internal symbol of WUI
-  (bind ((wui-package (find-package :hu.dwim.wui))
-         (wui.test-package (find-package :hu.dwim.wui.test)))
-    (iter (for symbol :in-package wui-package :external-only nil)
-          (when (and (eq (symbol-package symbol) wui-package)
-                     (not (find-symbol (symbol-name symbol) wui.test-package)))
-            (import symbol)))))
+(import-all-owned-symbols :hu.dwim.presentation :hu.dwim.presentation.test)
+(import-all-owned-symbols :hu.dwim.web-server.test :hu.dwim.presentation.test)

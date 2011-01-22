@@ -4,7 +4,7 @@
 ;;;
 ;;; See LICENCE for details.
 
-(in-package :hu.dwim.wui.test)
+(in-package :hu.dwim.presentation.test)
 
 ;;;;;;
 ;;; This is a simple example application with various components
@@ -12,7 +12,7 @@
 (def class component-demo-application (standard-application)
   ()
   (:default-initargs
-   :home-package (find-package :hu.dwim.wui.test)
+   :home-package (find-package :hu.dwim.presentation.test)
    :default-locale "en"))
 
 (def special-variable *component-demo-application* (make-instance 'component-demo-application))
@@ -21,20 +21,20 @@
 ;;; Entry point
 
 (def method make-frame-root-component-using-application ((application component-demo-application) session frame content)
-  (frame/widget (:title "hu.dwim.wui component demo"
-                 :stylesheet-uris (make-stylesheet-uris :hu.dwim.wui "static/" "css/test.css"))
+  (frame/widget (:title "hu.dwim.presentation component demo"
+                 :stylesheet-uris (make-stylesheet-uris :hu.dwim.presentation "static/" "css/test.css"))
     (top/widget (:menu-bar (menu-bar/widget ()
                              (make-debug-menu)))
       (make-component-demo-content content))))
 
-(def file-serving-entry-point *component-demo-application* "static/" (system-relative-pathname :hu.dwim.wui "www/"))
+(def file-serving-entry-point *component-demo-application* "static/" (system-relative-pathname :hu.dwim.presentation "www/"))
 
 (def entry-point (*component-demo-application* :path "")
   (with-entry-point-logic (:ensure-session #t :ensure-frame #t)
     (make-frame-root-component-rendering-response)))
 
-(def function startup-test-server-with-component-demo-application (&key (maximum-worker-count 16) (log-level +debug+) (host *test-host*) (port *test-port*))
-  (setf (log-level 'wui) log-level)
+(def function startup-test-server/with-component-demo-application (&key (maximum-worker-count 16) (log-level +debug+) (host *test-host*) (port *test-port*))
+  (setf (log-level 'log) log-level)
   (startup-test-server-with-brokers (list* *component-demo-application*
                                            (make-redirect-broker "" "/")
                                            (make-default-broker-list))
@@ -319,7 +319,7 @@
           (icon/widget refresh-component)
           (make-action))))
     (component-demo/widget "File download"
-      (download-file/widget :file-name (system-relative-pathname :hu.dwim.wui "test/component.lisp")))
+      (download-file/widget :file-name (system-relative-pathname :hu.dwim.presentation "test/component.lisp")))
     (component-demo/widget "File upload"
       (upload-file/widget))
     (component-demo/widget "List"
@@ -564,7 +564,7 @@
        ;; TODO: what is this type supposed to be? a slot type for a download/upload widget...
        #+nil
        (component-demo/widget "File"
-         ,(make 'file (system-relative-pathname :hu.dwim.wui "test/component.lisp"))))))
+         ,(make 'file (system-relative-pathname :hu.dwim.presentation "test/component.lisp"))))))
 
 (def function make-primitive-maker-node ()
   (make-primitive-presentation-node "Maker" make-maker primitive/maker))
@@ -623,7 +623,7 @@
        (component-demo/widget "Sequence element"
          ,(make '(make-sequence-element-place *person-name* 0)))
        (component-demo/widget "Instance slot"
-         ,(make '(make-object-slot-place (make-instance 'action :id "George") 'hu.dwim.wui::id))))))
+         ,(make '(make-object-slot-place (make-instance 'action :id "George") 'id))))))
 
 (def function make-place-maker-node ()
   (make-place-presentation-node "Maker" make-maker place/maker))
@@ -837,19 +837,19 @@
         (content/widget ()
           "Various specialized components for source related things."))
     (component-demo/widget "System"
-      (make-value-inspector (asdf:find-system :hu.dwim.wui)))
+      (make-value-inspector (asdf:find-system :hu.dwim.presentation)))
     (component-demo/widget "Module"
-      (make-value-inspector (reduce 'asdf:find-component (list "source" "component") :initial-value (asdf:find-system :hu.dwim.wui.component))))
+      (make-value-inspector (reduce 'asdf:find-component (list "source" "component") :initial-value (asdf:find-system :hu.dwim.presentation.component))))
     (component-demo/widget "Source file"
-      (make-value-inspector (system-relative-pathname :hu.dwim.wui.component "source/component/api/api.lisp")))
+      (make-value-inspector (system-relative-pathname :hu.dwim.presentation.component "source/component/api/api.lisp")))
     (component-demo/widget "Text file"
-      (make-value-inspector (asdf:system-relative-pathname :hu.dwim.wui "LICENCE")))
+      (make-value-inspector (asdf:system-relative-pathname :hu.dwim.presentation "LICENCE")))
     (component-demo/widget "Binary file"
-      (make-value-inspector (asdf:system-relative-pathname :hu.dwim.wui "www/icon/10x10/arrow-out.png")))
+      (make-value-inspector (asdf:system-relative-pathname :hu.dwim.presentation "www/icon/10x10/arrow-out.png")))
     (component-demo/widget "Pathname"
-      (make-value-inspector (system-relative-pathname :hu.dwim.wui.component "")))
+      (make-value-inspector (system-relative-pathname :hu.dwim.presentation.component "")))
     (component-demo/widget "Package"
-      (make-value-inspector (find-package :hu.dwim.wui)))
+      (make-value-inspector (find-package :hu.dwim.presentation)))
     (component-demo/widget "Dictionary"
       (make-value-inspector (make-instance 'dictionary
                                            :name 'editing
@@ -1047,14 +1047,14 @@
                                       "Bar")))
         (row/widget ()
           (cell/widget ()
-            (make-instance 'place/value/inspector :component-value (make-object-slot-place *request* 'hu.dwim.wui::http-method)))
+            (make-instance 'place/value/inspector :component-value (make-object-slot-place *request* 'hu.dwim.web-server::http-method)))
           (cell/widget ()
-            (make-instance 'place/value/inspector :component-value (make-object-slot-place *application* 'hu.dwim.wui::session-timeout))))
+            (make-instance 'place/value/inspector :component-value (make-object-slot-place *application* 'hu.dwim.web-server::session-timeout))))
         (row/widget ()
           (cell/widget ()
-            (make-instance 'place/value/inspector :component-value (make-object-slot-place *frame* 'hu.dwim.wui::action-id->action)))
+            (make-instance 'place/value/inspector :component-value (make-object-slot-place *frame* 'hu.dwim.web-server::action-id->action)))
           (cell/widget ()
-            (make-instance 'place/value/inspector :component-value (make-object-slot-place *server* 'hu.dwim.wui::started-at))))))
+            (make-instance 'place/value/inspector :component-value (make-object-slot-place *server* 'hu.dwim.web-server::started-at))))))
     (component-demo/widget "Filter"
       "TODO")))
 
@@ -1065,7 +1065,7 @@
   (bind ((content (content/widget ()
                     (or initial-content-component
                         (empty/layout)))))
-    (target-place/widget (:target-place (make-object-slot-place content 'hu.dwim.wui::content))
+    (target-place/widget (:target-place (make-object-slot-place content 'content))
       (horizontal-list/layout ()
         (tree/widget ()
           (node/widget ()
