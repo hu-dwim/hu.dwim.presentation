@@ -1,5 +1,7 @@
 (in-package :sb-pcl)
 
+;; TODO check if this file is actually loaded and delete eventually if the optimizations are appear to be not needed anymore
+
 ;;;;;;
 ;;; components can have component slots through which the parent
 ;;; relation is automatically updated. by redefining sbcl's ctor code
