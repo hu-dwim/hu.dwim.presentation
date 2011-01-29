@@ -22,7 +22,7 @@
                :hu.dwim.web-server.application)
   :components ((:module "source"
                 :components ((:module "util"
-                              :depends-on ("package" "logger")
+                              :depends-on ("logger" "package" "variables")
                               :components ((:file "book")
                                            (:file "csv")
                                            (:file "definition")
@@ -260,9 +260,10 @@
                                                          (:file "type")
                                                          (:file "uri")
                                                          (:file "variable")))))
+                             (:file "component-hierarchy-serving" :depends-on ("logger"))
                              (:file "logger" :depends-on ("package"))
                              (:file "package")
-                             (:file "component-hierarchy-serving" :depends-on ("logger"))
+                             (:file "variables" :depends-on ("package"))
                              ;; KLUDGE: kill this
                              (:file "xxx" :pathname #p"component/xxx.lisp" :depends-on ("component"))))))
 
