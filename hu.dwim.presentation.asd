@@ -13,7 +13,7 @@
   :description "A component based GUI framework with a backend to present it using HTML and JavaScript."
   :long-description "Provides various components, layouts, widgets, charts, books, model documentation components, meta components. Components have server and client side state and behavior."
   :depends-on (:contextl
-               :cl-graph ; KLUDGE component/source/class.lisp depends on cl-graph
+               :cl-graph+hu.dwim.graphviz ; KLUDGE component/source/class.lisp depends on cl-graph
                :hu.dwim.def+contextl
                :hu.dwim.stefil+hu.dwim.def ; to resolve the -body- symbol conflict
                :hu.dwim.util.authorization
