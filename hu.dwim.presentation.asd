@@ -19,7 +19,9 @@
                :hu.dwim.util.authorization
                :hu.dwim.util.source
                :hu.dwim.util.standard-process
-               :hu.dwim.web-server.application)
+               :hu.dwim.web-server.application
+               ;; TODO get rid of moptilities
+               :moptilities)
   :components ((:module "source"
                 :components ((:module "util"
                               :depends-on ("logger" "package" "variables")
