@@ -27,7 +27,7 @@
 ;;;;;;
 ;;; Component rendering response
 
-(def class* component-rendering-response (response)
+(def class* component-rendering-response (http-response)
   ((unique-counter 0 :type integer)
    (application :type application)
    (session :type session)
