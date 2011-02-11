@@ -64,7 +64,7 @@
                         (make-instance 'http-request :uri (parse-uri ""))))
          (*response* (if (boundp '*response*)
                          *response*
-                         (make-instance 'response)))
+                         (make-instance 'http-response)))
          (*application* (if (boundp '*application*)
                             *application*
                             (make-instance 'application :path-prefix "")))
