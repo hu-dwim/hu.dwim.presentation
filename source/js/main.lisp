@@ -8,6 +8,16 @@
 
 (log.debug "Started evaluating main.js of hu.dwim.presentation")
 
+(defmacro with-new-dom-nodes (bindings &BODY body)
+  (ITER (FOR binding :IN bindings)
+        (BIND (((variable-name tag-name &KEY class) binding))
+          (COLLECT `(,variable-name (document.createElement ,tag-name)) :INTO node-bindings)
+          (WHEN class
+            (COLLECT `(dojo.addClass ,variable-name ,class) :INTO forms)))
+        (FINALLY (RETURN `(bind (,@node-bindings)
+                            ,@forms
+                            ,@body)))))
+
 (dojo.getObject "hdp" #t)
 (dojo.getObject "hdp.io" #t)
 (dojo.getObject "hdp.field" #t)
@@ -238,7 +248,7 @@
   (if element
       (bind ((parent-element element.parentNode)
              (next-sibling element.nextSibling)
-             (table-element (create-dom-node "table")))
+             (table-element (make-dom-node "table")))
         (if (or (not style-class)
                 (not element-name)
                 (and (not (= element-name true))
@@ -257,11 +267,11 @@
                    (dojo.addClass result "decoration")
                    (return result)))
                (create-row (row-kind)
-                 (with-dom-nodes ((row-kind-element (+ "t" row-kind))
-                                  (row-element "tr")
-                                  (left-cell-element "td" :class "border-left")
-                                  (cell-element "td" :class "border-center")
-                                  (right-cell-element "td" :class "border-right"))
+                 (with-new-dom-nodes ((row-kind-element (+ "t" row-kind))
+                                      (row-element "tr")
+                                      (left-cell-element "td" :class "border-left")
+                                      (cell-element "td" :class "border-center")
+                                      (right-cell-element "td" :class "border-right"))
                    (when (= row-kind "head")
                      (dojo.place (create-dummy-div) left-cell-element "only")
                      (dojo.place (create-dummy-div) right-cell-element "only"))

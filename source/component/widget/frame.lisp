@@ -175,7 +175,7 @@
 
 (def (function e) make-default-script-uris ()
   (load-time-value
-   (list (list (parse-uri "/hdws/js/main.js")
+   (list (list (parse-uri "/hdws/js/main.dojo.js")
                (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.lisp")))
                  (delay (file-write-date file))))
          (list (parse-uri "/hdp/js/main.js")
