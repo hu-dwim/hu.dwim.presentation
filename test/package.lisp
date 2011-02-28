@@ -36,7 +36,5 @@
    (hu.dwim.web-server::setup-readtable)
    (hu.dwim.syntax-sugar:enable-string-quote-syntax)))
 
-(in-package :hu.dwim.presentation.test)
-
-(import-all-owned-symbols :hu.dwim.presentation :hu.dwim.presentation.test)
-(import-all-owned-symbols :hu.dwim.web-server.test :hu.dwim.presentation.test)
+(hu.dwim.common:import-all-owned-symbols :hu.dwim.presentation :hu.dwim.presentation.test)
+(hu.dwim.common:import-all-owned-symbols :hu.dwim.web-server.test :hu.dwim.presentation.test)
