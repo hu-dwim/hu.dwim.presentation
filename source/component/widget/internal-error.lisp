@@ -61,7 +61,7 @@
                                                    ;; TODO don't use component-message/widget here
                                                    (render-component (component-message/widget (:category :error)
                                                                        #"error.internal-server-error"))
-                                                   (apply-localization-function 'render-application-internal-error-page
+                                                   (apply-localization-function 'hu.dwim.web-server::render-application-internal-error-page
                                                                                 (list :administrator-email-address (administrator-email-address-of application))))))))
         (bind ((response (if *frame*
                              (progn
