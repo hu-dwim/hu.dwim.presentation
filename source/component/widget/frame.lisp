@@ -7,6 +7,13 @@
 (in-package :hu.dwim.presentation)
 
 ;;;;;;
+;;; API
+
+(def (generic e) application-relative-path-for-no-javascript-support-error (application)
+  (:method ((application application))
+    "/help/"))
+
+;;;;;;
 ;;; frame/widget
 
 (def (component e) frame/widget (top/component layer/mixin)
@@ -14,25 +21,40 @@
    (stylesheet-uris nil)
    (script-uris (make-default-script-uris))
    (page-icon-uri (make-page-icon-uri :hu.dwim.presentation "static/hdp/" "image/miscellaneous/favicon.ico"))
-   (title nil)
-   (dojo-skin-name *dojo-skin-name*)
+   (title nil)))
+
+(def method parent-component-of ((self frame/widget))
+  nil)
+
+(def method supports-debug-component-hierarchy? ((self frame/widget))
+  #f)
+
+;;;;;;
+;;; dojo-frame/widget
+
+(def (component e) dojo-frame/widget (frame/widget)
+  ((dojo-skin-name *dojo-skin-name*)
    (dojo-release-uri (parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* "dojo/")))
    (dojo-file-name *dojo-file-name*)
    (parse-dojo-widgets-on-load #f :type boolean)
    (debug-client-side :type boolean :writer (setf debug-client-side?))))
 
-(def (macro e) frame/widget ((&rest args &key &allow-other-keys) &body content)
-  `(make-instance 'frame/widget ,@args :content ,(the-only-element content)))
+(def (macro e) frame/widget ((&rest args &key (widget-library :dojo) &allow-other-keys) &body content)
+  (remove-from-plistf args :widget-library)
+  (ecase widget-library
+    (:dojo `(make-instance 'dojo-frame/widget ,@args :content ,(the-only-element content)))))
 
-(def method debug-client-side? ((self frame/widget))
+(def method debug-client-side? ((self dojo-frame/widget))
   (if (slot-boundp self 'debug-client-side)
       (slot-value self 'debug-client-side)
       (debug-client-side? *application*)))
 
-(def method parent-component-of ((self frame/widget))
-  nil)
+(def component-environment dojo-frame/widget
+  (with-active-layers (dojo-layer)
+    (call-next-method)))
 
-(def render-xhtml frame/widget
+;; we stay with render-xhtml here, because component-environment is reinstated only after us, so the dojo layer is not active yet
+(def render-xhtml dojo-frame/widget
   (bind ((application *application*)
          (path-prefix (path-prefix-of application))
          (encoding (or (when *response*
@@ -158,13 +180,6 @@
                          (clearTimeout document.hdp-failed-to-load-timer)
                          (dojo.style document.body "margin" "0px")))>>>))
 
-(def method supports-debug-component-hierarchy? ((self frame/widget))
-  #f)
-
-(def (generic e) application-relative-path-for-no-javascript-support-error (application)
-  (:method ((application application))
-    "/help/"))
-
 (def (function e) make-page-icon-uri (asdf-system-name-or-base-directory path-prefix path)
   (bind ((base-directory (aif (find-system asdf-system-name-or-base-directory #f)
                               (system-relative-pathname it "www/")
@@ -176,10 +191,10 @@
 (def (function e) make-default-script-uris ()
   (load-time-value
    (list (list (parse-uri "/hdws/js/main.dojo.js")
-               (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.lisp")))
+               (bind ((file (system-relative-pathname :hu.dwim.web-server "source/js/main.dojo.lisp")))
                  (delay (file-write-date file))))
-         (list (parse-uri "/hdp/js/main.js")
-               (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.lisp")))
+         (list (parse-uri "/hdp/js/main.dojo.js")
+               (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.dojo.lisp")))
                  (delay (file-write-date file))))
          (list (parse-uri +js-i18n-broker/default-path+)
                (delay hu.dwim.web-server::*js-i18n-resource-registry/last-modified-at*))

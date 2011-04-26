@@ -518,6 +518,8 @@
 
 (def (render-component-layer e) xhtml (backend) "Rendering into XHTML with JavaScript.")
 
+(def (render-component-layer e) dojo (xhtml) "Rendering into XHTML with JavaScript using the Dojotoolkit widget library.")
+
 (def (render-component-layer e) offline-xhtml (offline xhtml) "Rendering into offline XHTML with JavaScript that works without the server.")
 
 (def (render-component-layer e) passive-xhtml (passive xhtml) "Rendering into passive XHTML with JavaScript that does not provide behaviour.")
