@@ -839,15 +839,15 @@
     (component-demo/widget "System"
       (make-value-inspector (asdf:find-system :hu.dwim.presentation)))
     (component-demo/widget "Module"
-      (make-value-inspector (reduce 'asdf:find-component (list "source" "component") :initial-value (asdf:find-system :hu.dwim.presentation.component))))
+      (make-value-inspector (reduce 'asdf:find-component (list "source" "component") :initial-value (asdf:find-system :hu.dwim.presentation))))
     (component-demo/widget "Source file"
-      (make-value-inspector (system-relative-pathname :hu.dwim.presentation.component "source/component/api/api.lisp")))
+      (make-value-inspector (system-relative-pathname :hu.dwim.presentation "source/component/api/api.lisp")))
     (component-demo/widget "Text file"
       (make-value-inspector (asdf:system-relative-pathname :hu.dwim.presentation "LICENCE")))
     (component-demo/widget "Binary file"
       (make-value-inspector (asdf:system-relative-pathname :hu.dwim.presentation "www/icon/10x10/arrow-out.png")))
     (component-demo/widget "Pathname"
-      (make-value-inspector (system-relative-pathname :hu.dwim.presentation.component "")))
+      (make-value-inspector (system-relative-pathname :hu.dwim.presentation "")))
     (component-demo/widget "Package"
       (make-value-inspector (find-package :hu.dwim.presentation)))
     (component-demo/widget "Dictionary"
