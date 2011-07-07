@@ -47,7 +47,6 @@
                                                          (:file "mop")
                                                          (:file "number" :depends-on ("api"))
                                                          (:file "response" :depends-on ("component"))
-                                                         ;; TODO delme eventually #+sbcl(:file "sbcl-ctor-kludge" :depends-on ("mop"))
                                                          (:file "string" :depends-on ("api"))))
                                            (:module "mixin"
                                             :depends-on ("api")
