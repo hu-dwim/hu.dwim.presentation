@@ -89,7 +89,7 @@
                                       (print-uri-to-string uri)))>))
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
-          ,(string+ "djConfig = { baseUrl: 'static/hdws/libraries/" *dojo-directory-name* "dojo/'"
+          ,(string+ "djConfig = { baseUrl: '" (path-prefix-of *application*) "static/hdws/libraries/" *dojo-directory-name* "dojo/'"
                     ", parseOnLoad: " (to-js-boolean (parse-dojo-widgets-on-load? -self-))
                     ", isDebug: " (to-js-boolean debug-client-side?)
                     ;; TODO add separate flag for debugAtAllCosts
