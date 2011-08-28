@@ -42,6 +42,7 @@
                   :value ,(if value "true" "false")
                   :type "hidden")>)
     (if custom
+        ;; FIXME i think it's completely bitrotten...
         (progn
           ;; TODO :tabindex (tabindex field)
           ;; :class (style-class field)

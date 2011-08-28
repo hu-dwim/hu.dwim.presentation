@@ -27,6 +27,6 @@
   <span (:id ,(id-of component)) ,(print-component-value component)>)
 
 (def generic parse-component-value (component client-value)
-  (:documentation "Parses a STRING into the COMPONENT-VALUE of COMPONENT."))
+  (:documentation "Parses a STRING into the COMPONENT-VALUE of COMPONENT. Should return (values value no-value?)."))
 
 (def generic string-field-type (component))

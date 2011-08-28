@@ -685,6 +685,7 @@
   (make-object-presentation-node "Viewer" make-viewer t/alternator/viewer))
 
 (def function make-object-editor-node ()
+  ;; TODO FIXME there doesn't seem to be a t/alternator/editor anymore. check the others, too.
   (make-object-presentation-node "Editor" make-editor t/alternator/editor))
 
 (def function make-object-inspector-node ()
