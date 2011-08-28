@@ -141,7 +141,7 @@
           (listener (lambda ()
                       (hdp.field.update-use-in-filter use-in-filter-id (!= "" (.getValue this))))))
      (assert widget)
-     ;; TODO why not hdp.connect?
+     ;; TODO why not hdws.connect?
      (widget.connect widget "onKeyUp" listener)
      (widget.connect widget "onChange" listener))))
 
@@ -225,11 +225,11 @@
                     (foreach 'dojo.disconnect handles)
                     (hdp.help.teardown)
                     (dojo.stopEvent event))))
-    (handles.push (hdp.connect document "mouseover" (hdp.help.make-mouseover-handler url)))
-    (handles.push (hdp.connect document "click" aborter))
-    (handles.push (hdp.connect document "keypress" (lambda (event)
-                                                     (when (= event.charOrCode dojo.keys.ESCAPE)
-                                                       (aborter event)))))
+    (handles.push (hdws.connect document "mouseover" (hdp.help.make-mouseover-handler url)))
+    (handles.push (hdws.connect document "click" aborter))
+    (handles.push (hdws.connect document "keypress" (lambda (event)
+                                                      (when (= event.charOrCode dojo.keys.ESCAPE)
+                                                        (aborter event)))))
     (dojo.style document.body "cursor" "help")
     (dojo.stopEvent event)))
 
