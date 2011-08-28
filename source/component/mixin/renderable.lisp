@@ -50,9 +50,10 @@
       (mark-to-be-rendered-component instance))))
 
 (def method slot-makunbound-using-class ((class component-class) (instance renderable/mixin) (slot standard-effective-slot-definition))
-  (unless (slot-boundp-using-class class instance slot)
+  (when (slot-boundp-using-class class instance slot)
     (call-next-method)
     (unless (or (to-be-rendered-component-slot? slot)
                 (and (slot-boundp instance 'to-be-rendered-component)
                      (to-be-rendered-component? instance)))
-      (mark-to-be-rendered-component instance))))
+      (mark-to-be-rendered-component instance)))
+  instance)

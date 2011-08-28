@@ -32,7 +32,8 @@
            (old-value (when bound? (component-value-of component))))
       (if no-value?
           (when bound?
-            (slot-makunbound component 'component-value))
+            (slot-makunbound component 'component-value)
+            (debug-only (assert (not (slot-boundp component 'component-value)) () "This used to happen due to a bug in a customized SLOT-MAKUNBOUND-USING-CLASS")))
           (unless (and bound?
                        (equal old-value new-value))
             (setf (component-value-of component) new-value))))))
