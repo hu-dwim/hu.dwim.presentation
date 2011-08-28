@@ -48,37 +48,39 @@
 (def subtype-mapper *maker-type-mapping* boolean boolean/maker)
 
 (def render-xhtml boolean/maker
-  (bind (((:read-only-slots component-value-type) -self-)
+  (bind (((:read-only-slots component-value-type client-state-sink) -self-)
          (has-initform? (slot-boundp -self- 'initform))
          (initform (when has-initform?
                      (initform-of -self-)))
-         (constant-initform? (member initform '(#f #t))))
-    (if (and (eq component-value-type 'boolean)
+         (literal-initform? (member initform '(#f #t))))
+    (if (and (eq component-value-type 'boolean) ; FIXME is this a KLUDGE to test for a simple 'boolean type as opposed to (or null boolean)? then mark so, or use a properly named function instead.
              has-initform?
-             constant-initform?)
-        (bind ((checked (when (and has-initform?
-                                   (eq initform #t))
-                          "checked")))
-          <input (:type "checkbox" :checked ,checked)>)
-        <select ()
+             literal-initform?)
+        (render-checkbox-field (to-boolean (and has-initform?
+                                                (eq initform #t)))
+                               ;; FIXME how is it supposed to work? where should the client value be stored when needs storage?
+                               :value-sink client-state-sink
+                               :preprocess-value #f)
+        <select
           ;; TODO: add error marker when no initform and default value is selected
-          ,(bind ((selected (unless (and has-initform?
-                                         constant-initform?)
-                              "yes")))
-                 <option (:selected ,selected)
-                   ,(cond (has-initform? #"value.default")
-                          ((eq component-value-type 'boolean) "")
-                          (t #"value.nil"))>)
-          ,(bind ((selected (when (and has-initform?
-                                       (eq initform #t))
-                              "yes")))
-                 <option (:selected ,selected)
-                   ,#"boolean.true">)
-          ,(bind ((selected (when (and has-initform?
-                                       (eq initform #f))
-                              "yes")))
-                 <option (:selected ,selected)
-                   ,#"boolean.false">) >)))
+          <option (:value ""
+                   ,(maybe-make-xml-attribute "selected" (unless (and has-initform?
+                                                                      literal-initform?)
+                                                           "yes")))
+            ,(cond
+              (has-initform? #"value.default")
+              ((eq component-value-type 'boolean) "")
+              (t #"value.nil"))>
+          <option (:value "true"
+                   ,(maybe-make-xml-attribute "selected" (when (and has-initform?
+                                                                    (eq initform #t))
+                                                           "yes")))
+            ,#"boolean.true">
+          <option (:value "false"
+                   ,(maybe-make-xml-attribute "selected" (when (and has-initform?
+                                                                           (eq initform #f))
+                                                                  "yes")))
+            ,#"boolean.false"> >)))
 
 ;;;;;;
 ;;; character/maker

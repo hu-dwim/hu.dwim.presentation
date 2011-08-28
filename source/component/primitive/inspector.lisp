@@ -45,30 +45,29 @@
          (component-value (funcall component-value-transformer
                                    (when has-component-value?
                                      (component-value-of component)))))
-    <div ,(when edited-component
-            <input (:type "hidden"
-                    :name ,(id-of client-state-sink)
-                    :value ,(if component-value "true" "false"))>)
-         ,(if (symbolp component-value-type)
-              (bind ((checked (when component-value "checked"))
-                     (disabled (unless edited-component "disabled")))
-                <input (:type "checkbox" :checked ,checked :disabled ,disabled)>)
-              (bind ((disabled (unless edited-component "disabled")))
-                <select (:disabled ,disabled)
-                  ;; TODO: add error marker when no initform and default value is selected
-                  ,(bind ((selected (unless has-component-value? "yes")))
-                     <option (:selected ,selected)
-                       ,#"value.nil">)
-                  ,(bind ((selected (when (and has-component-value?
-                                               component-value)
-                                      "yes")))
-                     <option (:selected ,selected)
-                       ,#"boolean.true">)
-                  ,(bind ((selected (when (and has-component-value?
-                                               (not component-value))
-                                      "yes")))
-                     <option (:selected ,selected)
-                       ,#"boolean.false">) >))>))
+    <div (:id ,(id-of component))
+      ,(if (symbolp component-value-type) ; FIXME is this a KLUDGE to test for a simple 'boolean type as opposed to (or null boolean)? then mark so, or use a properly named function instead.
+           (render-checkbox-field (to-boolean component-value)
+                                  :disabled (not edited-component)
+                                  :value-sink client-state-sink
+                                  :preprocess-value #f)
+           (bind ((disabled (unless edited-component "disabled")))
+             <select (:name ,(id-of client-state-sink)
+                      :disabled ,disabled)
+               ;; TODO: add error marker when no initform and default value is selected
+               <option (:value ""
+                        ,(maybe-make-xml-attribute "selected" (unless has-component-value? "yes")))
+                 ,#"value.nil">
+               <option (:value "true"
+                        ,(maybe-make-xml-attribute "selected" (when (and has-component-value?
+                                                                         component-value)
+                                                                "yes")))
+                 ,#"boolean.true">
+               <option (:value "false"
+                        ,(maybe-make-xml-attribute "selected" (when (and has-component-value?
+                                                                         (not component-value))
+                                                                "yes")))
+                 ,#"boolean.false"> >))>))
 
 (def render-xhtml boolean/inspector
   (render-boolean-component -self-))

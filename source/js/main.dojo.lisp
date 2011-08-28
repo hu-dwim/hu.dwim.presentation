@@ -59,21 +59,23 @@
 ;;; fields
 
 ;; TODO rename to hdp.primitive.*? or something else...
-(defun hdp.field.setup-simple-checkbox (checkbox-id checked-tooltip unchecked-tooltip)
+;; TODO convert to using &key? see others, too...
+(defun hdp.field.setup-simple-checkbox (checkbox-id disabled checked-tooltip unchecked-tooltip)
   (bind ((checkbox (dojo.byId checkbox-id))
          (hidden (dojo.byId (+ checkbox-id "_hidden"))))
     (log.debug "Setting up simple checkbox " checkbox ", using hidden input " hidden)
-    (hdp.connect checkbox "onchange"
-                 (lambda (event)
-                   (let ((enabled checkbox.checked))
-                     (log.debug "Propagating checkbox.checked of " checkbox " to the hidden field " hidden " named " hidden.name)
-                     (setf hidden.value (if enabled
-                                            "true"
-                                            "false"))
-                     (setf checkbox.title
-                           (if enabled
-                               checked-tooltip
-                               unchecked-tooltip)))))
+    (unless disabled
+      (hdws.connect checkbox "onchange"
+                    (lambda (event)
+                      (let ((enabled checkbox.checked))
+                        (log.debug "Propagating checkbox.checked of " checkbox " to the hidden field " hidden " named " hidden.name)
+                        (setf hidden.value (if enabled
+                                               "true"
+                                               "false"))
+                        (setf checkbox.title
+                              (if enabled
+                                  checked-tooltip
+                                  unchecked-tooltip))))))
     (setf checkbox.hdp-set-checked (lambda (enabled)
                                      (if (= checkbox.checked enabled)
                                          (return false)
@@ -85,37 +87,38 @@
     (setf checkbox.hdp-is-checked (lambda ()
                                     (return checkbox.checked)))))
 
-(defun hdp.field.setup-custom-checkbox (link-id checked-image unchecked-image checked-tooltip unchecked-tooltip checked-class unchecked-class)
+(defun hdp.field.setup-custom-checkbox (link-id disabled checked-image unchecked-image checked-tooltip unchecked-tooltip checked-class unchecked-class)
+  ;; FIXME i think it's completely bitrotten...
   (bind ((link (dojo.byId link-id))
          (hidden (dojo.byId (+ link-id "_hidden"))))
     (log.debug "Setting up custom checkbox " link ", using hidden input " hidden)
     (bind ((image (aref (.get-elements-by-tag-name link "img") 0))
-           (enabled (not (= hidden.value "false"))))
+           (checked (not (= hidden.value "false"))))
 ;; TODO:      (assert image)
       (if (and checked-image
                unchecked-image)
-          (setf image.src (if enabled
+          (setf image.src (if checked
                               checked-image
                               unchecked-image)))
-      (setf link.className (if enabled
+      (setf link.className (if checked
                                checked-class
                                unchecked-class))
-      (setf link.title (if enabled
+      (setf link.title (if checked
                            checked-tooltip
                            unchecked-tooltip)))
-    (setf link.hdp-set-checked (lambda (enabled)
-                                 (setf hidden.value (if enabled
+    (setf link.hdp-set-checked (lambda (checked)
+                                 (setf hidden.value (if checked
                                                         "true"
                                                         "false"))
                                  (if (and checked-image
                                           unchecked-image)
-                                     (setf image.src (if enabled
+                                     (setf image.src (if checked
                                                          checked-image
                                                          unchecked-image)))
-                                 (setf link.className (if enabled
+                                 (setf link.className (if checked
                                                           checked-class
                                                           unchecked-class))
-                                 (setf link.title (if enabled
+                                 (setf link.title (if checked
                                                       checked-tooltip
                                                       unchecked-tooltip))))
     (setf link.hdp-is-checked (lambda ()

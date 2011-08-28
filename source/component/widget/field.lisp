@@ -12,38 +12,46 @@
 (def (function e) render-checkbox-field (value &key checked-image unchecked-image (id (unique-js-name "_chkb"))
                                                checked-tooltip unchecked-tooltip
                                                checked-class unchecked-class
-                                               on-change name value-sink)
+                                               on-change name value-sink (preprocess-value #t) (disabled #f))
+  "PREPROCESS-VALUE means that the js value is turned into a lisp value using STRING-TO-LISP-BOOLEAN."
+  (check-type disabled boolean)
   (assert (or (and (null checked-image) (null unchecked-image))
               (and checked-image unchecked-image)))
   (assert (not (and name value-sink)))
-  (assert (or name value-sink))
+  (assert (or disabled name value-sink) () "you must provide either a NAME or a VALUE-SINK argument to ~S unless it's a DISABLED one" 'render-checkbox-field)
   (when (typep name 'client-state-sink)
     (setf name (id-of name)))
-  (bind ((name (if name
-                   (etypecase name
-                     (client-state-sink (id-of name))
-                     (string name))
-                   (progn
-                     (assert (functionp value-sink))
-                     (id-of (client-state-sink (client-value)
-                              (funcall value-sink (string-to-lisp-boolean client-value)))))))
+  (bind ((name (unless disabled
+                 (if name
+                     (etypecase name
+                       (client-state-sink (id-of name))
+                       (string name))
+                     (progn
+                       (assert (functionp value-sink))
+                       (id-of (if preprocess-value
+                                  (client-state-sink (client-value)
+                                    (funcall value-sink (string-to-lisp-boolean client-value)))
+                                  (client-state-sink (client-value)
+                                    (funcall value-sink client-value))))))))
          (custom (or checked-image checked-class))
          (hidden-id (string+ id "_hidden"))
          (checked (when value "")))
-    <input (:id ,hidden-id
-            :name ,name
-            :value ,(if value "true" "false")
-            :type "hidden")>
+    (unless disabled
+      <input (:id ,hidden-id
+                  :name ,name
+                  :value ,(if value "true" "false")
+                  :type "hidden")>)
     (if custom
         (progn
           ;; TODO :tabindex (tabindex field)
           ;; :class (style-class field)
+          ;; handle :disabled
           <div (:id ,id)
             ,(if (and checked-image
                       unchecked-image)
                  ;; TODO cleanup... <img> tags are not allowed without an alt, but this is pure confusion here...
                  <img>)>
-          `js-onload(hdp.field.setup-custom-checkbox ,id ,checked-image ,unchecked-image ,checked-tooltip ,unchecked-tooltip ,checked-class ,unchecked-class))
+          `js-onload(hdp.field.setup-custom-checkbox ,id ,disabled ,checked-image ,unchecked-image ,checked-tooltip ,unchecked-tooltip ,checked-class ,unchecked-class))
         (progn
           ;; TODO :accesskey (accesskey field)
           ;; :title (or (tooltip field) (if value
@@ -55,8 +63,10 @@
           <input (:id ,id
                   :type "checkbox"
                   :checked ,checked
+                  ,(when disabled
+                     (make-xml-attribute "disabled" "disabled"))
                   ,(maybe-make-xml-attribute "onChange" on-change))>
-          `js-onload(hdp.field.setup-simple-checkbox ,id ,checked-tooltip ,unchecked-tooltip))))
+          `js-onload(hdp.field.setup-simple-checkbox ,id ,disabled ,checked-tooltip ,unchecked-tooltip))))
   (values))
 
 ;;;;;;
