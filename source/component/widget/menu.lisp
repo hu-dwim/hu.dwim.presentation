@@ -20,11 +20,10 @@
 
 (def render-xhtml menu-bar/widget
   (bind (((:read-only-slots menu-items id style-class custom-style) -self-))
-    (render-dojo-widget (id)
-      <div (:id ,id
+    (render-dojo-widget (+dijit/menu-bar+ () :id id)
+      <div (:id ,-id-
             :class ,style-class
-            :style ,custom-style
-            :dojoType #.+dijit/menu-bar+)
+            :style ,custom-style)
         ,(foreach #'render-component menu-items)>)))
 
 ;;;;;;
@@ -42,13 +41,10 @@
     (when menu-items
       <span (:id ,id :class ,style-class :style ,custom-style)
         ,(render-content-for -self-)
-        ,(bind ((menu-id (generate-unique-component-id)))
-               (render-dojo-widget (menu-id)
-          <div (:id ,menu-id
-                :dojoType #.+dijit/menu+
-                :targetNodeIds ,id
-                :style "display: none;")
-            ,(foreach #'render-component menu-items)>))>)))
+        ,(render-dojo-widget (+dijit/menu+ `(:targetNodeIds ,id))
+           <div (:id ,-id-
+                 :style "display: none;")
+             ,(foreach #'render-component menu-items)>)>)))
 
 ;;;;;;
 ;;; context-menu/widget
@@ -71,12 +67,10 @@
   (bind (((:read-only-slots menu-items id style-class custom-style) -self-)
          (parent-id (id-of (parent-component-of -self-))))
     (when menu-items
-      (render-dojo-widget (id)
-        <div (:id ,id
+      (render-dojo-widget (+dijit/menu+ `(:targetNodeIds ,parent-id) :id id)
+        <div (:id ,-id-
               :class ,style-class
-              :style `str("display: none;" ,custom-style)
-              :dojoType #.+dijit/menu+
-              :targetNodeIds ,parent-id)
+              :style `str("display: none;" ,custom-style))
           ,(foreach #'render-component menu-items)>))))
 
 (def layered-method render-component-stub :in xhtml-layer :after ((-self- context-menu/widget))
@@ -125,37 +119,33 @@
 (def render-xhtml menu-item/widget
   (bind (((:read-only-slots menu-items id style-class custom-style content) -self-))
     (if menu-items
-        (bind ((popup-id (generate-unique-component-id)))
-          (render-dojo-widget (popup-id)
-            <div (:id ,popup-id
-                  :class ,style-class
-                  :style ,custom-style
-                  :dojoType ,(if (typep (parent-component-of -self-) 'menu-bar/widget)
-                                 #.+dijit/popup-menu-bar-item+
-                                 #.+dijit/popup-menu-item+))
-              ,(if (stringp (content-of -self-))
-                   <span ,(render-content-for -self-)>
-                   (render-content-for -self-))
-              ,(render-dojo-widget (id)
-                 <div (:id ,id
-                       :dojoType #.+dijit/menu+
-                       :style "display: none;")
-                   ,(foreach #'render-component menu-items)>)>))
+        (render-dojo-widget ((if (typep (parent-component-of -self-) 'menu-bar/widget)
+                                 +dijit/popup-menu-bar-item+
+                                 +dijit/popup-menu-item+))
+          <div (:id ,-id-
+                :class ,style-class
+                :style ,custom-style)
+            ,(if (stringp (content-of -self-))
+                 <span ,(render-content-for -self-)>
+                 (render-content-for -self-))
+            ,(render-dojo-widget (+dijit/menu+)
+              <div (:id ,-id-
+                    :style "display: none;")
+                ,(foreach #'render-component menu-items)>)>)
         (when (visible-component? content)
-          (render-dojo-widget (id)
-            <div (:id ,id
+          (render-dojo-widget (+dijit/menu-item+ `(:iconClass ,(typecase content
+                                                                 (icon/widget
+                                                                  (icon-style-class content))
+                                                                 (content/mixin
+                                                                  (bind ((content-content (content-of content)))
+                                                                    (when (typep content-content 'icon/widget)
+                                                                      (icon-style-class content-content))))
+                                                                 (t
+                                                                  nil)))
+                                 :id id)
+            <div (:id ,-id-
                   :class ,style-class
-                  :style ,custom-style
-                  :dojoType #.+dijit/menu-item+
-                  :iconClass ,(typecase content
-                                (icon/widget
-                                 (icon-style-class content))
-                                (content/mixin
-                                 (bind ((content-content (content-of content)))
-                                   (when (typep content-content 'icon/widget)
-                                     (icon-style-class content-content))))
-                                (t
-                                 nil)))
+                  :style ,custom-style)
                  ;; KLUDGE: kill when command/widget is refactored into mouse event support
                  ;; some parts of the RENDER-COMPONENT protocol is repeated here, because
                  ;; menu-item/widget must look ahead to support icons properly, bah
@@ -207,8 +197,8 @@
 
 (def render-xhtml menu-item-separator/widget
   (bind (((:read-only-slots id) -self-))
-    (render-dojo-widget (id)
-      <div (:id ,id :dojoType #.+dijit/menu-separator+)
+    (render-dojo-widget (+dijit/menu-separator+ () :id id)
+      <div (:id ,-id-)
         ;; NOTE: we do need the empty string in the body to workaround a bug in firefox
         ;;       that occurs when the element is rendered without an explicit closing tag
         "">)))

@@ -313,12 +313,11 @@
 
 (def function render-date-component (component &key (id (generate-unique-component-id "_dtw")) on-change (printer #'print-component-value))
   (bind (((:read-only-slots client-state-sink) component))
-    (render-dojo-widget (id)
+    (render-dojo-widget (+dijit/date-text-box+ () :id id)
       <input (:type     "text"
-              :id       ,id
+              :id       ,-id-
               :name     ,(id-of client-state-sink)
               :value    ,(funcall printer component)
-              :dojoType #.+dijit/date-text-box+
               :onChange ,(force on-change))>)))
 
 (def function print-date-value (value)
@@ -350,13 +349,12 @@
 
 (def function render-time-component (component &key (id (generate-unique-component-id "_tmw")) on-change (printer #'print-component-value))
   (bind (((:read-only-slots client-state-sink) component))
-    (render-dojo-widget (id)
+    (render-dojo-widget (+dijit/time-text-box+ '(:constraints "{timePattern:'HH:mm:ss', clickableIncrement:'T01:00:00', visibleIncrement:'T04:00:00', visibleRange:'T12:00:00'}")
+                           :id id)
       <input (:type     "text"
-              :id       ,id
+              :id       ,-id-
               :name     ,(id-of client-state-sink)
-              :constraints "{timePattern:'HH:mm:ss', clickableIncrement:'T01:00:00', visibleIncrement:'T04:00:00', visibleRange:'T12:00:00'}"
               :value    ,(funcall printer component)
-              :dojoType #.+dijit/time-text-box+
               :onChange ,(force on-change))>)))
 
 ;; TODO: this prints an extra T when we simple want to print the time as a string
@@ -484,19 +482,16 @@
   (emit-html-string (print-component-value component)))
 
 (def function render-html-component (component)
-  (bind ((id (generate-unique-component-id))
-         (field-id (generate-unique-component-id)))
-    (render-dojo-widget (id)
+  (bind ((field-id (generate-unique-component-id)))
+    ;; TODO: according to the documentation the :height should be "", so that it will be adapted to content automatically
+    (render-dojo-widget (+dijit/editor+ '(:height "75px" :minHeight "75px" :maxHeight "200px"
+                                          :extraPlugins "['dijit._editor.plugins.AlwaysShowToolbar','foreColor','hiliteColor',{name:'dijit._editor.plugins.FontChoice', command:'fontName', generic:true},'fontSize','createLink','insertImage']"))
       <input (:id ,field-id
               :name ,(id-of (client-state-sink-of component))
               :value ,(print-component-value component)
               :type "hidden")>
-      <div (:id ,id
-            :dojoType #.+dijit/editor+
-            :extraPlugins "['dijit._editor.plugins.AlwaysShowToolbar','foreColor','hiliteColor',{name:'dijit._editor.plugins.FontChoice', command:'fontName', generic:true},'fontSize','createLink','insertImage']"
-            ;; TODO: according to the documentation the :height should be "", so that it will be adapted to content automatically
-            :height "75px" :minHeight "75px" :maxHeight "200px"
-            :onChange `js-inline(setf (slot-value (dojo.byId ,field-id) 'value) (.getValue (dijit.byId ,id))))
+      <div (:id ,-id-
+            :onChange `js-inline(setf (slot-value (dojo.byId ,field-id) 'value) (.getValue (dijit.byId ,-id-))))
         ,(emit-html-component-value component)>)))
 
 ;;;;;;

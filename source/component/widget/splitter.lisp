@@ -17,21 +17,12 @@
 
 (def render-xhtml splitter/widget
   (bind (((:read-only-slots id style-class custom-style orientation contents) -self-))
-    (render-dojo-widget (id)
-      <div (:id ,id
+    (render-dojo-widget (+dijit/split-container+ `(:orientation ,(string-downcase orientation) :sizerWidth 7) :id id)
+      <div (:id ,-id-
             :class ,style-class
-            :style ,custom-style
-            :dojoType #.+dijit/split-container+
-            :orientation ,(string-downcase orientation)
-            :sizerWidth 7)
+            :style ,custom-style)
         ,(foreach (lambda (content)
-                    (bind ((pane-id (generate-unique-component-id)))
-                      (render-dojo-widget (pane-id)
-                        <div (:id ,pane-id
-                              :dojoType #.+dijit/content-pane+
-                              :sizeMin 10
-                              :sizeShare 50)
-                             <p <div "FOOO">
-                             <div "BAR" >>
-                          ,(render-component content)>)))
+                    (render-dojo-widget (+dijit/content-pane+ `(:sizeMin 10 :sizeShare 50))
+                      <div (:id ,-id-)
+                        ,(render-component content)>))
                   contents)>)))

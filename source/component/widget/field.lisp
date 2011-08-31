@@ -74,11 +74,10 @@
 ;;; String field
 
 (def function render-string-field (type value client-state-sink &key (id (generate-unique-component-id "_stw")) on-change on-key-down on-key-up)
-  (render-dojo-widget (id)
-    ;; TODO dojoRows 3
-    <input (:dojoType #.+dijit/text-box+
-            :type     ,type
-            :id       ,id
+  ;; TODO dojoRows 3
+  (render-dojo-widget (+dijit/text-box+ () :id id)
+    <input (:type     ,type
+            :id       ,-id-
             :name     ,(id-of client-state-sink)
             :value    ,value
             ,(maybe-make-xml-attribute "onChange" on-change)
@@ -89,10 +88,9 @@
 ;;; Number field
 
 (def function render-number-field (value client-state-sink &key (id (generate-unique-component-id "_nrw")) on-change on-key-down on-key-up)
-  (render-dojo-widget (id)
-    <input (:dojoType #.+dijit/number-text-box+
-            :type     "text"
-            :id       ,id
+  (render-dojo-widget (+dijit/number-text-box+ () :id id)
+    <input (:type     "text"
+            :id       ,-id-
             :name     ,(id-of client-state-sink)
             :value    ,value
             ,(maybe-make-xml-attribute "onChange" on-change)
@@ -120,9 +118,8 @@
 
 (def function render-select-field (value possible-values &key (id (generate-unique-component-id "_w")) name
                                          (key #'identity) (test #'equal) (client-name-generator #'princ-to-string) on-change)
-  (render-dojo-widget (id)
-    <select (:id ,id
-             :dojoType #.+dijit/filtering-select+
+  (render-dojo-widget (+dijit/filtering-select+ () :id id)
+    <select (:id ,-id-
              :name ,name
              ,(maybe-make-xml-attribute "onChange" on-change))
       ;; TODO the qq patch "xml: add optimizations that collapse xml tags even when a macro and list qq is also involved" breaks this
@@ -155,7 +152,6 @@
 
 (def function render-popup-menu-select-field (value possible-values &key value-sink classes (test #'equal) (key #'identity))
   (bind ((div-id (generate-unique-component-id))
-         (menu-id (generate-unique-component-id))
          (field-id (generate-unique-component-id))
          (name (id-of (client-state-sink (client-value)
                         (funcall value-sink client-value))))
@@ -164,18 +160,12 @@
     <div (:id ,div-id :class ,(nth index classes))
       ,(unless classes
          value)
-      ,(render-dojo-widget (menu-id)
-        <div (:id ,menu-id
-              :dojoType #.+dijit/menu+
-              :leftClickToOpen "true"
-              :style "display: none;"
-              :targetNodeIds ,div-id)
+      ,(render-dojo-widget (+dijit/menu+ `(:leftClickToOpen "true" :targetNodeIds ,div-id))
+        <div (:id ,-id-
+              :style "display: none;")
           ,(iter (for possible-value :in possible-values)
                  (for class :in classes)
-                 (for option-id = (generate-unique-component-id))
-                 (render-dojo-widget (option-id)
-                   <div (:id ,option-id
-                         :dojoType #.+dijit/menu-item+
-                         :iconClass ,class
+                 (render-dojo-widget (+dijit/menu-item+ `(:iconClass ,class))
+                   <div (:id ,-id-
                          :onClick `js-inline(hdp.field.update-popup-menu-select-field ,div-id ,field-id ,possible-value ,class))
                      ,possible-value>))>)>))
