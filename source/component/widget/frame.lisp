@@ -149,8 +149,7 @@
                                                                             (setf failed-page.style.display ""))
                                                                           ,+page-failed-to-load-grace-period-in-millisecs+)))
                     (on-load
-                     ;; KLUDGE "content" cross reference is fragile...
-                     (hdws.reset-scroll-position "content")
+                     (hdp.reset-scroll-position)
                      (setf hdp.session-id  ,(or (awhen *session* (id-of it)) ""))
                      (setf hdp.frame-id    ,(or (awhen *frame* (id-of it)) ""))
                      (setf hdp.frame-index ,(or (awhen *frame* (frame-index-of it)) "")))))

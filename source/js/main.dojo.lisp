@@ -42,6 +42,34 @@
    event connection))
 
 ;;;;;;
+;;; scroll
+
+;; TODO this needs cleanup. for now it's quite hardwired and interdependent on distant codes... e.g. "content" cross-reference.
+
+(defun hdp.reset-scroll-position ()
+  (bind ((content ($ "content")))
+    (when content
+      (bind ((form (aref document.forms 0))
+             (sx (aref form #.+scroll-x-parameter-name+))
+             (sy (aref form #.+scroll-y-parameter-name+)))
+        (log.debug "Restoring scroll position: " sx.value sy.value)
+        (setf content.scrollLeft sx.value)
+        (setf content.scrollTop sy.value)))))
+
+(defun hdp.save-scroll-position ()
+  (setf content ($ "content"))
+  (when content
+    (bind ((form (aref document.forms 0))
+           (sx (aref form #.+scroll-x-parameter-name+))
+           (sy (aref form #.+scroll-y-parameter-name+)))
+      (log.debug "Saving scroll position: " content.scrollLeft content.scrollTop)
+      (setf sx.value content.scrollLeft)
+      (setf sy.value content.scrollTop))))
+
+;; register a hook that saves the view scroll position into the input fields
+(hdws.connect hdws.io "action" hdp.save-scroll-position)
+
+;;;;;;
 ;;; highlight
 
 (defun hdp.highlight-mouse-enter-handler (event (element :by-id))
