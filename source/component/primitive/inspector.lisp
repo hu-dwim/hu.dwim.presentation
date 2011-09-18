@@ -51,9 +51,11 @@
                                   :disabled (not edited-component)
                                   :value-sink client-state-sink
                                   :preprocess-value #f)
-           (bind ((disabled (unless edited-component "disabled")))
-             <select (:name ,(id-of client-state-sink)
-                      :disabled ,disabled)
+           (bind ()
+             <select (:name ,(when edited-component
+                               (id-of client-state-sink))
+                      :disabled ,(unless edited-component
+                                   "disabled"))
                ;; TODO: add error marker when no initform and default value is selected
                <option (:value ""
                         ,(maybe-make-xml-attribute "selected" (unless has-component-value? "yes")))
