@@ -39,7 +39,10 @@
 
 (def subtype-mapper *inspector-type-mapping* boolean boolean/inspector)
 
-(def function render-boolean-component (component &key (component-value-transformer #'identity))
+(def render-xhtml boolean/inspector
+  (render-boolean-inspector -self-))
+
+(def function render-boolean-inspector (component &key (component-value-transformer #'identity))
   (bind (((:read-only-slots component-value-type edited-component client-state-sink) component)
          (has-component-value? (slot-boundp component 'component-value))
          (component-value (funcall component-value-transformer
@@ -71,9 +74,6 @@
                                                                 "yes")))
                  ,#"boolean.false"> >))>))
 
-(def render-xhtml boolean/inspector
-  (render-boolean-component -self-))
-
 
 ;;;;;;
 ;;; bit/inspector
@@ -84,7 +84,7 @@
 (def subtype-mapper *inspector-type-mapping* (or null bit) bit/inspector)
 
 (def render-xhtml bit/inspector
-  (render-boolean-component -self- :component-value-transformer [not (zerop !1)]))
+  (render-boolean-inspector -self- :component-value-transformer [not (zerop !1)]))
 
 ;;;;;;
 ;;; character/inspector
