@@ -30,7 +30,7 @@
   (:documentation "A COMPONENT with a permanent frame unique string identifier that is set at the first REFRESH-COMPONENT and never changed afterwards."))
 
 (def function generate-unique-component-id (&optional prefix)
-  (generate-unique-string/frame-or-response prefix))
+  (generate-unique-string prefix))
 
 (def function ensure-frame-unique-id (component)
   (or (id-of component)
