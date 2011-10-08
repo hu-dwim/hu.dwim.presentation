@@ -73,20 +73,20 @@
              <link (:rel "icon"
                     :type "image/x-icon"
                     :href ,(bind ((uri (clone-uri icon-uri)))
-                             (prefix-uri-path uri path-prefix)
+                             (uri/prepend-path uri path-prefix)
                              (when timestamp
                                (append-timestamp-to-uri uri timestamp))
-                             (print-uri-to-string uri)))>))
+                             (uri/print-to-string uri)))>))
         <title ,(title-of -self-)>
         ,(foreach (lambda (entry)
                     (bind (((stylesheet-uri &optional timestamp) (ensure-list entry)))
                       <link (:rel "stylesheet"
                              :type "text/css"
                              :href ,(bind ((uri (clone-uri stylesheet-uri)))
-                                      (prefix-uri-path uri path-prefix)
+                                      (uri/prepend-path uri path-prefix)
                                       (when timestamp
                                         (append-timestamp-to-uri uri timestamp))
-                                      (print-uri-to-string uri)))>))
+                                      (uri/print-to-string uri)))>))
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
           ,(string+ "djConfig = { baseUrl: '/static/hdws/libraries/" *dojo-directory-name* "dojo/'"
@@ -100,11 +100,11 @@
         <script (:type +javascript-mime-type+
                  :src  ,(bind ((uri (clone-uri (dojo-release-uri-of -self-))))
                           ;; we have the dojo release version in the url, so timestamps here are not important
-                          (prefix-uri-path uri path-prefix)
-                          (append-path-to-uri uri (dojo-file-name-of -self-))
-                          (when debug-client-side?
-                            (append-path-to-uri uri ".uncompressed.js"))
-                          (print-uri-to-string uri)))
+                          (uri/prepend-path uri path-prefix)
+                          (uri/append-path uri (if debug-client-side?
+                                                   (dojo-file-name-of -self-)
+                                                   (string+ (dojo-file-name-of -self-) ".uncompressed.js")))
+                          (uri/print-to-string uri)))
                  ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                  "">
         ,(foreach (lambda (entry)
@@ -112,12 +112,12 @@
                       <script (:type +javascript-mime-type+
                                :src  ,(bind ((uri (clone-uri script-uri)))
                                         (unless (starts-with #\/ (path-of uri))
-                                          (prefix-uri-path uri path-prefix))
+                                          (uri/prepend-path uri path-prefix))
                                         (when timestamp
                                           (append-timestamp-to-uri uri timestamp))
                                         (when debug-client-side?
-                                          (setf (uri-query-parameter-value uri "debug") "t"))
-                                        (print-uri-to-string uri)))
+                                          (setf (uri/query-parameter-value uri "debug") "t"))
+                                        (uri/print-to-string uri)))
                         ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                         "">))
                   (script-uris-of -self-))>
@@ -155,7 +155,7 @@
                      (setf hdp.frame-index ,(or (awhen *frame* (frame-index-of it)) "")))))
         ;; NOTE: if javascript is turned on in the browser, then just reload without the marker parameter (this might be true after enabling it and pressing refresh)
         ,(unless javascript-supported?
-           (bind ((href (print-uri-to-string (clone-request-uri :strip-query-parameters (list +no-javascript-error-parameter-name+)))))
+           (bind ((href (uri/print-to-string (clone-request-uri :strip-query-parameters (list +no-javascript-error-parameter-name+)))))
              `js-xml(setf window.location.href ,href)))
         <form (:method "post"
                :enctype #.+form-encoding/multipart-form-data+
@@ -165,8 +165,8 @@
                ,(when *frame*
                   (make-xml-attribute "action"
                                       (bind ((frame-uri (make-uri-for-current-application)))
-                                        (setf (uri-query-parameter-value frame-uri +frame-index-parameter-name+) (next-frame-index-of *frame*))
-                                        (print-uri-to-string frame-uri)))))
+                                        (setf (uri/query-parameter-value frame-uri +frame-index-parameter-name+) (next-frame-index-of *frame*))
+                                        (uri/print-to-string frame-uri)))))
           <div (:style "display: none")
             <input (:id #.+scroll-x-parameter-name+ :name #.+scroll-x-parameter-name+ :type "hidden"
                     :value ,(first (ensure-list (parameter-value +scroll-x-parameter-name+))))>

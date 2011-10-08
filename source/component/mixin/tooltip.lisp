@@ -35,7 +35,7 @@
                             :position (array ,@position)
                             :href ,(etypecase tooltip
                                               (action (register-action/href tooltip :delayed-content #t))
-                                              (uri (print-uri-to-string tooltip))))))
+                                              (uri (uri/print-to-string tooltip))))))
     ;; action is subtypep function, therefore this order and the small code duplication...
     (computation
      `js-onload(new dijit.Tooltip

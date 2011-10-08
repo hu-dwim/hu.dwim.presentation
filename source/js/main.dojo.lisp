@@ -222,7 +222,7 @@
   (if (or (= id "")
           (= id undefined))
       (return url)
-      (return (hdp.append-query-parameter url #.(escape-as-uri +context-sensitive-help-parameter-name+) id))))
+      (return (hdp.append-query-parameter url #.(uri/percent-encoding/encode +context-sensitive-help-parameter-name+) id))))
 
 (defun hdp.help.make-mouseover-handler (url)
   (return

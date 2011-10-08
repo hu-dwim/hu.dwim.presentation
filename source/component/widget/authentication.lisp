@@ -65,8 +65,8 @@
   (command/widget (:default #t)
     (icon/widget login)
     (bind ((uri (make-uri-for-current-application +login-entry-point-path+)))
-      (setf (uri-query-parameter-value uri +user-action-query-parameter-name+) t)
-      (copy-uri-query-parameters (uri-of *request*) uri +continue-url-query-parameter-name+)
+      (setf (uri/query-parameter-value uri +user-action-query-parameter-name+) t)
+      (uri/copy-query-parameters (uri-of *request*) uri +continue-url-query-parameter-name+)
       uri)))
 
 (def (generic e) make-logout-command (application)
@@ -124,10 +124,10 @@
 (def render-xhtml fake-identifier-and-password-login/widget
   (bind (((:read-only-slots identifier password comment) -self-)
          (uri (clone-request-uri)))
-    (setf (uri-query-parameter-value uri "identifier") identifier)
-    (setf (uri-query-parameter-value uri "password") password)
+    (setf (uri/query-parameter-value uri "identifier") identifier)
+    (setf (uri/query-parameter-value uri "password") password)
     <div (:class "fake-login")
-         <a (:href ,(print-uri-to-string uri))
+         <a (:href ,(uri/print-to-string uri))
             ,(string+ identifier comment)>>))
 
 ;;;;;;

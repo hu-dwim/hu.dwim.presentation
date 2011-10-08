@@ -154,7 +154,7 @@
              (etypecase thing
                (integer (integer-to-string (mod thing 10000)))
                (local-time:timestamp (to-timestamp-string (local-time:sec-of thing))))))
-    (setf (uri-query-parameter-value uri +timestamp-parameter-name+)
+    (setf (uri/query-parameter-value uri +timestamp-parameter-name+)
           (to-timestamp-string (force timestamp))))
   uri)
 

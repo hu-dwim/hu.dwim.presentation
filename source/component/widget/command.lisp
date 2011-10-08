@@ -132,7 +132,7 @@
           (when (and (not *frame*)
                      (typep action 'uri))
             ;; this is needed on Chrome, which doesn't call onclick on the submit input dom node
-            `js(setf (slot-value (aref document.forms 0) 'action) ,(print-uri-to-string action)))))
+            `js(setf (slot-value (aref document.forms 0) 'action) ,(uri/print-to-string action)))))
       <span (:id ,id :class `str("disabled " ,style-class))
         #\Newline ;; NOTE: this is mandatory for chrome when the element does not have a content
         ,(render-component content)>))

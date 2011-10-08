@@ -29,16 +29,16 @@
 
 (def render-xhtml uri/external-link/inspector
   (with-render-style/component (-self- :element-name "span")
-    (bind ((uri (print-uri-to-string (component-value-of -self-))))
+    (bind ((uri (uri/print-to-string (component-value-of -self-))))
       ;; TODO: refactor this to use the external-link/widget
       <a (:href ,uri :target "_blank")
         ,uri ,(render-component (icon/widget external-link))>)))
 
 (def render-text uri/external-link/inspector
-  (render-component (print-uri-to-string (component-value-of -self-))))
+  (render-component (uri/print-to-string (component-value-of -self-))))
 
 (def render-ods uri/external-link/inspector
-  (let ((uri (print-uri-to-string (component-value-of -self-))))
+  (let ((uri (uri/print-to-string (component-value-of -self-))))
     <text:p <text:a (xlink:href ,uri) ,uri>>))
 
 (def method render-command-bar-for-alternative? ((component uri/external-link/inspector))

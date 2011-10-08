@@ -32,12 +32,12 @@
                        (make-value-inspector it
                                              :edited (edited-component? -self-)
                                              :editable (editable-component? -self-))
-                       (print-uri-to-string (uri-of component-value))))))
+                       (uri/print-to-string (uri-of component-value))))))
 
 (def render-xhtml hyperlink/text/inspector
   (bind (((:read-only-slots component-value) -self-))
     (with-render-style/component (-self- :element-name "span")
-      <a (:class "external-link widget" :target "_blank" :href ,(print-uri-to-string (uri-of component-value)))
+      <a (:class "external-link widget" :target "_blank" :href ,(uri/print-to-string (uri-of component-value)))
          ,(render-content-for -self-)
          ,(render-component (icon/widget external-link))>)))
 
@@ -45,7 +45,7 @@
   (bind (((:read-only-slots component-value) -self-))
     <text:a (;;xlink:type "simple"
              ;;office:name "link name"
-             xlink:href ,(print-uri-to-string (uri-of component-value)))
+             xlink:href ,(uri/print-to-string (uri-of component-value)))
       ,(render-content-for -self-)
       ;; TODO icon
       >))
@@ -55,7 +55,7 @@
   (bind (((:read-only-slots component-value) -self-))
     (when component-value
       (write-string " (" *text-stream*)
-      (write-string (print-uri-to-string (uri-of component-value)) *text-stream*)
+      (write-string (uri/print-to-string (uri-of component-value)) *text-stream*)
       (write-char #\) *text-stream*))))
 
 (def method render-command-bar-for-alternative? ((component hyperlink/text/inspector))
