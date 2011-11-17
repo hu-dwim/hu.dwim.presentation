@@ -23,10 +23,10 @@
     (append
      (hu.dwim.web-server::make-default-broker-list :include-application-support #t)
      (list (make-instance 'js-directory-serving-broker
-                          :path-prefix "/hdp/js/"
+                          :path "hdp/js"
                           :root-directory (system-relative-pathname :hu.dwim.presentation "source/js/")
                           :priority priority)
-           (make-directory-serving-broker "/static/hdp/" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)))))
+           (make-directory-serving-broker "static/hdp" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)))))
 
 ;;;;;;
 ;;; Icon

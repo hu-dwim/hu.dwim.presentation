@@ -56,7 +56,7 @@
 ;; we stay with render-xhtml here, because component-environment is reinstated only after us, so the dojo layer is not active yet
 (def render-xhtml dojo-frame/widget
   (bind ((application *application*)
-         (path-prefix (path-prefix-of application))
+         (application-path (path-of application))
          (encoding (or (when *response*
                          (encoding-name-of *response*))
                        +default-encoding+))
@@ -73,7 +73,7 @@
              <link (:rel "icon"
                     :type "image/x-icon"
                     :href ,(bind ((uri (clone-uri icon-uri)))
-                             (uri/prepend-path uri path-prefix)
+                             (uri/prepend-path uri application-path)
                              (when timestamp
                                (append-timestamp-to-uri uri timestamp))
                              (uri/print-to-string uri)))>))
@@ -83,7 +83,7 @@
                       <link (:rel "stylesheet"
                              :type "text/css"
                              :href ,(bind ((uri (clone-uri stylesheet-uri)))
-                                      (uri/prepend-path uri path-prefix)
+                                      (uri/prepend-path uri application-path)
                                       (when timestamp
                                         (append-timestamp-to-uri uri timestamp))
                                       (uri/print-to-string uri)))>))
@@ -100,7 +100,7 @@
         <script (:type +javascript-mime-type+
                  :src  ,(bind ((uri (clone-uri (dojo-release-uri-of -self-))))
                           ;; we have the dojo release version in the url, so timestamps here are not important
-                          (uri/prepend-path uri path-prefix)
+                          (uri/prepend-path uri application-path)
                           (uri/append-path uri (if debug-client-side?
                                                    (dojo-file-name-of -self-)
                                                    (string+ (dojo-file-name-of -self-) ".uncompressed.js")))
@@ -112,7 +112,7 @@
                       <script (:type +javascript-mime-type+
                                :src  ,(bind ((uri (clone-uri script-uri)))
                                         (unless (starts-with #\/ (path-of uri))
-                                          (uri/prepend-path uri path-prefix))
+                                          (uri/prepend-path uri application-path))
                                         (when timestamp
                                           (append-timestamp-to-uri uri timestamp))
                                         (when debug-client-side?

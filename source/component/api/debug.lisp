@@ -67,7 +67,7 @@
                          (make-instance 'http-response)))
          (*application* (if (boundp '*application*)
                             *application*
-                            (make-instance 'application :path-prefix "")))
+                            (make-instance 'application)))
          (*session* (if (boundp '*session*)
                         *session*
                         (aprog1 (make-instance 'session)

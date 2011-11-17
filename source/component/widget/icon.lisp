@@ -85,7 +85,7 @@
     {with-quasi-quoted-xml-to-binary-emitting-form-syntax/preserve-whitespace
       <span (:id ,id :class ,style-class)
         ,(when image-path
-           <img (:src ,(string+ (path-prefix-of *application*) image-path) :alt ,label)>)
+           <img (:src ,(string+ (join-strings (path-of *application*) #\/) "/" image-path) :alt ,label)>)
         ,(when label
            (render-icon-label icon label))>}))
 
