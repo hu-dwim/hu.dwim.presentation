@@ -22,10 +22,9 @@
 
 ;; TODO: move
 (def method call-in-interaction-environment :around ((application application-with-perec-support) session thunk)
-  (hu.dwim.meta-model::with-model-database
-    (hu.dwim.perec::with-transaction
-      (hu.dwim.perec:with-new-compiled-query-cache
-        (call-next-method)))))
+  (hu.dwim.rdbms:with-transaction
+    (hu.dwim.perec:with-new-compiled-query-cache
+      (call-next-method))))
 
 ;; TODO: move
 (def method component-value= ((value-1 hu.dwim.perec::persistent-object) (value-2 hu.dwim.perec::persistent-object))
