@@ -14,6 +14,7 @@
                :hu.dwim.perec+iolib
                :hu.dwim.presentation
                :hu.dwim.meta-model ; KLUDGE
+               :hu.dwim.web-server.application+hu.dwim.perec
                )
   :components ((:module "integration"
                 :components ((:module "perec"

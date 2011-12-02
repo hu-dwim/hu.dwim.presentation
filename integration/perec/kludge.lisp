@@ -10,17 +10,6 @@
 ;;; Kludges
 
 ;; TODO: move
-(def (class* e) application-with-perec-support ()
-  ())
-
-;; TODO: move
-(def method call-in-application-environment :around ((application application-with-perec-support) session thunk)
-  (hu.dwim.meta-model::with-model-database
-    (hu.dwim.perec::with-readonly-transaction
-      (hu.dwim.perec:with-new-compiled-query-cache
-        (call-next-method)))))
-
-;; TODO: move
 (def method call-in-interaction-environment :around ((application application-with-perec-support) session thunk)
   (hu.dwim.rdbms:with-transaction
     (hu.dwim.perec:with-new-compiled-query-cache
