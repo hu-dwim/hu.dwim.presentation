@@ -512,8 +512,8 @@
 
 ;; NOTE: all this hassle is to have a reasonable code shown by component-demo/widget
 (def macro make-primitive-presentation-node (name factory supercomponent)
-  (flet ((make (type value)
-           `(,factory ',type :value ,value)))
+  (flet ((make (type &optional (value nil value-provided?))
+           `(,factory ',type ,@(when value-provided? `(:value ,value)))))
     `(node/widget (:expanded #f)
          (replace-target-place/widget ()
              ,name
@@ -522,6 +522,8 @@
          ,(make 'null nil))
        (component-demo/widget "Boolean"
          ,(make 'boolean #t))
+       (component-demo/widget "Boolean (tristate)"
+         ,(make '(or hu.dwim.util::unbound boolean)))
        (component-demo/widget "Bit"
          ,(make 'bit 0))
        (component-demo/widget "Character"
