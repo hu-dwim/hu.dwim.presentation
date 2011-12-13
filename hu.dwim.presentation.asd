@@ -21,6 +21,7 @@
                :hu.dwim.util.source
                :hu.dwim.util.standard-process
                :hu.dwim.web-server.application
+               :iolib.pathnames
                ;; TODO get rid of moptilities
                :moptilities)
   :components ((:module "source"
