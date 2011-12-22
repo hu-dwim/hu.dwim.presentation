@@ -61,7 +61,7 @@
 (def (with-macro e) with-render-context ()
   (bind ((*request* (if (boundp '*request*)
                         *request*
-                        (make-instance 'http-request :uri (parse-uri ""))))
+                        (make-instance 'http-request :uri (hu.dwim.uri:parse-uri ""))))
          (*response* (if (boundp '*response*)
                          *response*
                          (make-instance 'http-response)))

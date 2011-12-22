@@ -12,10 +12,10 @@
 (def (component e) uri/alternator/inspector (t/alternator/inspector)
   ())
 
-(def subtype-mapper *inspector-type-mapping* (or null uri) uri/alternator/inspector)
+(def subtype-mapper *inspector-type-mapping* (or null hu.dwim.uri:uri) uri/alternator/inspector)
 
-(def layered-method make-alternatives ((component uri/alternator/inspector) (class standard-class) (prototype uri) (value uri))
-  ;; TOOD: not all uris are external links
+(def layered-method make-alternatives ((component uri/alternator/inspector) (class standard-class) (prototype hu.dwim.uri:uri) value)
+  ;; TODO: not all uris are external links
   (list* (make-instance 'uri/external-link/inspector :component-value value) (call-next-layered-method)))
 
 (def method component-style-class ((self uri/alternator/inspector))
@@ -29,16 +29,16 @@
 
 (def render-xhtml uri/external-link/inspector
   (with-render-style/component (-self- :element-name "span")
-    (bind ((uri (uri/print-to-string (component-value-of -self-))))
+    (bind ((uri (hu.dwim.uri:print-uri-to-string (component-value-of -self-))))
       ;; TODO: refactor this to use the external-link/widget
       <a (:href ,uri :target "_blank")
         ,uri ,(render-component (icon/widget external-link))>)))
 
 (def render-text uri/external-link/inspector
-  (render-component (uri/print-to-string (component-value-of -self-))))
+  (render-component (hu.dwim.uri:print-uri-to-string (component-value-of -self-))))
 
 (def render-ods uri/external-link/inspector
-  (let ((uri (uri/print-to-string (component-value-of -self-))))
+  (let ((uri (hu.dwim.uri:print-uri-to-string (component-value-of -self-))))
     <text:p <text:a (xlink:href ,uri) ,uri>>))
 
 (def method render-command-bar-for-alternative? ((component uri/external-link/inspector))

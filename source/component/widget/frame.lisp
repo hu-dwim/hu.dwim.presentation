@@ -34,7 +34,7 @@
 
 (def (component e) dojo-frame/widget (frame/widget)
   ((dojo-skin-name *dojo-skin-name*)
-   (dojo-release-uri (parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* "dojo/")))
+   (dojo-release-uri (hu.dwim.uri:parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* "dojo/")))
    (dojo-file-name *dojo-file-name*)
    (parse-dojo-widgets-on-load #f :type boolean)
    (debug-client-side :type boolean :writer (setf debug-client-side?))))
@@ -72,21 +72,21 @@
            (when icon-uri
              <link (:rel "icon"
                     :type "image/x-icon"
-                    :href ,(bind ((uri (clone-uri icon-uri)))
-                             (uri/prepend-path uri application-path)
+                    :href ,(bind ((uri (hu.dwim.uri:clone-uri icon-uri)))
+                             (hu.dwim.uri:prepend-path uri application-path)
                              (when timestamp
                                (append-timestamp-to-uri uri timestamp))
-                             (uri/print-to-string uri)))>))
+                             (hu.dwim.uri:print-uri-to-string uri)))>))
         <title ,(title-of -self-)>
         ,(foreach (lambda (entry)
                     (bind (((stylesheet-uri &optional timestamp) (ensure-list entry)))
                       <link (:rel "stylesheet"
                              :type "text/css"
-                             :href ,(bind ((uri (clone-uri stylesheet-uri)))
-                                      (uri/prepend-path uri application-path)
+                             :href ,(bind ((uri (hu.dwim.uri:clone-uri stylesheet-uri)))
+                                      (hu.dwim.uri:prepend-path uri application-path)
                                       (when timestamp
                                         (append-timestamp-to-uri uri timestamp))
-                                      (uri/print-to-string uri)))>))
+                                      (hu.dwim.uri:print-uri-to-string uri)))>))
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
           ,(string+ "djConfig = { baseUrl: '/static/hdws/libraries/" *dojo-directory-name* "dojo/'"
@@ -98,26 +98,26 @@
                     ", locale: " (to-js-literal (locale-name (locale (first (ensure-list (default-locale-of application))))))
                     "}")>
         <script (:type +javascript-mime-type+
-                 :src  ,(bind ((uri (clone-uri (dojo-release-uri-of -self-))))
+                 :src  ,(bind ((uri (hu.dwim.uri:clone-uri (dojo-release-uri-of -self-))))
                           ;; we have the dojo release version in the url, so timestamps here are not important
-                          (uri/prepend-path uri application-path)
-                          (uri/append-path uri (if debug-client-side?
-                                                   (dojo-file-name-of -self-)
-                                                   (string+ (dojo-file-name-of -self-) ".uncompressed.js")))
-                          (uri/print-to-string uri)))
+                          (hu.dwim.uri:prepend-path uri application-path)
+                          (hu.dwim.uri:append-path uri (if debug-client-side?
+                                                           (dojo-file-name-of -self-)
+                                                           (string+ (dojo-file-name-of -self-) ".uncompressed.js")))
+                          (hu.dwim.uri:print-uri-to-string uri)))
                  ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                  "">
         ,(foreach (lambda (entry)
                     (bind (((script-uri &optional timestamp) (ensure-list entry)))
                       <script (:type +javascript-mime-type+
-                               :src  ,(bind ((uri (clone-uri script-uri)))
-                                        (unless (starts-with #\/ (path-of uri))
-                                          (uri/prepend-path uri application-path))
+                               :src  ,(bind ((uri (hu.dwim.uri:clone-uri script-uri)))
+                                        (unless (starts-with #\/ (hu.dwim.uri:path-of uri))
+                                          (hu.dwim.uri:prepend-path uri application-path))
                                         (when timestamp
                                           (append-timestamp-to-uri uri timestamp))
                                         (when debug-client-side?
-                                          (setf (uri/query-parameter-value uri "debug") "t"))
-                                        (uri/print-to-string uri)))
+                                          (setf (hu.dwim.uri:query-parameter-value uri "debug") "t"))
+                                        (hu.dwim.uri:print-uri-to-string uri)))
                         ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                         "">))
                   (script-uris-of -self-))>
@@ -155,7 +155,7 @@
                      (setf hdp.frame-index ,(or (awhen *frame* (frame-index-of it)) "")))))
         ;; NOTE: if javascript is turned on in the browser, then just reload without the marker parameter (this might be true after enabling it and pressing refresh)
         ,(unless javascript-supported?
-           (bind ((href (uri/print-to-string (clone-request-uri :strip-query-parameters (list +no-javascript-error-parameter-name+)))))
+           (bind ((href (hu.dwim.uri:print-uri-to-string (clone-request-uri :strip-query-parameters (list +no-javascript-error-parameter-name+)))))
              `js-xml(setf window.location.href ,href)))
         <form (:method "post"
                :enctype #.+form-encoding/multipart-form-data+
@@ -165,8 +165,8 @@
                ,(when *frame*
                   (make-xml-attribute "action"
                                       (bind ((frame-uri (make-uri-for-current-application)))
-                                        (setf (uri/query-parameter-value frame-uri +frame-index-parameter-name+) (next-frame-index-of *frame*))
-                                        (uri/print-to-string frame-uri)))))
+                                        (setf (hu.dwim.uri:query-parameter-value frame-uri +frame-index-parameter-name+) (next-frame-index-of *frame*))
+                                        (hu.dwim.uri:print-uri-to-string frame-uri)))))
           <div (:style "display: none")
             <input (:id #.+scroll-x-parameter-name+ :name #.+scroll-x-parameter-name+ :type "hidden"
                     :value ,(first (ensure-list (parameter-value +scroll-x-parameter-name+))))>
@@ -184,20 +184,20 @@
                               (system-relative-pathname it "www/")
                               asdf-system-name-or-base-directory))
          (file (assert-file-exists (merge-pathnames path base-directory))))
-    (list (parse-uri (string+ path-prefix path))
+    (list (hu.dwim.uri:parse-uri (string+ path-prefix path))
           (delay (file-write-date file)))))
 
 (def (function e) make-default-script-uris ()
   (load-time-value
-   (list (list (parse-uri "/hdws/js/main.dojo.js")
+   (list (list (hu.dwim.uri:parse-uri "/hdws/js/main.dojo.js")
                (bind ((file (system-relative-pathname :hu.dwim.web-server "source/js/main.dojo.lisp")))
                  (delay (file-write-date file))))
-         (list (parse-uri "/hdp/js/main.dojo.js")
+         (list (hu.dwim.uri:parse-uri "/hdp/js/main.dojo.js")
                (bind ((file (system-relative-pathname :hu.dwim.presentation "source/js/main.dojo.lisp")))
                  (delay (file-write-date file))))
-         (list (parse-uri +js-i18n-broker/default-path+)
+         (list (hu.dwim.uri:parse-uri +js-i18n-broker/default-path+)
                (delay hu.dwim.web-server::*js-i18n-resource-registry/last-modified-at*))
-         (list (parse-uri +js-component-hierarchy-serving-broker/default-path+)
+         (list (hu.dwim.uri:parse-uri +js-component-hierarchy-serving-broker/default-path+)
                (delay *js-component-hierarchy-cache/last-modified-at*)))))
 
 (def function %make-stylesheet-uris (asdf-system-name-or-base-directory path-prefix &rest relative-paths)
@@ -205,13 +205,13 @@
                               (system-relative-pathname it "www/")
                               asdf-system-name-or-base-directory)))
     (iter (for path :in relative-paths)
-          (collect (list (parse-uri (string+ path-prefix path))
+          (collect (list (hu.dwim.uri:parse-uri (string+ path-prefix path))
                          (bind ((file (assert-file-exists (merge-pathnames path base-directory))))
                            (delay (file-write-date file))))))))
 
 (def (function e) make-default-stylesheet-uris ()
   (flet ((dojo-relative-path (path)
-           (parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* path))))
+           (hu.dwim.uri:parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* path))))
     (append
      (mapcar #'dojo-relative-path
              '("dojo/resources/dojo.css"

@@ -24,7 +24,7 @@
 
 (def refresh-component download-file/widget
   (bind (((:slots file-name action url-prefix) -self-))
-    (setf action (make-uri :path (string+ url-prefix (namestring file-name))))))
+    (setf action (hu.dwim.uri:make-uri :path (string+ url-prefix (namestring file-name))))))
 
 (def render-xhtml download-file/widget
   (bind ((absolute-file-name (merge-pathnames (file-name-of -self-) (directory-of -self-))))

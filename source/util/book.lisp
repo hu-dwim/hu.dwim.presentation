@@ -26,11 +26,11 @@
 ;;; Hyperlink
 
 (def class* hyperlink ()
-  ((uri :type (or string uri))
+  ((uri :type (or string hu.dwim.uri:uri))
    (content :type t)))
 
 (def (macro e) hyperlink (uri &optional text)
-  `(make-instance 'hyperlink :uri (parse-uri ,uri) :content ,text))
+  `(make-instance 'hyperlink :uri (hu.dwim.uri:parse-uri ,uri) :content ,text))
 
 (def (macro e) hyperlink/wikipedia (relative-uri &optional (text relative-uri))
   `(hyperlink (string+ "http://wikipedia.org/wiki/" ,relative-uri) ,text))

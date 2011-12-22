@@ -20,7 +20,7 @@
 ;; TODO: this could collect the essential data in a special variable and at the end of rendering emit a literal js array with all the tooltips
 (def (function e) render-tooltip (tooltip target-id &key position)
   ":position might be '(\"below\" \"right\")"
-  (check-type tooltip (or string uri action function))
+  (check-type tooltip (or string hu.dwim.uri:uri action function))
   (check-type target-id string)
   (etypecase tooltip
     (string
@@ -29,13 +29,13 @@
                     (create :connectId (array ,target-id)
                             :label ,tooltip
                             :position (array ,@position))))
-    ((or action uri)
+    ((or action hu.dwim.uri:uri)
      `js-onload(new dojox.widget.DynamicTooltip
                     (create :connectId (array ,target-id)
                             :position (array ,@position)
                             :href ,(etypecase tooltip
-                                              (action (register-action/href tooltip :delayed-content #t))
-                                              (uri (uri/print-to-string tooltip))))))
+                                     (action          (register-action/href tooltip :delayed-content #t))
+                                     (hu.dwim.uri:uri (hu.dwim.uri:print-uri-to-string tooltip))))))
     ;; action is subtypep function, therefore this order and the small code duplication...
     (computation
      `js-onload(new dijit.Tooltip

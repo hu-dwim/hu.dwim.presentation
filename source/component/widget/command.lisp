@@ -28,7 +28,7 @@
     :type (or null t) ; FIXME :type (or null component) would try to set the parent-component slot of components that are put in this slot. we obviously don't want that...
     :documentation "Specifies the component which will be used to indicate the progress when the command is issued.")
    (action
-    :type (or uri action)
+    :type (or hu.dwim.uri:uri action)
     :documentation "The action (function) that will be called when this command is activated.")
    (action-arguments
     nil
@@ -130,9 +130,9 @@
                   :name #.+action-id-parameter-name+ :value ,(when (typep action 'action)
                                                                (id-of action)))>
           (when (and (not *frame*)
-                     (typep action 'uri))
+                     (typep action 'hu.dwim.uri:uri))
             ;; this is needed on Chrome, which doesn't call onclick on the submit input dom node
-            `js(setf (slot-value (aref document.forms 0) 'action) ,(uri/print-to-string action)))))
+            `js(setf (slot-value (aref document.forms 0) 'action) ,(hu.dwim.uri:print-uri-to-string action)))))
       <span (:id ,id :class `str("disabled " ,style-class))
         #\Newline ;; NOTE: this is mandatory for chrome when the element does not have a content
         ,(render-component content)>))

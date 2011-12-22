@@ -10,7 +10,7 @@
 ;;; image/widget
 
 (def (component e) image/widget (standard/widget)
-  ((location :type uri))
+  ((location :type hu.dwim.uri:uri))
   (:documentation "An IMAGE specified by an URI location"))
 
 (def (macro e) image/widget (&rest args &key location &allow-other-keys)
@@ -22,4 +22,4 @@
 
 (def (function e) render-image (self)
   (bind (((:read-only-slots id style-class custom-style location) self))
-    <img (:id ,id :class ,style-class :style ,custom-style :src ,(uri/print-to-string location) :alt "")>))
+    <img (:id ,id :class ,style-class :style ,custom-style :src ,(hu.dwim.uri:print-uri-to-string location) :alt "")>))

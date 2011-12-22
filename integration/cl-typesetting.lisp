@@ -246,7 +246,7 @@
           (render-component content))))
 
 (def render-pdf uri/external-link/inspector
-  (typeset:put-string (uri/print-to-string (component-value-of -self-))))
+  (typeset:put-string (hu.dwim.uri:print-uri-to-string (component-value-of -self-))))
 
 ;;;;;;
 ;;; Utilities

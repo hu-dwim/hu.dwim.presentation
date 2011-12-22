@@ -826,7 +826,7 @@
     (component-demo/widget "Toc"
       "TODO")
     (component-demo/widget "URI"
-      (make-value-inspector (parse-uri "http://dwim.hu/")))
+      (make-value-inspector (hu.dwim.uri:parse-uri "http://dwim.hu/")))
     (component-demo/widget "Hyperlink"
       (make-value-inspector (hyperlink "http://dwim.hu/" "Home")))))
 
@@ -1028,8 +1028,8 @@
           (make-inspector 'string :value (compute-as (string+ (selected-component-value left-list) " - " (selected-component-value right-list))))
           right-list)))
     (component-demo/widget "Inspector"
-      (bind ((list-inspector (make-value-inspector (list (parse-uri "http://dwim.hu")
-                                                         (parse-uri "http://sbcl.org")))))
+      (bind ((list-inspector (make-value-inspector (list (hu.dwim.uri:parse-uri "http://dwim.hu")
+                                                         (hu.dwim.uri:parse-uri "http://sbcl.org")))))
         (vertical-list/layout ()
           list-inspector
           (make-inspector 'uri :value (compute-as (selected-component-value (content-of list-inspector)))))))))
