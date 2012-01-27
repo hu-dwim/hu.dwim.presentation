@@ -41,7 +41,7 @@
                                     :host host
                                     :port port
                                     :maximum-worker-count maximum-worker-count
-                                    :request-content-length-limit (* 1024 1024 50)))
+                                    :length-limit/http-request-body (* 1024 1024 50)))
 
 ;;;;;;
 ;;; Component demo

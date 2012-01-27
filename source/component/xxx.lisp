@@ -26,7 +26,8 @@
                           :path "hdp/js"
                           :root-directory (system-relative-pathname :hu.dwim.presentation "source/js/")
                           :priority priority)
-           (make-directory-serving-broker "static/hdp" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)))))
+           (make-directory-serving-broker "static/hdp" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)
+           (make-instance 'js-component-hierarchy-serving-broker :priority 100)))))
 
 ;;;;;;
 ;;; Icon

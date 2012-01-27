@@ -27,6 +27,9 @@
   (:shadowing-import-from :hu.dwim.syntax-sugar
                           #:define-syntax)
 
+  (:shadowing-import-from :hu.dwim.presentation
+                          #:log)
+
   (:shadow #:parent
            #:test
            #:test
