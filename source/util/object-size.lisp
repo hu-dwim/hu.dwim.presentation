@@ -191,6 +191,10 @@
          (cond
            ((= widetag sb-vm:simple-fun-header-widetag)
             0)
+           ((= widetag sb-vm:funcallable-instance-header-widetag)
+            ;; proposed on #lisp on 2012-04-06
+            (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-header-data object)))
+                                  sb-vm:n-word-bytes)))
            ((= widetag sb-vm:closure-header-widetag)
             (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-closure-length object)))
                                   sb-vm:n-word-bytes)))
