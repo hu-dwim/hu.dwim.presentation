@@ -83,7 +83,7 @@
 (def (with-macro e) with-render-to-string-context ()
   (with-render-context
     (octets-to-string
-     (with-output-to-sequence (buffer-stream :external-format +default-encoding+ :initial-buffer-size 256)
+     (with-output-to-sequence (buffer-stream :external-format +default-encoding+)
        (emit-into-xml-stream buffer-stream
          `xml,@(with-xhtml-body-environment ()
                  (-with-macro/body-))

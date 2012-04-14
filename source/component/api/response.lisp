@@ -86,8 +86,8 @@
          (*ajax-aware-request* (ajax-aware-request?))
          (*delayed-content-request* (or *ajax-aware-request*
                                         (delayed-content-request?)))
-         (body (with-output-to-sequence (buffer-stream :external-format (external-format-of self)
-                                                       :initial-buffer-size 256)
+         ;; by default we render into a BYTE-VECTOR-RESPONSE to accommodate for proper connection multiplexing when it eventually gets implemented
+         (body (with-output-to-sequence (buffer-stream :external-format (external-format-of self))
                  (when (and *frame*
                             (not *delayed-content-request*))
                    (app.debug "This is not a delayed content request, clearing the action and client-state-sink hashtables of ~A" *frame*)

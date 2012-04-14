@@ -6,6 +6,8 @@
 
 (in-package :hu.dwim.presentation)
 
+;; TODO rename? not to be confused with debug-component-hierarchy
+
 ;;;;;;
 ;;; js-component-hierarchy-broker
 
@@ -17,7 +19,8 @@
 
 (def (class* e) js-component-hierarchy-serving-broker (broker-at-path)
   ()
-  (:default-initargs :path +js-component-hierarchy-serving-broker/default-path+))
+  (:default-initargs :path +js-component-hierarchy-serving-broker/default-path+)
+  (:documentation "Renders a JS file that transfers the lisp side component class hierarchy to the JS stack. For now it's only used by the hdp.apply-generic-function function."))
 
 (def function clear-js-component-hierarchy-cache ()
   (setf *js-component-hierarchy-cache* nil)
