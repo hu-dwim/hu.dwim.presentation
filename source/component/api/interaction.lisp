@@ -22,7 +22,8 @@
 (def (with-macro e) with-interaction (component)
   "Wraps the forms inside with an INTERACTION related to COMPONENT."
   (bind ((*interaction* (make-instance 'interaction)))
-    (unwind-protect (call-in-interaction-environment *application* *session* (lambda () (-body-)))
+    (unwind-protect
+         (call-in-interaction-environment *application* *session* #'-body-)
       (when (interaction-aborted?)
         (add-component-error-message component #"interaction-aborted")))))
 

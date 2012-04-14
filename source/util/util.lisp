@@ -51,6 +51,7 @@
 ;;;;;;
 ;;; Utils
 
+;; TODO maybe rename to js-string-to-lisp-boolean ?
 (def function string-to-lisp-boolean (value)
   (eswitch (value :test #'string=)
     ("true" #t)
@@ -223,7 +224,7 @@
 ;;;;;;
 ;;; Dynamic classes
 
-;; TODO FIXME thread safety?
+;; TODO FIXME thread safety? use (def namespace ...)?
 (def special-variable *dynamic-classes* (make-hash-table :test #'equal))
 
 (def function find-dynamic-class (class-names)
