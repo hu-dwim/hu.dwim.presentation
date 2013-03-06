@@ -4,12 +4,9 @@
 ;;;
 ;;; See LICENCE for details.
 
-(load-system :hu.dwim.asdf)
-
-(in-package :hu.dwim.asdf)
-
 (defsystem :hu.dwim.presentation.test
-  :class hu.dwim.test-system
+  :defsystem-depends-on (:hu.dwim.asdf)
+  :class "hu.dwim.asdf:hu.dwim.test-system"
   :package-name :hu.dwim.presentation.test
   :depends-on (:hu.dwim.graphviz
                :hu.dwim.web-server.application.test
