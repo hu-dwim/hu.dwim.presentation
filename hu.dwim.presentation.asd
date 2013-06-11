@@ -267,11 +267,11 @@
                              ;; KLUDGE: kill this
                              (:file "xxx" :pathname #p"component/xxx.lisp" :depends-on ("component"))))))
 
-(defmethod perform :before ((op develop-op) (system (eql (find-system :hu.dwim.presentation))))
-  (develop-system :hu.dwim.web-server))
+(defmethod perform :before ((op hu.dwim.asdf:develop-op) (system (eql (find-system :hu.dwim.presentation))))
+  (hu.dwim.asdf:develop-system :hu.dwim.web-server))
 
 #+nil ; TODO delme
-(defmethod perform :after ((op develop-op) (system (eql (find-system :hu.dwim.presentation))))
+(defmethod perform :after ((op hu.dwim.asdf:develop-op) (system (eql (find-system :hu.dwim.presentation))))
   (let ((*package* (find-package :hu.dwim.presentation)))
     (eval
      (read-from-string
