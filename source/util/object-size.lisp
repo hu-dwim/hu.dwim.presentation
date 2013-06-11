@@ -148,7 +148,13 @@
            (logand (the sb-vm:word (+ size sb-vm:lowtag-mask))
                    (lognot sb-vm:lowtag-mask)))
          (sbcl-vector-size (object)
-           (sb-vm::vector-total-size object (svref sb-vm::*room-info* (sb-kernel:widetag-of object)))))
+           ;; maybe this? http://paste.lisp.org/display/137558
+           ;; the third value of
+           ;;   (sb-vm::reconstitute-object
+           ;;    (ash (logxor (sb-kernel:get-lisp-obj-address object)
+           ;;                 sb-vm:lowtag-mask)
+           ;;         (- sb-vm:n-fixnum-tag-bits)))
+           (sb-vm::array-total-size object)))
     (etypecase object
       ((or fixnum float character)
        ;; these are immediate values

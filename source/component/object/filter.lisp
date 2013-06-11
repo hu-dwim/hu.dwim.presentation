@@ -120,7 +120,7 @@ Optimized factory configuration (default):
        (declare (ignore type size)
                 (optimize (debug 0) (speed 3)))
        (funcall function candidate))
-     :dynamic #t)))
+     :dynamic)))
 
 ;;;;;;
 ;;; t/reference/filter
