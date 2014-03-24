@@ -236,6 +236,8 @@
     (t (call-next-method))))
 
 (def layered-method map-filter-input ((component t/filter) (class class) (prototype class) (value class) function)
+  (not-yet-implemented)
+  #+nil
   (maphash-keys (lambda (key)
                   (awhen (find-class key #f)
                     (funcall function it)))
