@@ -102,8 +102,8 @@
                           ;; we have the dojo release version in the url, so timestamps here are not important
                           (hu.dwim.uri:prepend-path uri application-path)
                           (hu.dwim.uri:append-path uri (if debug-client-side?
-                                                           (dojo-file-name-of -self-)
-                                                           (string+ (dojo-file-name-of -self-) ".uncompressed.js")))
+                                                           (string+ (dojo-file-name-of -self-) ".uncompressed.js")
+                                                           (dojo-file-name-of -self-)))
                           (hu.dwim.uri:print-uri-to-string uri)))
                  ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                  "">
