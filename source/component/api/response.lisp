@@ -15,7 +15,9 @@
 
 (def (macro e) make-component-action (component &body body)
   (with-unique-names (action)
-    `(bind ((,action (make-instance 'component-action :component ,component)))
+    `(bind ((,action (make-instance 'component-action
+                                    :component ,(or component
+                                                    (error "~S was called with NIL component" 'make-component-action)))))
        (set-funcallable-instance-function ,action (named-lambda component-action-body ()
                                                     ,@body))
        ,action)))
@@ -37,6 +39,7 @@
 ;; seems like with xhtml there are random problems, like some dojo x.innerHTML throws...
 (def (function e) make-component-rendering-response (component &key (application *application*) (session *session*) (frame *frame*)
                                                                (encoding (guess-encoding-for-http-response)) (content-type (content-type-for +html-mime-type+ encoding)))
+  (check-type component component)
   (aprog1
       (make-instance 'component-rendering-response
                      :component component
