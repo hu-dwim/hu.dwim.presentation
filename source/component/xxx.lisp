@@ -17,17 +17,20 @@
     "INSPECT"
     (make-action (inspect-in-repl component))))
 
-(def (function e) make-default-broker-list ()
+(def (function e) make-default-broker-list (&key (path-prefix ""))
   "Returns a list of brokers that are needed for normal operation."
   (bind ((priority 100))
     (append
-     (hu.dwim.web-server::make-default-broker-list :include-application-support #t)
+     (hu.dwim.web-server::make-default-broker-list :path-prefix path-prefix :include-application-support #t)
      (list (make-instance 'js-directory-serving-broker
-                          :path "hdp/js"
+                          :path (string+ path-prefix "hdp/js")
                           :root-directory (system-relative-pathname :hu.dwim.presentation "source/js/")
                           :priority priority)
-           (make-directory-serving-broker "static/hdp" (system-relative-pathname :hu.dwim.presentation "www/") :priority priority)
-           (make-instance 'js-component-hierarchy-serving-broker :priority priority)))))
+           (make-directory-serving-broker (string+ path-prefix "static/hdp")
+                                          (system-relative-pathname :hu.dwim.presentation "www/")
+                                          :priority priority)
+           (make-instance 'js-component-hierarchy-serving-broker
+                          :priority priority)))))
 
 ;;;;;;
 ;;; Icon
