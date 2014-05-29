@@ -12,6 +12,7 @@
   :depends-on (:contextl
                :cl-graph+hu.dwim.graphviz ; KLUDGE component/source/class.lisp depends on cl-graph
                :hu.dwim.def+contextl
+               :hu.dwim.logger
                :hu.dwim.stefil+hu.dwim.def ; to resolve the -body- symbol conflict
                :hu.dwim.util.authorization
                :hu.dwim.util.linear-mapping
