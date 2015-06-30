@@ -133,6 +133,7 @@
                                                +no-javascript-error-parameter-name+
                                                "=t"))>>
            (apply-localization-function 'render-failed-to-load-page)
+           ;; don't use any non-standard js stuff for the failed-to-load machinery, because if things go wrong then nothing is guaranteed to be loaded...
            `js-xml(progn
                     ;; don't use any non-standard js stuff for the failed-to-load machinery, because if things go wrong then nothing is guaranteed to be loaded...
                     (defun _wui_handleFailedToLoad ()

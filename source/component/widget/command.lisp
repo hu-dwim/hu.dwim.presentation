@@ -126,6 +126,9 @@
         (when default
           ;; NOTE: we must do this after render-action-js-event-handler, because the action gets registered in it and we use its id here
           ;; TODO add client side warning for multiple default actions?
+          ;; https://stackoverflow.com/questions/4068082/submitting-a-form-with-the-enter-button-in-a-form-with-several-submit-buttons
+          ;; https://stackoverflow.com/questions/8294465/making-enter-key-on-an-html-form-submit-instead-of-activating-button
+          ;; https://stackoverflow.com/questions/925334/how-is-the-default-submit-button-on-an-html-form-determined
           <input (:id ,submit-id :type "submit" :style "display: none;"
                   :name #.+action-id-parameter-name+ :value ,(when (typep action 'action)
                                                                (id-of action)))>
