@@ -32,6 +32,7 @@
      :mode :retained)
     (hash-table-values class-name->object-size-descriptor)))
 
+;; TODO use sb-introspect:map-root instead
 (def function %iterate-descendant-objects (root visitor &key ignored-type (mode :retained))
   (check-type mode (member :retained :reachable))
   (bind ((seen-object-set (make-hash-table :test #'eq)))
