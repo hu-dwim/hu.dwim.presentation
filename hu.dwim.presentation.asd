@@ -14,10 +14,11 @@
                :hu.dwim.def+contextl
                :hu.dwim.logger
                :hu.dwim.stefil+hu.dwim.def ; to resolve the -body- symbol conflict
-               :hu.dwim.util.authorization
-               :hu.dwim.util.linear-mapping
-               :hu.dwim.util.source
-               :hu.dwim.util.standard-process
+               :hu.dwim.util
+               :hu.dwim.util/authorization
+               :hu.dwim.util/linear-mapping
+               :hu.dwim.util/source
+               :hu.dwim.util/standard-process
                :hu.dwim.web-server.application
                :iolib/pathnames
                ;; TODO get rid of moptilities
