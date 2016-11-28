@@ -42,5 +42,4 @@
                    (typecase component
                      (asdf:module (recurse component))
                      (asdf:source-file (funcall function component))))))
-    (iter (for (system-name (version . system)) :in-hashtable asdf::*defined-systems*)
-          (recurse system))))
+    (asdf:map-systems #'recurse)))
