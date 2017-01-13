@@ -5,6 +5,7 @@
 
 div.content-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/content-border.png") 5 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/content-border.png") 5 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/content-border.png") 5 stretch stretch;
@@ -21,6 +22,7 @@ div.content-border {
 
 div.title-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/title-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/title-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/title-border.png") 3 stretch stretch;
@@ -38,6 +40,7 @@ div.title-border {
 
 div.table-header-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
@@ -55,6 +58,7 @@ div.table-header-border {
 
 div.place-group-header-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/column-border.png") 3 stretch stretch;
@@ -72,6 +76,7 @@ div.place-group-header-border {
 
 div.error-message-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/error-message-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/error-message-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/error-message-border.png") 3 stretch stretch;
@@ -89,6 +94,7 @@ div.error-message-border {
 
 div.warning-message-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/warning-message-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/warning-message-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/warning-message-border.png") 3 stretch stretch;
@@ -105,6 +111,7 @@ div.warning-message-border {
 
 div.information-message-border {
   padding: 2px;
+  border: solid transparent;
   border-image: url("/static/hdp/image/border/information-message-border.png") 3 stretch stretch;
   -moz-border-image: url("/static/hdp/image/border/information-message-border.png") 3 stretch stretch;
   -webkit-border-image: url("/static/hdp/image/border/information-message-border.png") 3 stretch stretch;
