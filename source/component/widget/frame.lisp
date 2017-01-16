@@ -95,7 +95,9 @@
                     ;; TODO add separate flag for debugAtAllCosts
                     ", debugAtAllCosts: " (to-js-boolean debug-client-side?)
                     ;; TODO locale should come from either the session or from frame/widget
-                    ", locale: " (to-js-literal (locale-name (locale (first (ensure-list (default-locale-of application))))))
+                    ;; KLUDGE browsers do not substitute &quot; if the content-type of the response is text/html.
+                    ;;    was:", locale: " (to-js-literal (locale-name (locale (first (ensure-list (default-locale-of application))))))
+                    ", locale: '" (escape-as-js-string (locale-name (locale (first (ensure-list (default-locale-of application)))))) "'"
                     "}")>
         <script (:type +javascript-mime-type+
                  :src  ,(bind ((uri (hu.dwim.uri:clone-uri (dojo-release-uri-of -self-))))
