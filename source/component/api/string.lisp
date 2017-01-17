@@ -70,7 +70,7 @@
   (values))
 
 (def method mark-rendered-component ((self string))
-  (operation-not-supported "Cannot MARK-RENDERED-COMPONENT ~A"))
+  (operation-not-supported "Cannot MARK-RENDERED-COMPONENT ~A" self))
 
 ;;;;;;
 ;;; Refresh component
