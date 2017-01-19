@@ -133,15 +133,18 @@
                     :style "display: none;")
                 ,(foreach #'render-component menu-items)>)>)
         (when (visible-component? content)
-          (render-dojo-widget (+dijit/menu-item+ `(:iconClass ,(typecase content
-                                                                 (icon/widget
-                                                                  (icon-style-class content))
-                                                                 (content/mixin
-                                                                  (bind ((content-content (content-of content)))
-                                                                    (when (typep content-content 'icon/widget)
-                                                                      (icon-style-class content-content))))
-                                                                 (t
-                                                                  nil)))
+          (render-dojo-widget ((if (typep (parent-component-of -self-) 'menu-bar/widget)
+                                 +dijit/menu-bar-item+
+                                 +dijit/menu-item+)
+                               `(:iconClass ,(typecase content
+                                                       (icon/widget
+                                                        (icon-style-class content))
+                                                       (content/mixin
+                                                        (bind ((content-content (content-of content)))
+                                                          (when (typep content-content 'icon/widget)
+                                                            (icon-style-class content-content))))
+                                                       (t
+                                                        nil)))
                                  :id id)
             <div (:id ,-id-
                   :class ,style-class
