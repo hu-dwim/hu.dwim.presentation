@@ -127,6 +127,22 @@ div.information-message-border {
   background-color: #075122;
 }
 
+span.button-border {
+  padding: 2px;
+  border: solid transparent;
+  border-image: url("/static/hdp/image/border/button-border.png") 6 stretch stretch;
+  -moz-border-image: url("/static/hdp/image/border/button-border.png") 6 stretch stretch;
+  -webkit-border-image: url("/static/hdp/image/border/button-border.png") 6 stretch stretch;
+  border-width: 6px;
+  -moz-border-width: 6px;
+  -webkit-border-width: 6px;
+  background-image: url("/static/hdp/image/button-border/border-center.png");
+  background-repeat: repeat-x;
+  background-clip: padding;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+}
+
 /* button-border */
 
 .button-border {
