@@ -29,7 +29,7 @@
   ())
 
 (def method component-dispatch-class ((self t/maker))
-  (or (find-class-for-type (component-value-type-of self))
+  (or (find-most-generic-subclass-for-type (component-value-type-of self) :otherwise nil)
       (find-class t)))
 
 ;;;;;;

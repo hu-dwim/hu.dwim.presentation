@@ -95,6 +95,32 @@
   `(and string
         (satisfies password?)))
 
+;; TODO use def namespace if possible to make thread-safety portable
+;; (def (namespace :test 'equal :finder-name %find-class-for-type) class-for-type)
+(def special-variable *find-most-generic-subclass-for-type/cache* (make-hash-table :test #'equal #+sbcl :synchronized #+sbcl #t))
+
+(def function find-most-generic-subclass-for-type (type &key (otherwise :error))
+  (or (gethash type *find-most-generic-subclass-for-type/cache*)
+      (awhen (or (when (symbolp type)
+                   (find-class type nil))
+                 ;; NOTE at one point this has been obsoleted by a change in the sbcl internals:
+                 ;; https://github.com/sbcl/sbcl/commit/66d35ed03a2360fbcb776b66d3d55bd2bf72cb1a
+                 ;; KLUDGE this feels like an ugly kludge. maybe properly parse/interpret the type?
+                 (first (sort (bind ((classes (list)))
+                                ;; enumerate *every* defined class, using SBCL internals
+                                (sb-c::call-with-each-globaldb-name
+                                 (lambda (x)
+                                   (bind ((class (find-class x nil)))
+                                     (when (and class
+                                                (not (typep class 'built-in-class))
+                                                (subtypep class type))
+                                       (push class classes)))))
+                                classes)
+                              (lambda (class-1 class-2)
+                                (subtypep class-2 class-1)))))
+        (setf (gethash type *find-most-generic-subclass-for-type/cache*) it))
+      (handle-otherwise/value otherwise :default-message (list "~S failed for ~S" -this-function/name- type))))
+
 (def (function i) class-prototype (class)
   (cond
     ;; KLUDGE: SBCL's class prototypes for built in classes are wrong in some cases

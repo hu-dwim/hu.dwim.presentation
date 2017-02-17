@@ -22,7 +22,7 @@
       (lookup-first-matching-resource
         ((class-name (owner-class-of-effective-slot-definition slot)) slot-name)
         ("slot-name" slot-name)
-        ("class-name" (awhen (find-class-for-type (slot-definition-type slot))
+        ("class-name" (awhen (find-most-generic-subclass-for-type (slot-definition-type slot) :otherwise nil)
                         (class-name it))))))
 
   (:method :around ((slot effective-slot-definition) &key (capitalize-first-letter #t) prefix-with)
