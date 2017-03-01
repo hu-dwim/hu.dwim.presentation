@@ -484,8 +484,12 @@
 (def function render-html-component (component)
   (bind ((field-id (generate-unique-component-id)))
     ;; TODO: according to the documentation the :height should be "", so that it will be adapted to content automatically
-    (render-dojo-widget (+dijit/editor+ '(:height "75px" :minHeight "75px" :maxHeight "200px"
-                                          :extraPlugins "['dijit._editor.plugins.AlwaysShowToolbar','foreColor','hiliteColor',{name:'dijit._editor.plugins.FontChoice', command:'fontName', generic:true},'fontSize','createLink','insertImage']"))
+    (render-dojo-widget (+dijit/editor+ `(:height "75px" :min-height "75px" :max-height "200px"
+                                          :extra-plugins ,`js-piece (array "dijit._editor.plugins.AlwaysShowToolbar"
+                                                                           "foreColor" "hiliteColor"
+                                                                           (create :name "dijit._editor.plugins.FontChoice"
+                                                                                   :command "fontName" :generic t)
+                                                                           "fontSize" "createLink" "insertImage")))
       <input (:id ,field-id
               :name ,(id-of (client-state-sink-of component))
               :value ,(print-component-value component)
