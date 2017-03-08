@@ -219,8 +219,9 @@
      (mapcar #'dojo-relative-path
              '("dojo/resources/dojo.css"
                "dijit/themes/tundra/tundra.css"))
+     (%make-stylesheet-uris :hu.dwim.web-server "static/hdws/"
+                            "css/hdws.css")
      (%make-stylesheet-uris :hu.dwim.presentation "static/hdp/"
-                            "css/wui.css"
                             "css/icon.css"
                             "css/border.css"
                             "css/layout.css"
