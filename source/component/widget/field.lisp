@@ -160,12 +160,12 @@
     <div (:id ,div-id :class ,(nth index classes))
       ,(unless classes
          value)
-      ,(render-dojo-widget (+dijit/menu+ `(:leftClickToOpen "true" :targetNodeIds ,div-id))
+      ,(render-dojo-widget (+dijit/menu+ `(:left-click-to-open ,`js-piece true :target-node-ids ,`js-piece(array ,div-id)))
         <div (:id ,-id-
               :style "display: none;")
           ,(iter (for possible-value :in possible-values)
                  (for class :in classes)
-                 (render-dojo-widget (+dijit/menu-item+ `(:iconClass ,class))
+                 (render-dojo-widget (+dijit/menu-item+ `(:icon-class ,class))
                    <div (:id ,-id-
                          :onClick `js-inline(hdp.field.update-popup-menu-select-field ,div-id ,field-id ,possible-value ,class))
                      ,possible-value>))>)>))
