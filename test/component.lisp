@@ -625,7 +625,7 @@
        (component-demo/widget "Sequence element"
          ,(make '(make-sequence-element-place *person-name* 0)))
        (component-demo/widget "Instance slot"
-         ,(make '(make-object-slot-place (make-instance 'action :id "George") 'id))))))
+         ,(make '(make-object-slot-place (make-instance 'action :id "George") 'hu.dwim.presentation::id))))))
 
 (def function make-place-maker-node ()
   (make-place-presentation-node "Maker" make-maker place/maker))
