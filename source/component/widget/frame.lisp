@@ -20,7 +20,7 @@
   ((content-mime-type +xhtml-mime-type+)
    (stylesheet-uris nil)
    (script-uris (make-default-script-uris))
-   (page-icon-uri (make-page-icon-uri :hu.dwim.presentation "static/hdp/" "image/miscellaneous/favicon.ico"))
+   (page-icon-uri nil)
    (title nil)))
 
 (def method parent-component-of ((self frame/widget))
