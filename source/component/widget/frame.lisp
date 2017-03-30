@@ -68,7 +68,7 @@
       <head
         <meta (:http-equiv +header/content-type+
                :content ,(content-type-for (content-mime-type-of -self-) encoding))>
-        ,(bind (((icon-uri &optional timestamp) (ensure-list (page-icon-uri-of -self-))))
+        ,(bind (((&optional icon-uri timestamp) (ensure-list (page-icon-uri-of -self-))))
            (when icon-uri
              <link (:rel "icon"
                     :type "image/x-icon"
@@ -182,13 +182,17 @@
                          (clearTimeout document.hdp-failed-to-load-timer)
                          (dojo.style document.body "margin" "0px")))>>>))
 
-(def (function e) make-page-icon-uri (asdf-system-name-or-base-directory path-prefix path)
+(def (function e) make-page-icon-uri (asdf-system-name-or-base-directory path-prefix path &key (otherwise nil otherwise?))
   (bind ((base-directory (aif (find-system asdf-system-name-or-base-directory #f)
                               (system-relative-pathname it "www/")
                               asdf-system-name-or-base-directory))
-         (file (assert-file-exists (merge-pathnames path base-directory))))
-    (list (hu.dwim.uri:parse-uri (string+ path-prefix path))
-          (delay (file-write-date file)))))
+         (file (merge-pathnames path base-directory)))
+    (if (uiop:file-exists-p file)
+        (list (hu.dwim.uri:parse-uri (string+ path-prefix path))
+              (delay (file-write-date file)))
+        (handle-otherwise
+          (error "~S: the specified page icon (favicon) does not exist, (~S, ~S, ~S)"
+                 'make-page-icon-uri asdf-system-name-or-base-directory path-prefix path)))))
 
 (def (function e) make-default-script-uris ()
   (load-time-value
