@@ -10,12 +10,12 @@
 ;;; Font loading
 
 (def function get-font-path-list (directory font-extension metrics-extension)
-  (when (cl-fad:directory-exists-p directory)
-    (prog1-bind file-names nil
-      (cl-fad:walk-directory directory (lambda (path)
-                                         (bind ((type (pathname-type path)))
-                                           (when (and type (string= type metrics-extension))
-                                             (push (merge-pathnames (make-pathname :type font-extension) path) file-names))))))))
+  (when (uiop:directory-exists-p directory)
+    (remove nil (mapcar (lambda (path)
+                          (bind ((type (pathname-type path)))
+                            (when (and type (string= type metrics-extension))
+                              (merge-pathnames (make-pathname :type font-extension) path))))
+                        (uiop:directory-files directory)))))
 
 (def function load-truetype-unicode-font (font-path)
   (pdf:load-ttu-font

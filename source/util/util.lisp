@@ -171,7 +171,7 @@
       slots))
 
 (def function assert-file-exists (file)
-  (assert (cl-fad:file-exists-p file))
+  (assert (uiop:file-exists-p file))
   file)
 
 (def constant +timestamp-parameter-name+ "_ts")
