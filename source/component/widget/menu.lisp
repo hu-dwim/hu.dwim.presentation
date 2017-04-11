@@ -121,7 +121,9 @@
     (if menu-items
         (render-dojo-widget ((if (typep (parent-component-of -self-) 'menu-bar/widget)
                                  +dijit/popup-menu-bar-item+
-                                 +dijit/popup-menu-item+))
+                                 +dijit/popup-menu-item+)
+                             ()
+                             :id id)
           <div (:id ,-id-
                 :class ,style-class
                 :style ,custom-style)
