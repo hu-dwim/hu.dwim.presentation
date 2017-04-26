@@ -208,6 +208,7 @@
                (delay *js-component-hierarchy-cache/last-modified-at*)))))
 
 (def function %make-stylesheet-uris (asdf-system-name-or-base-directory path-prefix &rest relative-paths)
+  ;; FIXME asdf is probably not thread safe and we call into it here...
   (bind ((base-directory (aif (find-system asdf-system-name-or-base-directory #f)
                               (system-relative-pathname it "www/")
                               asdf-system-name-or-base-directory)))

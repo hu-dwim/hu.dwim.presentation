@@ -69,6 +69,7 @@
   (awhen (result-of component)
     (render-component it)))
 
+;; TODO better name! make-result-inspector?
 (def (layered-function e) make-result (component class prototype value)
   (:method ((component component-result/mixin) class prototype value)
     (make-inspector value)))
