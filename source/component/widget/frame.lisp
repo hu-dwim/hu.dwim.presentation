@@ -34,8 +34,8 @@
 
 (def (component e) dojo-frame/widget (frame/widget)
   ((dojo-skin-name *dojo-skin-name*)
-   (dojo-release-uri (hu.dwim.uri:parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* "dojo/")))
-   (dojo-file-name *dojo-file-name*)
+   (dojo-script-uri (or *dojo-script-uri*
+                        (hu.dwim.uri:append-path (hu.dwim.uri:clone-uri *dojo-base-uri*) "dojo/dojo.js")))
    (parse-dojo-widgets-on-load #f :type boolean)
    (debug-client-side :type boolean :writer (setf debug-client-side?))))
 
@@ -89,7 +89,8 @@
                                       (hu.dwim.uri:print-uri-to-string uri)))>))
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
-          ,(string+ "djConfig = { baseUrl: '/static/hdws/libraries/" *dojo-directory-name* "dojo/'"
+          ;; NOTE /static/hdws is *not* application relative, it's global
+          ,(string+ "djConfig = { baseUrl: '" (hu.dwim.uri:print-uri-to-string *dojo-base-uri*) "dojo/'"
                     ", parseOnLoad: " (to-js-boolean (parse-dojo-widgets-on-load? -self-))
                     ", isDebug: " (to-js-boolean debug-client-side?)
                     ;; TODO add separate flag for debugAtAllCosts
@@ -100,12 +101,11 @@
                     ", locale: '" (escape-as-js-string (locale-name (locale (first (ensure-list (default-locale-of application)))))) "'"
                     "}")>
         <script (:type +javascript-mime-type+
-                 :src  ,(bind ((uri (hu.dwim.uri:clone-uri (dojo-release-uri-of -self-))))
+                 :src  ,(bind ((uri (hu.dwim.uri:clone-uri (dojo-script-uri-of -self-))))
                           ;; we have the dojo release version in the url, so timestamps here are not important
                           (hu.dwim.uri:prepend-path uri application-path)
-                          (hu.dwim.uri:append-path uri (if debug-client-side?
-                                                           (string+ (dojo-file-name-of -self-) ".uncompressed.js")
-                                                           (dojo-file-name-of -self-)))
+                          (when debug-client-side?
+                            (hu.dwim.uri:append-to-last-path-element uri ".uncompressed.js"))
                           (hu.dwim.uri:print-uri-to-string uri)))
                  ;; it must have an empty body because browsers don't like collapsed <script ... /> in the head
                  "">
@@ -218,7 +218,7 @@
 
 (def (function e) make-default-stylesheet-uris ()
   (flet ((dojo-relative-path (path)
-           (hu.dwim.uri:parse-uri (string+ "static/hdws/libraries/" *dojo-directory-name* path))))
+           (hu.dwim.uri:append-path (hu.dwim.uri:clone-uri *dojo-base-uri*) path)))
     (append
      (mapcar #'dojo-relative-path
              '("dojo/resources/dojo.css"
