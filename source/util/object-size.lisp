@@ -96,14 +96,13 @@
                     )
                    (function
                     #+sbcl
-                    (bind ((widetag (sb-kernel:widetag-of object)))
-                      (cond ((= widetag sb-vm:simple-fun-header-widetag)
-                             (recurse (sb-kernel:fun-code-header object)))
-                            ((= widetag sb-vm:closure-header-widetag)
-                             (recurse (sb-kernel:%closure-fun object))
-                             (sb-impl::do-closure-values (value object)
-                               (recurse value)))
-                            (t (error "Unknown function type ~A" object)))))))))
+                    (cond ((sb-kernel:simple-fun-p object)
+                           (recurse (sb-kernel:fun-code-header object)))
+                          ((sb-kernel:closurep object)
+                           (recurse (sb-kernel:%closure-fun object))
+                           (sb-impl::do-closure-values (value object)
+                             (recurse value)))
+                          (t (error "Unknown function type ~A" object))))))))
       (recurse root))))
 
 (def function object-allocated-size (object)
@@ -194,18 +193,17 @@
        ;; TODO
        0)
       (function
-       (bind ((widetag (sb-kernel:widetag-of object)))
-         (cond
-           ((= widetag sb-vm:simple-fun-header-widetag)
-            0)
-           ((= widetag sb-vm:funcallable-instance-header-widetag)
-            ;; proposed on #lisp on 2012-04-06
-            (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-header-data object)))
-                                  sb-vm:n-word-bytes)))
-           ((= widetag sb-vm:closure-header-widetag)
-            (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-closure-length object)))
-                                  sb-vm:n-word-bytes)))
-           (t (error "Unknown function type ~A" object)))))
+       (cond
+         ((sb-kernel:simple-fun-p object)
+          0)
+         ((sb-kernel:funcallable-instance-p object)
+          ;; proposed on #lisp on 2012-04-06
+          (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-header-data object)))
+                                sb-vm:n-word-bytes)))
+         ((sb-kernel:closurep object)
+          (round-to-dualword (* (the fixnum (1+ (sb-kernel:get-closure-length object)))
+                                sb-vm:n-word-bytes)))
+         (t (error "Unknown function type ~A" object))))
       (sb-kernel::random-class
        ;; TODO:
        0)
