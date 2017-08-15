@@ -349,7 +349,8 @@
 
 (def function render-time-component (component &key (id (generate-unique-component-id "_tmw")) on-change (printer #'print-component-value))
   (bind (((:read-only-slots client-state-sink) component))
-    (render-dojo-widget (+dijit/time-text-box+ '(:constraints "{timePattern:'HH:mm:ss', clickableIncrement:'T01:00:00', visibleIncrement:'T04:00:00', visibleRange:'T12:00:00'}")
+    (render-dojo-widget (+dijit/time-text-box+ `(:constraints ,`js-piece(create :time-pattern "HH:mm:ss" :clickable-increment "T01:00:00"
+                                                                                :visible-increment "T04:00:00" :visible-range "T12:00:00"))
                            :id id)
       <input (:type     "text"
               :id       ,-id-
