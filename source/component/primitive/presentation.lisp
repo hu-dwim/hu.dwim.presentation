@@ -320,8 +320,8 @@
               :value    ,(funcall printer component)
               :onChange ,(force on-change))>)))
 
-(def function print-date-value (value)
-  (local-time:format-rfc3339-timestring nil value :omit-time-part #t :omit-timezone-part #t))
+(def function print-date-value (value &key (timezone local-time:+utc-zone+))
+  (local-time:format-rfc3339-timestring nil value :omit-time-part #t :omit-timezone-part #t :timezone timezone))
 
 (def method print-component-value ((component date/presentation))
   (bind (((:values component-value has-component-value?) (component-value-and-bound? component)))
@@ -360,8 +360,8 @@
 
 ;; TODO: this prints an extra T when we simple want to print the time as a string
 ;;       maybe we should use dojo to localize the time value
-(def function print-time-value (value)
-  (local-time:format-timestring nil value :format '(#\T (:hour 2) #\: (:min 2) #\: (:sec 2)) :timezone local-time:+utc-zone+))
+(def function print-time-value (value &key (timezone local-time:+utc-zone+))
+  (local-time:format-timestring nil value :format '(#\T (:hour 2) #\: (:min 2) #\: (:sec 2)) :timezone timezone))
 
 (def method print-component-value ((component time-of-day/presentation))
   (bind (((:values component-value has-component-value?) (component-value-and-bound? component)))
@@ -388,13 +388,13 @@
                                                                      (declare (ignore component))
                                                                      (if (and has-component-value?
                                                                               component-value)
-                                                                         (print-date-value component-value)
+                                                                         (print-date-value component-value :timezone local-time:*default-timezone*)
                                                                          "")))
     (render-time-component component :on-change on-change :printer (lambda (component)
                                                                      (declare (ignore component))
                                                                      (if (and has-component-value?
                                                                               component-value)
-                                                                         (print-time-value component-value)
+                                                                         (print-time-value component-value :timezone local-time:*default-timezone*)
                                                                          "")))))
 
 (def method print-component-value ((component timestamp/presentation))
@@ -404,11 +404,17 @@
         (localized-timestamp component-value)
         "")))
 
+(def function parse-timestamp (client-value &key (timezone local-time:*default-timezone*))
+  (bind ((utc-timestamp (local-time:parse-timestring client-value :fail-on-error #f)))
+    (when utc-timestamp
+      (bind (((:values nsec ss mm hh day month year) (local-time:decode-timestamp utc-timestamp :timezone local-time:+utc-zone+)))
+        (local-time:encode-timestamp nsec ss mm hh day month year :timezone timezone)))))
+
 (def method parse-component-value ((component timestamp/presentation) client-value)
   (when (consp client-value)
     (setf client-value (apply #'string+ client-value)))
   (unless (string= client-value "")
-    (aprog1 (local-time:parse-timestring client-value :fail-on-error #f)
+    (aprog1 (parse-timestamp client-value :timezone local-time:*default-timezone*)
       ;; TODO: timezone is not present in the string and thus this parsing fails: (local-time:parse-rfc3339-timestring client-value :fail-on-error #f)
       (unless it
         (invalid-client-value "Failed to parse ~S as a timestamp" client-value)))))
