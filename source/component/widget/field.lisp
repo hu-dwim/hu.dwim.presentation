@@ -65,9 +65,12 @@
                   :type "checkbox"
                   :checked ,checked
                   ,(when disabled
-                     (make-xml-attribute "disabled" "disabled"))
-                  ,(maybe-make-xml-attribute "onChange" on-change))>
-          `js-onload(hdp.field.setup-simple-checkbox ,id ,disabled ,checked-tooltip ,unchecked-tooltip))))
+                     (make-xml-attribute "disabled" "disabled")))>
+          (if on-change
+              `js-onload(progn
+                          (hdws.connect ,id "onchange" (lambda (event) ,on-change))
+                          (hdp.field.setup-simple-checkbox ,id ,disabled ,checked-tooltip ,unchecked-tooltip))
+              `js-onload(hdp.field.setup-simple-checkbox ,id ,disabled ,checked-tooltip ,unchecked-tooltip)))))
   (values))
 
 ;;;;;;

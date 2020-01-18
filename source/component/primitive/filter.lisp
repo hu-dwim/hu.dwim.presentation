@@ -36,7 +36,7 @@
     (if (eq (component-value-type-of -self-) 'boolean)
         (render-checkbox-field component-value
                                :name (client-state-sink-of -self-)
-                               :on-change `js-inline(hdp.field.update-use-in-filter ,use-in-filter-id #t))
+                               :on-change `js-piece(hdp.field.update-use-in-filter ,use-in-filter-id #t))
         <select (:name ,(id-of (client-state-sink-of -self-))
                  :onChange `js-inline(hdp.field.update-use-in-filter ,use-in-filter-id #t))
           ,(bind ((selected (when (and use-in-filter?
