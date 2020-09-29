@@ -20,7 +20,7 @@
 (def class* dictionary ()
   ((name :type symbol)
    (definition-names :type list)
-   (documentation nil :type string))
+   (documentation nil :type (or null string)))
   (:documentation "A DICTIONARY is a list of definition names referring to the related definitions."))
 
 ;; TODO: move?

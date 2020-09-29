@@ -39,13 +39,13 @@
 ;;; Title mixin
 
 (def class* title-mixin ()
-  ((title nil :type string)))
+  ((title nil :type (or null string))))
 
 ;;;;;;
 ;;; Book
 
 (def class* book (text title-mixin)
-  ((subtitle nil :type string)
+  ((subtitle nil :type (or null string))
    (name :type symbol)
    (authors nil :type list))
   (:documentation "A BOOK is a mostly textual description of something."))

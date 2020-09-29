@@ -14,7 +14,7 @@
 
 (def (class* e) project ()
   ((name :type string)
-   (path nil :type pathname)
+   (path nil :type (or null pathname))
    (description nil)))
 
 (def constructor project
