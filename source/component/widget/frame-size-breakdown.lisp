@@ -6,6 +6,8 @@
 
 (in-package :hu.dwim.presentation)
 
+;; NOTE this file got bitrotten, and is not loaded anymore
+
 ;;;;;;
 ;;; frame-size-breakdown/widget
 

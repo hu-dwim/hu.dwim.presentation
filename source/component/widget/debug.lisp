@@ -79,11 +79,11 @@
             (replace-target-place/widget ()
                 "Response"
               (make-value-inspector *response*)))
-        #+sbcl
-        (menu-item/widget ()
-            (replace-target-place/widget ()
-                "Frame size breakdown"
-              (make-instance 'frame-size-breakdown/widget)))
+        ;; #+sbcl
+        ;; (menu-item/widget ()
+        ;;     (replace-target-place/widget ()
+        ;;         "Frame size breakdown"
+        ;;       (make-instance 'frame-size-breakdown/widget)))
         (menu-item/widget ()
             (replace-target-place/widget ()
                 "User agent breakdown"
