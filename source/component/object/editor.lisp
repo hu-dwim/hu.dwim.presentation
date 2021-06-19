@@ -9,12 +9,6 @@
 ;;;;;;
 ;;; t/editor
 
-(def (component e) t/editor (t/presentation)
-  ())
-
-;;;;;;
-;;; t/editor
-
 (def (component e) t/editor (t/presentation
                              cloneable/component
                              layer/mixin)
