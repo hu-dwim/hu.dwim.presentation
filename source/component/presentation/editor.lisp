@@ -27,6 +27,7 @@
 ;;;;;;
 ;;; t/editor
 
+;; FIXME clashes with t/editor in component/object/editor.lisp
 (def (component e) t/editor (component/editor t/presentation)
   ())
 

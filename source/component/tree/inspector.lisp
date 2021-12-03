@@ -77,6 +77,12 @@
 (def (component e) t/tree-level/inspector (t/detail/inspector tree-level/widget)
   ())
 
+(def (layered-function e) make-previous-sibling-presentation (component class prototype value))
+
+(def (layered-function e) make-next-sibling-presentation (component class prototype value))
+
+(def (layered-function e) make-descendants-presentation (component class prototype value))
+
 (def refresh-component t/tree-level/inspector
   (bind (((:slots path previous-sibling next-sibling descendants node) -self-)
          (dispatch-class (component-dispatch-class -self-))
@@ -123,12 +129,6 @@
                    :component-value value
                    :edited (edited-component? component)
                    :editable (editable-component? component))))
-
-(def (layered-function e) make-previous-sibling-presentation (component class prototype value))
-
-(def (layered-function e) make-next-sibling-presentation (component class prototype value))
-
-(def (layered-function e) make-descendants-presentation (component class prototype value))
 
 ;;;;;;
 ;;; t/tree-level/reference/inspector

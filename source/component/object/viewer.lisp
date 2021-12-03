@@ -9,6 +9,7 @@
 ;;;;;;
 ;;; t/viewer
 
+;; FIXME clashes with t/viewer in component/presentation/viewer.lisp
 (def (component e) t/viewer (t/presentation
                              cloneable/component
                              layer/mixin)

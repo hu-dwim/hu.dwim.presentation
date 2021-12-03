@@ -354,11 +354,10 @@
     (pdf:set-color-stroke '(0 0 0))
     (pdf:set-line-width (width-of edge))
     (let ((points (points-of edge))
-          x1 y1 x2 y2 x3 y3 prev-x1 prev-y1)
+          x1 y1 x2 y2 x3 y3)
       (when points
         (pdf:move-to (caar points) (second (pop points)))
         (iter (while points)
-              (setf prev-x1 x1 prev-y1 y1)
               (setf x1 (caar points) y1 (second (pop points))
                     x2 (caar points) y2 (second (pop points))
                     x3 (caar points) y3 (second (pop points)))

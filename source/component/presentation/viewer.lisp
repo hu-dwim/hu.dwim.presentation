@@ -26,6 +26,7 @@
 ;;;;;;
 ;;; t/viewer
 
+;; FIXME clashes with t/viewer in component/object/viewer.lisp
 (def (component e) t/viewer (component/viewer t/presentation)
   ())
 

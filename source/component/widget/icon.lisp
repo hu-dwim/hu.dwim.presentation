@@ -65,8 +65,9 @@
 (def (function e) render-icon (&key icon (name nil name?) (label nil label?) (image-path nil image-path?) (tooltip nil tooltip?) (style-class nil style-class?))
   (when (and icon
              (not (stringp icon)))
-    (unless name?
-      (setf name (name-of icon)))
+    ;; commented out to silence a warning
+    ;; (unless name?
+    ;;   (setf name (name-of icon)))
     (unless label?
       (setf label (label-of icon)))
     (setf label (force label))

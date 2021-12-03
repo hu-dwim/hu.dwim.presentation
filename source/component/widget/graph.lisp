@@ -191,7 +191,7 @@
            (points-length (length bezier-points)))
       (unless (zerop points-length)
         (iter (for p1 first (car bezier-points) then p4)
-              (for (p2 p3 p4 more) on (cdr bezier-points) by #'cdddr)
+              (for (p2 p3 p4) on (cdr bezier-points) by #'cdddr)
               (for i :from 1)
               <svg:path (:d ,(string+ "M" (p->string p1)
                                                  " C" (p->string p2)
