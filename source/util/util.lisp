@@ -119,7 +119,7 @@
                               (lambda (class-1 class-2)
                                 (subtypep class-2 class-1)))))
         (setf (gethash type *find-most-generic-subclass-for-type/cache*) it))
-      (handle-otherwise/value otherwise :default-message (list "~S failed for ~S" -this-function/name- type))))
+      (handle-otherwise/value otherwise :default-message (list "~S failed for ~S" -this-definition/name- type))))
 
 (def (function i) class-prototype (class)
   (cond
