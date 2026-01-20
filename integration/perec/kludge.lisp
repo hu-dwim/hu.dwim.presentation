@@ -113,4 +113,7 @@
 (pushnew 'hu.dwim.presentation::html-text hu.dwim.perec::*canonical-types*)
 
 ;; TODO: KLUDGE: bruhuhu, should kill this stupid type mapping in hu.dwim.perec and use the one from hu.dwim.util
-(pushnew 'hu.dwim.presentation::html-text hu.dwim.perec::*mapped-type-precedence-list*)
+;; insert html-text before text in *mapped-type-precedence-list*
+(bind ((cell-index (position 'text *mapped-type-precedence-list*))
+       (cell (nthcdr (1- cell-index) *mapped-type-precedence-list*)))
+  (setf (cdr cell) (cons 'hu.dwim.presentation::html-text (cdr cell))))
