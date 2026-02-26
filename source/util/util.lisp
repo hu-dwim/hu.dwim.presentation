@@ -138,6 +138,8 @@
      '(42))
     ((subtypep class 'function)
      (lambda ()))
+    ((eql class (find-class t)) ; KLUDGE cannot create an instance of T
+     nil)
     (t (aprog1 (closer-mop:class-prototype (ensure-finalized class))
          (assert (or (subtypep class 'number)
                      (not (eql it 42))))))))
