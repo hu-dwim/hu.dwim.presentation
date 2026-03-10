@@ -90,6 +90,8 @@
                   (stylesheet-uris-of -self-))
         <script (:type +javascript-mime-type+)
           ;; NOTE /static/hdws is *not* application relative, it's global
+          ;; maybe? seems to be the new format: <script data-dojo-config="async: 1, tlmSiblingOfDojo: 0, locale:'en_US', deps:['app/run']" src="dojo/dojo.js"></script>
+          ;; from: https://stackoverflow.com/questions/16600063/dojo-1-9-build-multipledefine-error-while-loading-locale
           ,(string+ "djConfig = { baseUrl: '" (hu.dwim.uri:print-uri-to-string *dojo-base-uri*) "dojo/'"
                     ", parseOnLoad: " (to-js-boolean (parse-dojo-widgets-on-load? -self-))
                     ", isDebug: " (to-js-boolean debug-client-side?)
@@ -137,8 +139,8 @@
            (apply-localization-function 'render-failed-to-load-page)
            ;; don't use any non-standard js stuff for the failed-to-load machinery, because if things go wrong then nothing is guaranteed to be loaded...
            `js-xml(progn
-                    ;; don't use any non-standard js stuff for the failed-to-load machinery, because if things go wrong then nothing is guaranteed to be loaded...
-                    (defun _wui_handleFailedToLoad ()
+                    ;; this is used by the localization
+                    (defun _hdp_reloadPage ()
                       (setf document.location.href document.location.href)
                       (return false))
                     (bind ((failed-page (document.getElementById ,+page-failed-to-load-id+)))

@@ -18,7 +18,7 @@
     (render-tooltip it (id-of component))))
 
 ;; TODO: this could collect the essential data in a special variable and at the end of rendering emit a literal js array with all the tooltips
-(def (function e) render-tooltip (tooltip target-id &key position)
+(def (function e) render-tooltip (tooltip target-id &key position (widget-id (generate-unique-component-id "_dj_tt_")))
   ":position might be '(\"below\" \"right\")"
   (check-type tooltip (or string hu.dwim.uri:uri action function))
   (check-type target-id string)
@@ -26,12 +26,14 @@
     (string
      ;; alternative onhover: (dijit.showTooltip ,tooltip ,target-id (array ,@position))
      `js-onload(new dijit.Tooltip
-                    (create :connectId (array ,target-id)
+                    (create :id ,widget-id
+                            :connectId (array ,target-id)
                             :label ,tooltip
                             :position (array ,@position))))
     ((or action hu.dwim.uri:uri)
      `js-onload(new dojox.widget.DynamicTooltip
-                    (create :connectId (array ,target-id)
+                    (create :id ,widget-id
+                            :connectId (array ,target-id)
                             :position (array ,@position)
                             :href ,(etypecase tooltip
                                      (action          (register-action/href tooltip :delayed-content #t))
@@ -39,7 +41,8 @@
     ;; action is subtypep function, therefore this order and the small code duplication...
     (computation
      `js-onload(new dijit.Tooltip
-                    (create :connectId (array ,target-id)
+                    (create :id ,widget-id
+                            :connectId (array ,target-id)
                             :label ,(babel:octets-to-string (emit-into-xml-stream-buffer (:external-format (external-format-of *response*))
                                                               (force tooltip))
                                                             :encoding (external-format-of *response*))

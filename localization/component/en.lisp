@@ -86,9 +86,9 @@
   (render-failed-to-load-page (&key &allow-other-keys)
     <div (:id ,+page-failed-to-load-id+)
       <h1 "It takes suspiciously long to load the page...">
-      <p "Unfortunately sometimes certain browsers get confused even when loading an otherwise valid page. You can try to "
-         <a (:href "#" :onclick "_wui_handleFailedToLoad()") "reload the page"> ", or use the " <i "Refresh"> "
-         button of your browser, which usually solves the problem.">>))
+      <p "You may have a connection problem, but unfortunately web browsers also get confused sometimes, even when loading an otherwise valid page. You can try to "
+         <a (:href "#" :onclick "_hdp_reloadPage()") "reload the page"> ", or use the " <i "Refresh"> "
+         button of your browser, which usually solves the problem in those cases.">>))
 
 ;;;;;
 ;;; Context sensitive help

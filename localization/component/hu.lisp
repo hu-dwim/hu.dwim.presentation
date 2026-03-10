@@ -86,8 +86,8 @@
   (render-failed-to-load-page (&key &allow-other-keys)
     <div (:id ,+page-failed-to-load-id+)
      <h1 "Gyanúsan sokáig tart az oldal betöltése...">
-     <p "Sajnos egyes böngészők néha összezavarodnak az egyébként hibátlan oldal betöltése közben is. Az "
-        <a (:href "#" :onclick "return _wui_handleFailedToLoad()") "oldal újratöltése">
+     <p "Lehet, hogy lassú az Internet kapcsolata, de sajnos néha összezavarodnak a böngészők is egy egyébként hibátlan oldal betöltése közben. Az "
+        <a (:href "#" :onclick "_hdp_reloadPage()") "oldal újratöltése">
         ", esetleg a " <i "Frissítés">  " gomb használata a legtöbb esetben megoldja a problémát.">>))
 
 ;;;;;;

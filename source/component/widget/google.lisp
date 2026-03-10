@@ -17,11 +17,16 @@
 
 (def render-xhtml google-analytics/widget
   (bind (((:read-only-slots analytics-account) -self-))
-    `js(let ((gaJsHost (if (== "https:" document.location.protocol)
-                           "https://ssl."
-                           "http://www.")))
-         (document.write (unescape (+ "%3Cscript src='" gaJsHost "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"))))
-    `js(try (let ((pageTracker (_gat._getTracker ,analytics-account)))
-              (pageTracker._trackPageview))
-         (catch (e)
-           nil))))
+    `js(hdws.io.eval-js-at-url (+ (if (== "https:" document.location.protocol)
+                                      "https://ssl."
+                                      "http://www.")
+                                  "google-analytics.com/ga.js")
+                               :on-success (lambda (type data event)
+                                             (try
+                                                  (let ((pageTracker (_gat._getTracker ,analytics-account)))
+                                                    (pageTracker._trackPageview))
+                                               (catch (e)
+                                                 nil)))
+                               :on-error (lambda ()
+                                           (log.warn "Failed to load google-analytics.com/ga.js"))
+                               :sync false)))

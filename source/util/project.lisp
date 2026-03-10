@@ -9,8 +9,8 @@
 ;;;;;;
 ;;; Project
 
-(def (namespace e) project (&rest args &key &allow-other-keys)
-  `(make-instance 'project :name ',-name- ,@args))
+(def (namespace e) project (&rest args &key (class ''project) &allow-other-keys)
+  `(make-instance ,class :name ',-name- ,@(remove-from-plist args :class)))
 
 (def (class* e) project ()
   ((name :type string)

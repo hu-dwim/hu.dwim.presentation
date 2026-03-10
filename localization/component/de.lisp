@@ -87,7 +87,7 @@
     <div (:id ,+page-failed-to-load-id+)
       <h1 "Es dauert verdächtig lange, die Seite zu laden ...">
       <p "Manchmal kommen Internet-Browser beim Laden einer ansonsten gültigen Seite durcheinander. Sie können "
-         <a (:href "#" :onclick "_wui_handleFailedToLoad()") "die Seite neu laden"> ", oder Sie verwenden die " <i "Neu laden"> "
+         <a (:href "#" :onclick "_hdp_reloadPage()") "die Seite neu laden"> ", oder Sie verwenden die " <i "Neu laden"> "
          Schaltfläche Ihres Browsers, die das Problem auch beheben kann.">>))
 
 ;;;;;
